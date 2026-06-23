@@ -15,9 +15,10 @@
 
 ## Git Rules
 - Work on `feat/...`, `chore/...`, `fix/...`, or `docs/...` branches, not directly on `main`.
-- Current docs branch: `chore/motocare-prd-docs`.
+- Docs branch pattern: `chore/docs`.
 - Do not push until user says `push`.
 - Each implementation step must include branch name, commit message, files, and verification.
+- Step 1 onward branch names and commit messages must be short and must not include `motocare`.
 
 ## Verification
 - Before claiming code work done, run relevant Gradle task.

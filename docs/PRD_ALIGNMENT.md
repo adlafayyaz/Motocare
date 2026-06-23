@@ -4,7 +4,7 @@
 - PRD: `C:\Users\Admin\Downloads\PRD MotoCare.pdf`
 - Repo: `D:\Adla\Kotlin\Motocare`
 - Remote: `https://github.com/adlafayyaz/Motocare`
-- Docs branch: `chore/motocare-prd-docs`
+- Docs branch: `chore/docs`
 
 ## Current Project
 - Android app module: `app`

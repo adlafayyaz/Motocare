@@ -24,6 +24,6 @@ Implement MotoCare from PRD without changing stack or scope.
 - Report exact failing command and exact error if build fails.
 
 ## Branch Plan
-- Docs branch: `chore/motocare-prd-docs`
+- Docs branch: `chore/docs`
 - Implementation base: create `feat/...` branches from latest `main` only after user approves.
-- Suggested first implementation branch: `feat/motocare-foundation`
+- Suggested first implementation branch: `feat/foundation`

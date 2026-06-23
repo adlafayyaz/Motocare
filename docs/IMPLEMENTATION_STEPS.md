@@ -3,7 +3,7 @@
 > Required worker skill: use plan/task execution. Do not push until user says `push`.
 
 ## Step 0: Documentation Only
-- Branch: `chore/motocare-prd-docs`
+- Branch: `main`
 - Status: current branch
 - Files:
   - `AGENTS.md`
@@ -16,7 +16,7 @@
   - Confirm only `.md` files are intentional changes.
 
 ## Step 1: App Foundation
-- Branch: create `feat/motocare-foundation` from `main`
+- Branch: create `feat/foundation` from `main`
 - Goal: make app match PRD first flow: Splash -> Login -> Dashboard.
 - Files:
   - Modify `app/src/main/AndroidManifest.xml`
@@ -27,13 +27,13 @@
   - Create `app/src/main/res/layout/activity_login.xml`
   - Create `app/src/main/res/layout/activity_dashboard.xml`
   - Modify `app/src/main/res/values/strings.xml`
-- Commit message: `feat: add splash login dashboard foundation`
+- Commit message: `feat: add foundation`
 - Verify:
   - `.\gradlew.bat :app:assembleDebug`
   - Open app. Expected: splash opens, login accepts local static data, dashboard opens.
 
 ## Step 2: Local Database
-- Branch: create `feat/motocare-local-database` from `feat/motocare-foundation`
+- Branch: create `feat/db` from `feat/foundation`
 - Goal: add local storage for PRD tables.
 - Files:
   - Create `app/src/main/java/com/example/motocare/data/MotoCareDbHelper.kt`
@@ -42,13 +42,13 @@
   - Create `app/src/main/java/com/example/motocare/data/Bensin.kt`
   - Create `app/src/main/java/com/example/motocare/data/Pajak.kt`
   - Create `app/src/test/java/com/example/motocare/data/MotoCareDbHelperTest.kt`
-- Commit message: `feat: add local sqlite database`
+- Commit message: `feat: add database`
 - Verify:
   - `.\gradlew.bat :app:testDebugUnitTest`
   - `.\gradlew.bat :app:assembleDebug`
 
 ## Step 3: Data Motor CRUD
-- Branch: create `feat/motocare-motor-crud` from `feat/motocare-local-database`
+- Branch: create `feat/motor` from `feat/db`
 - Goal: add data motor add, list, detail, edit, delete.
 - Files:
   - Create `app/src/main/java/com/example/motocare/motor/MotorListActivity.kt`
@@ -61,13 +61,13 @@
   - Create `app/src/main/res/layout/item_motor.xml`
   - Modify `app/src/main/AndroidManifest.xml`
   - Modify `app/src/main/res/layout/activity_dashboard.xml`
-- Commit message: `feat: add motor crud screens`
+- Commit message: `feat: add motor crud`
 - Verify:
   - `.\gradlew.bat :app:assembleDebug`
   - Black box: add motor, show list, open detail, edit, delete.
 
 ## Step 4: Servis And Oli CRUD
-- Branch: create `feat/motocare-servis-oli` from `feat/motocare-motor-crud`
+- Branch: create `feat/service-oil` from `feat/motor`
 - Goal: add riwayat servis and ganti oli records.
 - Files:
   - Create `app/src/main/java/com/example/motocare/servis/ServisListActivity.kt`
@@ -79,13 +79,13 @@
   - Create `app/src/main/res/layout/activity_servis_detail.xml`
   - Create `app/src/main/res/layout/item_servis.xml`
   - Modify database helper to store `servis` rows and mark oil-change service type.
-- Commit message: `feat: add servis and oil records`
+- Commit message: `feat: add service and oil`
 - Verify:
   - `.\gradlew.bat :app:assembleDebug`
   - Black box: add servis, add ganti oli, show list, detail, edit, delete.
 
 ## Step 5: Bensin CRUD
-- Branch: create `feat/motocare-bensin-crud` from `feat/motocare-servis-oli`
+- Branch: create `feat/fuel` from `feat/service-oil`
 - Goal: add pengeluaran bensin records.
 - Files:
   - Create `app/src/main/java/com/example/motocare/bensin/BensinListActivity.kt`
@@ -96,13 +96,13 @@
   - Create `app/src/main/res/layout/activity_bensin_form.xml`
   - Create `app/src/main/res/layout/activity_bensin_detail.xml`
   - Create `app/src/main/res/layout/item_bensin.xml`
-- Commit message: `feat: add bensin expense crud`
+- Commit message: `feat: add fuel crud`
 - Verify:
   - `.\gradlew.bat :app:assembleDebug`
   - Black box: add bensin, show list, detail, edit, delete.
 
 ## Step 6: Pajak CRUD
-- Branch: create `feat/motocare-pajak-crud` from `feat/motocare-bensin-crud`
+- Branch: create `feat/tax` from `feat/fuel`
 - Goal: add pajak/STNK due date, biaya, payment status.
 - Files:
   - Create `app/src/main/java/com/example/motocare/pajak/PajakListActivity.kt`
@@ -113,32 +113,32 @@
   - Create `app/src/main/res/layout/activity_pajak_form.xml`
   - Create `app/src/main/res/layout/activity_pajak_detail.xml`
   - Create `app/src/main/res/layout/item_pajak.xml`
-- Commit message: `feat: add pajak stnk crud`
+- Commit message: `feat: add tax crud`
 - Verify:
   - `.\gradlew.bat :app:assembleDebug`
   - Black box: add pajak, change status, show list, detail, edit, delete.
 
 ## Step 7: Dashboard Estimation
-- Branch: create `feat/motocare-dashboard-summary` from `feat/motocare-pajak-crud`
+- Branch: create `feat/dashboard` from `feat/tax`
 - Goal: show summary count and monthly expense estimate.
 - Files:
   - Modify `app/src/main/java/com/example/motocare/DashboardActivity.kt`
   - Modify `app/src/main/res/layout/activity_dashboard.xml`
   - Add query helpers in `MotoCareDbHelper.kt`
-- Commit message: `feat: add dashboard monthly summary`
+- Commit message: `feat: add dashboard`
 - Verify:
   - `.\gradlew.bat :app:assembleDebug`
   - Black box: dashboard shows total servis cost, bensin cost, pajak cost, total monthly estimate.
 
 ## Step 8: UI Polish And Final Test
-- Branch: create `feat/motocare-final-polish` from `feat/motocare-dashboard-summary`
+- Branch: create `chore/final-test` from `feat/dashboard`
 - Goal: align UI with PRD NFR: simple, neat, easy, fast, valid input.
 - Files:
   - Modify `app/src/main/res/values/colors.xml`
   - Modify `app/src/main/res/values/themes.xml`
   - Modify all form layouts for required field validation text.
   - Create `docs/BLACK_BOX_TESTING.md`
-- Commit message: `test: add motocare black box checklist`
+- Commit message: `test: add black box checklist`
 - Verify:
   - `.\gradlew.bat :app:assembleDebug`
   - Run black box checklist:
