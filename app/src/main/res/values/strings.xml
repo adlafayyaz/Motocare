@@ -52,6 +52,10 @@
     <string name="nav_add">+</string>
     <string name="nav_riwayat">R</string>
     <string name="nav_profile">P</string>
+    <string name="nav_home_label">Home</string>
+    <string name="nav_motor_label">Motor</string>
+    <string name="nav_riwayat_label">Riwayat</string>
+    <string name="nav_profile_label">Profil</string>
     <string name="dashboard_greeting">Halo, Adla</string>
     <string name="profile_initial">A</string>
     <string name="catat_servis_short">S</string>
@@ -62,5 +66,15 @@
     <string name="catat_oli">Catat oli</string>
     <string name="catat_bensin">Catat bensin</string>
     <string name="catat_pajak">Catat pajak</string>
+    <string name="servis_label">Servis</string>
+    <string name="oli_label">Oli</string>
+    <string name="pajak_label">Pajak</string>
+    <string name="bensin_label">Bensin</string>
+    <string name="transactions_recorded">36 transaksi tercatat</string>
+    <string name="cost_tab">Biaya</string>
+    <string name="distance_tab">Jarak</string>
+    <string name="service_meta_sample">1.200 km / 18 hari</string>
+    <string name="service_target_sample">13.650 km</string>
+    <string name="target_label">Target</string>
     <string name="feature_next_step">Fitur ini dibuat pada step berikutnya.</string>
 </resources>
