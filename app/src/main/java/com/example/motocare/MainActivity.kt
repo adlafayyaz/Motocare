@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.motocare.auth.GoogleAuthManager
-import com.example.motocare.setup.SetupMotorActivity
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -13,7 +12,7 @@ class MainActivity : AppCompatActivity() {
 
         val authManager = GoogleAuthManager(this)
         val nextActivity = if (authManager.isSignedIn()) {
-            SetupMotorActivity::class.java
+            DashboardActivity::class.java
         } else {
             OnboardingActivity::class.java
         }

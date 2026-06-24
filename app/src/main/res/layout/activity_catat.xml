@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#070A12"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:text="@string/catat_title"
+        android:textColor="#F4F5FA"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/buttonCatatMotor"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:layout_marginTop="30dp"
+        android:backgroundTint="#FFCB25"
+        android:text="@string/add_motor"
+        android:textColor="#070A12"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/buttonCatatServis"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="#2A2D3B"
+        android:text="@string/catat_servis"
+        android:textColor="#F4F5FA"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/buttonCatatOli"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="#2A2D3B"
+        android:text="@string/catat_oli"
+        android:textColor="#F4F5FA"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/buttonCatatBensin"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="#2A2D3B"
+        android:text="@string/catat_bensin"
+        android:textColor="#F4F5FA"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/buttonCatatPajak"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="#2A2D3B"
+        android:text="@string/catat_pajak"
+        android:textColor="#F4F5FA"
+        android:textStyle="bold" />
+</LinearLayout>

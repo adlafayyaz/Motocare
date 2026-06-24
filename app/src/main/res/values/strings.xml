@@ -35,4 +35,20 @@
     <string name="cancel">Batal</string>
     <string name="delete_motor_title">Hapus motor?</string>
     <string name="delete_motor_message">Data motor ini akan dihapus.</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="no_active_motor">Belum ada motor aktif</string>
+    <string name="add_motor_first">Tambahkan motor pertama.</string>
+    <string name="monthly_expense">Pengeluaran bulan ini</string>
+    <string name="rupiah_value">Rp %1$d</string>
+    <string name="no_service_data">Servis berikutnya: belum ada data</string>
+    <string name="no_motor_estimate">Tambahkan motor untuk melihat estimasi.</string>
+    <string name="nav_home">H</string>
+    <string name="nav_motor">M</string>
+    <string name="nav_add">+</string>
+    <string name="catat_title">Catat</string>
+    <string name="catat_servis">Catat servis</string>
+    <string name="catat_oli">Catat oli</string>
+    <string name="catat_bensin">Catat bensin</string>
+    <string name="catat_pajak">Catat pajak</string>
+    <string name="feature_next_step">Fitur ini dibuat pada step berikutnya.</string>
 </resources>

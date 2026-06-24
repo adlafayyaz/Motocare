@@ -83,6 +83,29 @@ class MotoCareDbHelper(context: Context) : SQLiteOpenHelper(
         return motors
     }
 
+    fun getActiveMotor(): Motor? {
+        readableDatabase.query(
+            TABLE_MOTORS,
+            null,
+            "is_active = 1",
+            null,
+            null,
+            null,
+            "id DESC",
+            "1"
+        ).use { cursor ->
+            return if (cursor.moveToFirst()) cursor.toMotor() else null
+        }
+    }
+
+    fun getMonthlyExpenseTotal(): Int = 0
+
+    fun getFuelMonthlyTotal(): Int = 0
+
+    fun getTaxMonthlyTotal(): Int = 0
+
+    fun getOilMonthlyTotal(): Int = 0
+
     fun setActiveMotor(id: Long) {
         writableDatabase.beginTransaction()
         try {

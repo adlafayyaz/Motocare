@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.motocare.R
 import com.example.motocare.data.MotoCareDbHelper
+import com.example.motocare.navigation.BottomNavBinder
 
 class MotorListActivity : AppCompatActivity() {
     private lateinit var dbHelper: MotoCareDbHelper
@@ -36,6 +37,7 @@ class MotorListActivity : AppCompatActivity() {
         findViewById<Button>(R.id.buttonAddMotor).setOnClickListener {
             startActivity(Intent(this, MotorFormActivity::class.java))
         }
+        BottomNavBinder.bind(this, BottomNavBinder.MENU_MOTOR)
     }
 
     override fun onResume() {

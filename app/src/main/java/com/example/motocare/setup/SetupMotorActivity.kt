@@ -6,10 +6,10 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.motocare.DashboardActivity
 import com.example.motocare.R
 import com.example.motocare.data.MotoCareDbHelper
 import com.example.motocare.data.Motor
-import com.example.motocare.motor.MotorListActivity
 
 class SetupMotorActivity : AppCompatActivity() {
     private lateinit var dbHelper: MotoCareDbHelper
@@ -37,7 +37,7 @@ class SetupMotorActivity : AppCompatActivity() {
                     )
                 )
                 Toast.makeText(this, R.string.setup_motor_saved, Toast.LENGTH_SHORT).show()
-                startActivity(Intent(this, MotorListActivity::class.java))
+                startActivity(Intent(this, DashboardActivity::class.java))
                 finish()
             }
         }

@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Motocare">
         <activity
+            android:name=".CatatActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DashboardActivity"
+            android:exported="false" />
+        <activity
             android:name=".motor.MotorDetailActivity"
             android:exported="false" />
         <activity
