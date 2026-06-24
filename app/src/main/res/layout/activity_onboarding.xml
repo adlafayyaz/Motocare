@@ -4,47 +4,34 @@
     android:layout_height="match_parent"
     android:background="#070A12"
     android:orientation="vertical"
-    android:padding="24dp">
+    android:paddingStart="22dp"
+    android:paddingTop="18dp"
+    android:paddingEnd="22dp"
+    android:paddingBottom="28dp">
 
     <TextView
+        android:layout_width="match_parent"
+        android:layout_height="22dp"
+        android:gravity="start|center_vertical"
+        android:text="@string/status_time"
+        android:textColor="#F4F5FA"
+        android:textSize="13sp"
+        android:textStyle="bold" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPagerOnboarding"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@drawable/bg_card_dark"
-        android:gravity="center"
-        android:text="@string/onboarding_visual"
-        android:textColor="#FFCB25"
-        android:textSize="72sp"
-        android:textStyle="bold" />
+        android:layout_marginTop="36dp"
+        android:layout_weight="1" />
 
-    <TextView
-        android:id="@+id/textOnboardingTitle"
+    <LinearLayout
+        android:id="@+id/layoutOnboardingDots"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="34dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="22dp"
         android:gravity="center"
-        android:textColor="#F4F5FA"
-        android:textSize="28sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/textOnboardingBody"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:gravity="center"
-        android:lineSpacingExtra="4dp"
-        android:textColor="#9AA0B5"
-        android:textSize="14sp" />
-
-    <TextView
-        android:id="@+id/textOnboardingIndicator"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:gravity="center"
-        android:textColor="#FFCB25"
-        android:textStyle="bold" />
+        android:orientation="horizontal" />
 
     <Button
         android:id="@+id/buttonOnboardingNext"

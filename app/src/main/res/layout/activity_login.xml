@@ -5,21 +5,35 @@
     android:background="#070A12"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:padding="24dp">
+    android:paddingStart="24dp"
+    android:paddingTop="18dp"
+    android:paddingEnd="24dp"
+    android:paddingBottom="28dp">
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:text="@string/login_visual"
-        android:textColor="#FFCB25"
-        android:textSize="96sp"
+        android:layout_height="22dp"
+        android:gravity="start|center_vertical"
+        android:text="@string/status_time"
+        android:textColor="#F4F5FA"
+        android:textSize="13sp"
         android:textStyle="bold" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <ImageView
+        android:layout_width="124dp"
+        android:layout_height="124dp"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/logo" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="42dp"
         android:gravity="center"
         android:text="@string/login_title"
         android:textColor="#F4F5FA"
@@ -29,9 +43,8 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="12dp"
         android:gravity="center"
-        android:lineSpacingExtra="4dp"
         android:text="@string/login_body"
         android:textColor="#9AA0B5"
         android:textSize="14sp" />
@@ -40,18 +53,15 @@
         android:id="@+id/buttonGoogleLogin"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="54dp"
         android:backgroundTint="#FFCB25"
         android:text="@string/google_login"
         android:textColor="#070A12"
         android:textStyle="bold" />
 
-    <TextView
+    <Space
         android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:gravity="center"
-        android:text="@string/local_data_note"
-        android:textColor="#8B91A5"
-        android:textSize="12sp" />
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
 </LinearLayout>

@@ -2,6 +2,7 @@ package com.example.motocare.navigation
 
 import android.app.Activity
 import android.content.Intent
+import android.widget.Toast
 import android.widget.TextView
 import com.example.motocare.CatatActivity
 import com.example.motocare.DashboardActivity
@@ -20,6 +21,12 @@ object BottomNavBinder {
         }
         activity.findViewById<TextView?>(R.id.navCatat)?.setOnClickListener {
             open(activity, CatatActivity::class.java)
+        }
+        activity.findViewById<TextView?>(R.id.navRiwayat)?.setOnClickListener {
+            Toast.makeText(activity, R.string.feature_next_step, Toast.LENGTH_SHORT).show()
+        }
+        activity.findViewById<TextView?>(R.id.navProfile)?.setOnClickListener {
+            Toast.makeText(activity, R.string.feature_next_step, Toast.LENGTH_SHORT).show()
         }
     }
 

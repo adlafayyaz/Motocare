@@ -19,36 +19,66 @@
             android:textSize="28sp"
             android:textStyle="bold" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="34dp"
+            android:text="@string/motor_name"
+            android:textColor="#F4F5FA"
+            android:textStyle="bold" />
+
         <EditText
             android:id="@+id/editMotorName"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginTop="34dp"
-            android:backgroundTint="#FFCB25"
-            android:hint="@string/motor_name"
+            android:layout_height="58dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_input_dark"
+            android:hint="@string/motor_name_hint"
             android:inputType="textCapWords"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
             android:textColor="#F4F5FA"
             android:textColorHint="#8B91A5" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text="@string/plate_number"
+            android:textColor="#F4F5FA"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/editPlateNumber"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginTop="18dp"
-            android:backgroundTint="#FFCB25"
-            android:hint="@string/plate_number"
+            android:layout_height="58dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_input_dark"
+            android:hint="@string/plate_number_hint"
             android:inputType="textCapCharacters"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
             android:textColor="#F4F5FA"
             android:textColorHint="#8B91A5" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text="@string/current_kilometer"
+            android:textColor="#F4F5FA"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/editCurrentKilometer"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginTop="18dp"
-            android:backgroundTint="#FFCB25"
-            android:hint="@string/current_kilometer"
+            android:layout_height="58dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_input_dark"
+            android:hint="@string/current_kilometer_hint"
             android:inputType="number"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
             android:textColor="#F4F5FA"
             android:textColorHint="#8B91A5" />
 

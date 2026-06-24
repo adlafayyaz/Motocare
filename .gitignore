@@ -29,4 +29,5 @@ google-services.json
 # Android Studio user-local settings
 /.idea/appInsightsSettings.xml
 /.idea/deploymentTargetSelector.xml
+/.idea/deviceManager.xml
 /.idea/vcs.xml
