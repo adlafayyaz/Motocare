@@ -15,11 +15,19 @@
         android:textSize="30sp"
         android:textStyle="bold" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/catat_subtitle"
+        android:textColor="#9AA0B5"
+        android:textSize="14sp" />
+
     <Button
         android:id="@+id/buttonCatatMotor"
         android:layout_width="match_parent"
-        android:layout_height="54dp"
-        android:layout_marginTop="30dp"
+        android:layout_height="62dp"
+        android:layout_marginTop="26dp"
         android:backgroundTint="#FFCB25"
         android:text="@string/add_motor"
         android:textColor="#070A12"
@@ -28,9 +36,13 @@
     <Button
         android:id="@+id/buttonCatatServis"
         android:layout_width="match_parent"
-        android:layout_height="54dp"
+        android:layout_height="62dp"
         android:layout_marginTop="12dp"
-        android:backgroundTint="#2A2D3B"
+        android:backgroundTint="#202331"
+        android:drawableStart="@drawable/ic_service"
+        android:drawablePadding="14dp"
+        android:paddingStart="18dp"
+        android:paddingEnd="18dp"
         android:text="@string/catat_servis"
         android:textColor="#F4F5FA"
         android:textStyle="bold" />
@@ -38,9 +50,13 @@
     <Button
         android:id="@+id/buttonCatatOli"
         android:layout_width="match_parent"
-        android:layout_height="54dp"
+        android:layout_height="62dp"
         android:layout_marginTop="12dp"
-        android:backgroundTint="#2A2D3B"
+        android:backgroundTint="#202331"
+        android:drawableStart="@drawable/ic_oil"
+        android:drawablePadding="14dp"
+        android:paddingStart="18dp"
+        android:paddingEnd="18dp"
         android:text="@string/catat_oli"
         android:textColor="#F4F5FA"
         android:textStyle="bold" />
@@ -48,9 +64,13 @@
     <Button
         android:id="@+id/buttonCatatBensin"
         android:layout_width="match_parent"
-        android:layout_height="54dp"
+        android:layout_height="62dp"
         android:layout_marginTop="12dp"
-        android:backgroundTint="#2A2D3B"
+        android:backgroundTint="#202331"
+        android:drawableStart="@drawable/ic_fuel"
+        android:drawablePadding="14dp"
+        android:paddingStart="18dp"
+        android:paddingEnd="18dp"
         android:text="@string/catat_bensin"
         android:textColor="#F4F5FA"
         android:textStyle="bold" />
@@ -58,9 +78,13 @@
     <Button
         android:id="@+id/buttonCatatPajak"
         android:layout_width="match_parent"
-        android:layout_height="54dp"
+        android:layout_height="62dp"
         android:layout_marginTop="12dp"
-        android:backgroundTint="#2A2D3B"
+        android:backgroundTint="#202331"
+        android:drawableStart="@drawable/ic_tax"
+        android:drawablePadding="14dp"
+        android:paddingStart="18dp"
+        android:paddingEnd="18dp"
         android:text="@string/catat_pajak"
         android:textColor="#F4F5FA"
         android:textStyle="bold" />

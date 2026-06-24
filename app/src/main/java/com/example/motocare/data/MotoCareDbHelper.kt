@@ -2,6 +2,7 @@ package com.example.motocare.data
 
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
@@ -98,13 +99,141 @@ class MotoCareDbHelper(context: Context) : SQLiteOpenHelper(
         }
     }
 
-    fun getMonthlyExpenseTotal(): Int = 0
+    fun getMonthlyExpenseTotal(): Int {
+        return getServiceMonthlyTotal() + getOilMonthlyTotal() + getFuelMonthlyTotal() + getTaxMonthlyTotal()
+    }
 
     fun getFuelMonthlyTotal(): Int = 0
 
     fun getTaxMonthlyTotal(): Int = 0
 
-    fun getOilMonthlyTotal(): Int = 0
+    fun getOilMonthlyTotal(): Int = sumCost(TABLE_OIL_RECORDS)
+
+    fun getServiceMonthlyTotal(): Int = sumCost(TABLE_SERVICE_RECORDS)
+
+    fun insertServis(servis: Servis): Long {
+        return writableDatabase.insert(TABLE_SERVICE_RECORDS, null, servis.toValues())
+    }
+
+    fun updateServis(servis: Servis): Int {
+        return writableDatabase.update(
+            TABLE_SERVICE_RECORDS,
+            servis.toValues(),
+            "id = ?",
+            arrayOf(servis.id.toString())
+        )
+    }
+
+    fun deleteServis(id: Long): Int {
+        return writableDatabase.delete(TABLE_SERVICE_RECORDS, "id = ?", arrayOf(id.toString()))
+    }
+
+    fun getServis(id: Long): Servis? {
+        readableDatabase.query(
+            TABLE_SERVICE_RECORDS,
+            null,
+            "id = ?",
+            arrayOf(id.toString()),
+            null,
+            null,
+            null
+        ).use { cursor ->
+            return if (cursor.moveToFirst()) cursor.toServis() else null
+        }
+    }
+
+    fun getServisByMotor(motorId: Long): List<Servis> {
+        val items = mutableListOf<Servis>()
+        readableDatabase.query(
+            TABLE_SERVICE_RECORDS,
+            null,
+            "motor_id = ?",
+            arrayOf(motorId.toString()),
+            null,
+            null,
+            "service_date DESC, id DESC"
+        ).use { cursor ->
+            while (cursor.moveToNext()) items.add(cursor.toServis())
+        }
+        return items
+    }
+
+    fun getLatestServis(motorId: Long): Servis? {
+        readableDatabase.query(
+            TABLE_SERVICE_RECORDS,
+            null,
+            "motor_id = ?",
+            arrayOf(motorId.toString()),
+            null,
+            null,
+            "kilometer DESC, id DESC",
+            "1"
+        ).use { cursor ->
+            return if (cursor.moveToFirst()) cursor.toServis() else null
+        }
+    }
+
+    fun insertOli(oli: Oli): Long {
+        return writableDatabase.insert(TABLE_OIL_RECORDS, null, oli.toValues())
+    }
+
+    fun updateOli(oli: Oli): Int {
+        return writableDatabase.update(
+            TABLE_OIL_RECORDS,
+            oli.toValues(),
+            "id = ?",
+            arrayOf(oli.id.toString())
+        )
+    }
+
+    fun deleteOli(id: Long): Int {
+        return writableDatabase.delete(TABLE_OIL_RECORDS, "id = ?", arrayOf(id.toString()))
+    }
+
+    fun getOli(id: Long): Oli? {
+        readableDatabase.query(
+            TABLE_OIL_RECORDS,
+            null,
+            "id = ?",
+            arrayOf(id.toString()),
+            null,
+            null,
+            null
+        ).use { cursor ->
+            return if (cursor.moveToFirst()) cursor.toOli() else null
+        }
+    }
+
+    fun getOliByMotor(motorId: Long): List<Oli> {
+        val items = mutableListOf<Oli>()
+        readableDatabase.query(
+            TABLE_OIL_RECORDS,
+            null,
+            "motor_id = ?",
+            arrayOf(motorId.toString()),
+            null,
+            null,
+            "oil_change_date DESC, id DESC"
+        ).use { cursor ->
+            while (cursor.moveToNext()) items.add(cursor.toOli())
+        }
+        return items
+    }
+
+    fun getLatestOli(motorId: Long): Oli? {
+        readableDatabase.query(
+            TABLE_OIL_RECORDS,
+            null,
+            "motor_id = ?",
+            arrayOf(motorId.toString()),
+            null,
+            null,
+            "kilometer DESC, id DESC",
+            "1"
+        ).use { cursor ->
+            return if (cursor.moveToFirst()) cursor.toOli() else null
+        }
+    }
 
     fun setActiveMotor(id: Long) {
         writableDatabase.beginTransaction()
@@ -135,6 +264,67 @@ class MotoCareDbHelper(context: Context) : SQLiteOpenHelper(
             currentKilometer = getInt(getColumnIndexOrThrow("current_kilometer")),
             isActive = getInt(getColumnIndexOrThrow("is_active")) == 1
         )
+    }
+
+    private fun Servis.toValues(): ContentValues {
+        return ContentValues().apply {
+            put("motor_id", motorId)
+            put("service_date", serviceDate)
+            put("service_type", serviceType)
+            put("kilometer", kilometer)
+            put("interval_km", intervalKm)
+            put("interval_month", intervalMonth)
+            put("cost", cost)
+            put("note", note)
+        }
+    }
+
+    private fun Oli.toValues(): ContentValues {
+        return ContentValues().apply {
+            put("motor_id", motorId)
+            put("oil_change_date", oilChangeDate)
+            put("kilometer", kilometer)
+            put("next_kilometer", nextKilometer)
+            put("interval_km", intervalKm)
+            put("interval_month", intervalMonth)
+            put("oil_type", oilType)
+            put("cost", cost)
+        }
+    }
+
+    private fun Cursor.toServis(): Servis {
+        return Servis(
+            id = getLong(getColumnIndexOrThrow("id")),
+            motorId = getLong(getColumnIndexOrThrow("motor_id")),
+            serviceDate = getString(getColumnIndexOrThrow("service_date")),
+            serviceType = getString(getColumnIndexOrThrow("service_type")),
+            kilometer = getInt(getColumnIndexOrThrow("kilometer")),
+            intervalKm = getInt(getColumnIndexOrThrow("interval_km")),
+            intervalMonth = getInt(getColumnIndexOrThrow("interval_month")),
+            cost = getInt(getColumnIndexOrThrow("cost")),
+            note = getString(getColumnIndexOrThrow("note")).orEmpty()
+        )
+    }
+
+    private fun Cursor.toOli(): Oli {
+        return Oli(
+            id = getLong(getColumnIndexOrThrow("id")),
+            motorId = getLong(getColumnIndexOrThrow("motor_id")),
+            oilChangeDate = getString(getColumnIndexOrThrow("oil_change_date")),
+            kilometer = getInt(getColumnIndexOrThrow("kilometer")),
+            nextKilometer = getInt(getColumnIndexOrThrow("next_kilometer")),
+            intervalKm = getInt(getColumnIndexOrThrow("interval_km")),
+            intervalMonth = getInt(getColumnIndexOrThrow("interval_month")),
+            oilType = getString(getColumnIndexOrThrow("oil_type")),
+            cost = getInt(getColumnIndexOrThrow("cost"))
+        )
+    }
+
+    private fun sumCost(table: String): Int {
+        readableDatabase.rawQuery("SELECT COALESCE(SUM(cost), 0) FROM $table", null).use { cursor ->
+            cursor.moveToFirst()
+            return cursor.getInt(0)
+        }
     }
 
     companion object {

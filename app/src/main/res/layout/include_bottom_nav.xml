@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="78dp"
+    android:background="#070A12"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:paddingStart="12dp"
+    android:paddingEnd="12dp">
+
+    <TextView
+        android:id="@+id/navHome"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:drawableTop="@drawable/ic_home"
+        android:drawablePadding="4dp"
+        android:gravity="center"
+        android:text="@string/nav_home_label"
+        android:textColor="#8B91A5"
+        android:textSize="10sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/navMotor"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:drawableTop="@drawable/ic_motor"
+        android:drawablePadding="4dp"
+        android:gravity="center"
+        android:text="@string/nav_motor_label"
+        android:textColor="#8B91A5"
+        android:textSize="10sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/navCatat"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:background="@drawable/bg_circle_yellow"
+        android:gravity="center"
+        android:text="@string/nav_add"
+        android:textColor="#070A12"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/navRiwayat"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:drawableTop="@drawable/ic_history"
+        android:drawablePadding="4dp"
+        android:gravity="center"
+        android:text="@string/nav_riwayat_label"
+        android:textColor="#FFCB25"
+        android:textSize="10sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/navProfile"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:drawableTop="@drawable/ic_profile"
+        android:drawablePadding="4dp"
+        android:gravity="center"
+        android:text="@string/nav_profile_label"
+        android:textColor="#8B91A5"
+        android:textSize="10sp"
+        android:textStyle="bold" />
+</LinearLayout>

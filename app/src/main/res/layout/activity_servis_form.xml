@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#070A12">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="22dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="@string/service_form_title"
+            android:textColor="#F4F5FA"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textServisMotor"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/bg_card_dark"
+            android:gravity="center_vertical"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:textColor="#FFCB25"
+            android:textStyle="bold" />
+
+        <TextView
+            style="@style/FormLabel"
+            android:text="@string/service_date" />
+
+        <EditText
+            android:id="@+id/editServisDate"
+            style="@style/FormInput"
+            android:hint="@string/date_hint"
+            android:inputType="date" />
+
+        <TextView
+            style="@style/FormLabel"
+            android:text="@string/service_type" />
+
+        <EditText
+            android:id="@+id/editServisType"
+            style="@style/FormInput"
+            android:hint="@string/default_service_type"
+            android:inputType="textCapWords" />
+
+        <TextView
+            style="@style/FormLabel"
+            android:text="@string/service_kilometer" />
+
+        <EditText
+            android:id="@+id/editServisKilometer"
+            style="@style/FormInput"
+            android:hint="@string/current_kilometer_hint"
+            android:inputType="number" />
+
+        <TextView
+            style="@style/FormLabel"
+            android:text="@string/service_interval_km" />
+
+        <EditText
+            android:id="@+id/editServisIntervalKm"
+            style="@style/FormInput"
+            android:hint="@string/service_interval_hint"
+            android:inputType="number" />
+
+        <TextView
+            style="@style/FormLabel"
+            android:text="@string/service_interval_month" />
+
+        <EditText
+            android:id="@+id/editServisIntervalMonth"
+            style="@style/FormInput"
+            android:hint="@string/service_interval_month_hint"
+            android:inputType="number" />
+
+        <TextView
+            style="@style/FormLabel"
+            android:text="@string/service_cost" />
+
+        <EditText
+            android:id="@+id/editServisCost"
+            style="@style/FormInput"
+            android:hint="@string/cost_hint"
+            android:inputType="number" />
+
+        <TextView
+            style="@style/FormLabel"
+            android:text="@string/service_note" />
+
+        <EditText
+            android:id="@+id/editServisNote"
+            style="@style/FormInput"
+            android:hint="@string/service_note_hint"
+            android:inputType="textCapSentences" />
+
+        <Button
+            android:id="@+id/buttonSaveServis"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="28dp"
+            android:backgroundTint="#FFCB25"
+            android:text="@string/save"
+            android:textColor="#070A12"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/buttonDeleteServis"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="#2A2D3B"
+            android:text="@string/delete"
+            android:textColor="#F23D47"
+            android:textStyle="bold" />
+    </LinearLayout>
+</ScrollView>

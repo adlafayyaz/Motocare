@@ -8,6 +8,7 @@ import com.example.motocare.CatatActivity
 import com.example.motocare.DashboardActivity
 import com.example.motocare.R
 import com.example.motocare.motor.MotorListActivity
+import com.example.motocare.servis.ServisListActivity
 
 object BottomNavBinder {
     fun bind(activity: Activity, activeMenu: String) {
@@ -23,7 +24,7 @@ object BottomNavBinder {
             open(activity, CatatActivity::class.java)
         }
         activity.findViewById<TextView?>(R.id.navRiwayat)?.setOnClickListener {
-            Toast.makeText(activity, R.string.feature_next_step, Toast.LENGTH_SHORT).show()
+            open(activity, ServisListActivity::class.java)
         }
         activity.findViewById<TextView?>(R.id.navProfile)?.setOnClickListener {
             Toast.makeText(activity, R.string.feature_next_step, Toast.LENGTH_SHORT).show()
@@ -37,4 +38,5 @@ object BottomNavBinder {
 
     const val MENU_HOME = "home"
     const val MENU_MOTOR = "motor"
+    const val MENU_RIWAYAT = "riwayat"
 }

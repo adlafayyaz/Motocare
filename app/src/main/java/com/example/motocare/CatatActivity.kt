@@ -6,6 +6,8 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.motocare.motor.MotorFormActivity
+import com.example.motocare.oli.OliFormActivity
+import com.example.motocare.servis.ServisFormActivity
 
 class CatatActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -15,8 +17,12 @@ class CatatActivity : AppCompatActivity() {
         findViewById<Button>(R.id.buttonCatatMotor).setOnClickListener {
             startActivity(Intent(this, MotorFormActivity::class.java))
         }
-        findViewById<Button>(R.id.buttonCatatServis).setOnClickListener { showNextStepToast() }
-        findViewById<Button>(R.id.buttonCatatOli).setOnClickListener { showNextStepToast() }
+        findViewById<Button>(R.id.buttonCatatServis).setOnClickListener {
+            startActivity(Intent(this, ServisFormActivity::class.java))
+        }
+        findViewById<Button>(R.id.buttonCatatOli).setOnClickListener {
+            startActivity(Intent(this, OliFormActivity::class.java))
+        }
         findViewById<Button>(R.id.buttonCatatBensin).setOnClickListener { showNextStepToast() }
         findViewById<Button>(R.id.buttonCatatPajak).setOnClickListener { showNextStepToast() }
     }

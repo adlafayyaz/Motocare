@@ -12,6 +12,24 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Motocare">
         <activity
+            android:name=".oli.OliDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".oli.OliFormActivity"
+            android:exported="false" />
+        <activity
+            android:name=".oli.OliListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".servis.ServisFormActivity"
+            android:exported="false" />
+        <activity
+            android:name=".servis.ServisDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".servis.ServisListActivity"
+            android:exported="false" />
+        <activity
             android:name=".CatatActivity"
             android:exported="false" />
         <activity
