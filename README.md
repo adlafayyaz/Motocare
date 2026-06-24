@@ -164,25 +164,6 @@ https://api.alifmaulidanar.my.id/api-bbm/{jenis}/{merek}/{oktan}
 
 API hanya digunakan untuk harga bensin. Jika API gagal, pengguna tetap bisa memasukkan harga secara manual.
 
-## Desain
-
-Desain final berada di Figma:
-
-```text
-https://www.figma.com/design/SmNYZgqyZJYoF57be2rz5w/Motocare-Design--Copy-?node-id=2012-53&p=f&t=YSW39PW2qMv2LDrx-0
-```
-
-Ringkasan desain:
-
-* Onboarding 3 slide
-* Google login
-* Setup awal motor, servis, oli, pajak
-* Dashboard motor aktif
-* Pilih beberapa motor
-* Catat servis, oli, bensin, pajak
-* Riwayat dengan tab
-* Profile, pengaturan, backup/export, tentang aplikasi
-
 ## Cara Menjalankan Project
 
 1. Clone repository ini.
