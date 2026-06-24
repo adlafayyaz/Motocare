@@ -6,17 +6,26 @@ MotoCare adalah aplikasi Android sederhana untuk mencatat perawatan dan pengelua
 
 Banyak pengguna motor sering lupa kapan terakhir servis, ganti oli, atau membayar pajak kendaraan. MotoCare membantu pengguna mencatat semua informasi tersebut secara lebih rapi dalam satu aplikasi.
 
-Aplikasi ini bersifat personal dan menggunakan database lokal, sehingga data tersimpan di perangkat pengguna.
+Aplikasi ini bersifat personal. Login menggunakan Google, sedangkan data utama kendaraan tetap disimpan secara lokal di perangkat pengguna.
 
 ## Fitur Utama
 
-* Mencatat data motor
+* Onboarding pengenalan fitur aplikasi
+* Login menggunakan Google
+* Setup awal data motor
+* Setup opsional servis, oli, dan pajak
+* Mengelola beberapa motor
+* Memilih motor aktif untuk dashboard
 * Mencatat riwayat servis
-* Mencatat jadwal ganti oli
+* Mencatat jadwal dan riwayat ganti oli
 * Mencatat pengeluaran bensin
+* Mengambil harga bensin terbaru dari API hargaBensin
 * Mencatat informasi pajak/STNK
-* Melihat estimasi pengeluaran motor
+* Melihat ringkasan pengeluaran bulanan
+* Menghitung estimasi servis dan oli berikutnya dari kilometer serta interval bulan
+* Melihat riwayat servis, oli, pajak, dan bensin dengan tab
 * Mengubah dan menghapus data catatan
+* Mengelola profil, pengaturan, backup/export, dan tentang aplikasi
 
 ## Teknologi yang Digunakan
 
@@ -27,6 +36,9 @@ Aplikasi ini bersifat personal dan menggunakan database lokal, sehingga data ter
 * SQLite / Room Database
 * RecyclerView
 * Intent & Activity
+* Firebase Authentication untuk Google login
+* Material Vector Drawable untuk icon
+* API hargaBensin untuk harga BBM
 
 ## Database Overview
 
@@ -34,11 +46,12 @@ Aplikasi ini menggunakan database lokal untuk menyimpan data motor dan riwayat p
 
 | Tabel             | Fungsi                               |
 | ----------------- | ------------------------------------ |
-| `motors`          | Menyimpan data motor pengguna        |
-| `service_records` | Menyimpan riwayat servis motor       |
-| `oil_records`     | Menyimpan catatan ganti oli          |
-| `fuel_records`    | Menyimpan catatan pengeluaran bensin |
-| `tax_records`     | Menyimpan informasi pajak/STNK       |
+| `users`           | Menyimpan profil pengguna login       |
+| `motors`          | Menyimpan data motor pengguna         |
+| `service_records` | Menyimpan riwayat servis motor        |
+| `oil_records`     | Menyimpan catatan ganti oli           |
+| `fuel_records`    | Menyimpan catatan pengeluaran bensin  |
+| `tax_records`     | Menyimpan informasi pajak/STNK        |
 
 ### Struktur Data Utama
 
@@ -49,8 +62,8 @@ Aplikasi ini menggunakan database lokal untuk menyimpan data motor dan riwayat p
 | `id`               | ID motor                 |
 | `name`             | Nama atau tipe motor     |
 | `plateNumber`      | Nomor plat motor         |
-| `brand`            | Merek motor              |
 | `currentKilometer` | Kilometer motor saat ini |
+| `isActive`         | Status motor aktif       |
 
 #### `service_records`
 
@@ -61,6 +74,8 @@ Aplikasi ini menggunakan database lokal untuk menyimpan data motor dan riwayat p
 | `serviceDate` | Tanggal servis        |
 | `serviceType` | Jenis servis          |
 | `kilometer`   | Kilometer saat servis |
+| `intervalKm`  | Interval servis KM    |
+| `intervalMonth` | Interval servis bulan |
 | `cost`        | Biaya servis          |
 | `note`        | Catatan tambahan      |
 
@@ -73,6 +88,8 @@ Aplikasi ini menggunakan database lokal untuk menyimpan data motor dan riwayat p
 | `oilChangeDate` | Tanggal ganti oli                       |
 | `kilometer`     | Kilometer saat ganti oli                |
 | `nextKilometer` | Estimasi kilometer ganti oli berikutnya |
+| `intervalKm`    | Interval oli KM                         |
+| `intervalMonth` | Interval oli bulan                      |
 | `oilType`       | Jenis oli                               |
 | `cost`          | Biaya ganti oli                         |
 
@@ -83,7 +100,10 @@ Aplikasi ini menggunakan database lokal untuk menyimpan data motor dan riwayat p
 | `id`        | ID catatan bensin         |
 | `motorId`   | ID motor terkait          |
 | `fuelDate`  | Tanggal isi bensin        |
-| `fuelType`  | Jenis bensin              |
+| `fuelType`  | Jenis BBM                 |
+| `fuelBrand` | Merek BBM                 |
+| `octane`    | Oktan BBM                 |
+| `pricePerLiter` | Harga per liter       |
 | `liter`     | Jumlah liter bensin       |
 | `cost`      | Biaya bensin              |
 | `kilometer` | Kilometer saat isi bensin |
@@ -102,12 +122,66 @@ Aplikasi ini menggunakan database lokal untuk menyimpan data motor dan riwayat p
 ## Alur Aplikasi
 
 1. Pengguna membuka aplikasi.
-2. Pengguna masuk ke halaman utama.
-3. Pengguna menambahkan data motor.
-4. Pengguna mencatat servis, ganti oli, bensin, atau pajak.
-5. Data tersimpan di database lokal.
-6. Pengguna dapat melihat, mengubah, dan menghapus data.
-7. Aplikasi menampilkan ringkasan pengeluaran motor.
+2. Splash mengecek status login.
+3. Jika belum login, pengguna melihat onboarding.
+4. Pengguna masuk menggunakan Google.
+5. Pengguna mengisi setup motor pertama.
+6. Pengguna dapat mengisi setup servis, oli, dan pajak atau melewatinya.
+7. Dashboard menampilkan motor aktif, pengeluaran bulanan, dan jadwal berikutnya.
+8. Pengguna dapat mengganti motor aktif dari halaman motor.
+9. Tombol `+` digunakan untuk mencatat servis, oli, bensin, pajak, atau motor.
+10. Riwayat ditampilkan dengan tab servis, oli, pajak, dan bensin.
+11. Aplikasi dapat mengambil harga BBM terbaru untuk membantu input bensin.
+12. Data tersimpan di database lokal dan tetap bisa dipakai offline.
+13. Pengguna dapat membuka profil, pengaturan, backup/export, dan tentang aplikasi.
+
+## Aturan Estimasi Servis dan Oli
+
+Servis dan oli memakai dua patokan:
+
+* Kilometer
+* Bulan
+
+Aplikasi menampilkan estimasi yang lebih dulu tercapai di dashboard dan riwayat.
+
+Default awal:
+
+| Jenis  | Kilometer | Waktu   |
+| ------ | --------- | ------- |
+| Servis | 3.000 km  | 3 bulan |
+| Oli    | 2.000 km  | 2 bulan |
+
+## API Eksternal
+
+Aplikasi menggunakan repo `https://github.com/alifmaulidanar/hargaBensin` untuk mengambil harga BBM realtime.
+
+Endpoint utama:
+
+```text
+https://api.alifmaulidanar.my.id/api-bbm/full
+https://api.alifmaulidanar.my.id/api-bbm/{jenis}/{merek}/{oktan}
+```
+
+API hanya digunakan untuk harga bensin. Jika API gagal, pengguna tetap bisa memasukkan harga secara manual.
+
+## Desain
+
+Desain final berada di Figma:
+
+```text
+https://www.figma.com/design/SmNYZgqyZJYoF57be2rz5w/Motocare-Design--Copy-?node-id=2012-53&p=f&t=YSW39PW2qMv2LDrx-0
+```
+
+Ringkasan desain:
+
+* Onboarding 3 slide
+* Google login
+* Setup awal motor, servis, oli, pajak
+* Dashboard motor aktif
+* Pilih beberapa motor
+* Catat servis, oli, bensin, pajak
+* Riwayat dengan tab
+* Profile, pengaturan, backup/export, tentang aplikasi
 
 ## Cara Menjalankan Project
 
