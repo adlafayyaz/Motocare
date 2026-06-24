@@ -9,9 +9,10 @@
 - Android app: `D:\Adla\Kotlin\Motocare`.
 - GitHub repo: `https://github.com/adlafayyaz/Motocare`.
 - Current PRD source: `C:\Users\Admin\Downloads\PRD MotoCare.pdf`.
-- Stack from PRD: Kotlin, Android, XML layouts, SQLite or Room, Activity, Intent, RecyclerView, Adapter.
+- Stack from PRD and final design: Kotlin, Android, XML layouts, SQLite or Room, Activity, Intent, RecyclerView, Adapter, Firebase Auth for Google login only.
 - Do not use Jetpack Compose unless user explicitly changes PRD.
-- Keep data local. No Firebase/Auth, Maps, upload, cloud sync, admin dashboard, or online multi-user.
+- Keep app data local. No Maps, upload, cloud sync, admin dashboard, or online multi-user.
+- Fuel price API allowed: `https://github.com/alifmaulidanar/hargaBensin`.
 
 ## Git Rules
 - Work on `feat/...`, `chore/...`, `fix/...`, or `docs/...` branches, not directly on `main`.

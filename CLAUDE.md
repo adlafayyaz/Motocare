@@ -12,9 +12,11 @@ Implement MotoCare from PRD without changing stack or scope.
 - Use Kotlin.
 - Use XML layouts.
 - Use local SQLite or Room.
+- Use Firebase Auth for Google login only.
 - Use Activity, Intent, RecyclerView, Adapter.
 - Keep app offline-first.
-- Do not add Firebase, online login, Maps, cloud sync, photo upload, admin dashboard, or Compose.
+- Do not add cloud sync, Maps, photo upload, admin dashboard, or Compose.
+- Fuel price API allowed: `https://github.com/alifmaulidanar/hargaBensin`.
 - Do not push unless user explicitly says `push`.
 
 ## Work Style
