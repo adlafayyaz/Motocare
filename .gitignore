@@ -13,3 +13,20 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# Local secrets / API keys
+.env
+.env.*
+*.env
+secrets.properties
+apikey.properties
+api-keys.properties
+keystore.properties
+*.jks
+*.keystore
+google-services.json
+
+# Android Studio user-local settings
+/.idea/appInsightsSettings.xml
+/.idea/deploymentTargetSelector.xml
+/.idea/vcs.xml
