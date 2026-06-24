@@ -103,7 +103,7 @@ class MotoCareDbHelper(context: Context) : SQLiteOpenHelper(
         return getServiceMonthlyTotal() + getOilMonthlyTotal() + getFuelMonthlyTotal() + getTaxMonthlyTotal()
     }
 
-    fun getFuelMonthlyTotal(): Int = 0
+    fun getFuelMonthlyTotal(): Int = sumCost(TABLE_FUEL_RECORDS)
 
     fun getTaxMonthlyTotal(): Int = 0
 
@@ -235,6 +235,53 @@ class MotoCareDbHelper(context: Context) : SQLiteOpenHelper(
         }
     }
 
+    fun insertBensin(bensin: Bensin): Long {
+        return writableDatabase.insert(TABLE_FUEL_RECORDS, null, bensin.toValues())
+    }
+
+    fun updateBensin(bensin: Bensin): Int {
+        return writableDatabase.update(
+            TABLE_FUEL_RECORDS,
+            bensin.toValues(),
+            "id = ?",
+            arrayOf(bensin.id.toString())
+        )
+    }
+
+    fun deleteBensin(id: Long): Int {
+        return writableDatabase.delete(TABLE_FUEL_RECORDS, "id = ?", arrayOf(id.toString()))
+    }
+
+    fun getBensin(id: Long): Bensin? {
+        readableDatabase.query(
+            TABLE_FUEL_RECORDS,
+            null,
+            "id = ?",
+            arrayOf(id.toString()),
+            null,
+            null,
+            null
+        ).use { cursor ->
+            return if (cursor.moveToFirst()) cursor.toBensin() else null
+        }
+    }
+
+    fun getBensinByMotor(motorId: Long): List<Bensin> {
+        val items = mutableListOf<Bensin>()
+        readableDatabase.query(
+            TABLE_FUEL_RECORDS,
+            null,
+            "motor_id = ?",
+            arrayOf(motorId.toString()),
+            null,
+            null,
+            "fuel_date DESC, id DESC"
+        ).use { cursor ->
+            while (cursor.moveToNext()) items.add(cursor.toBensin())
+        }
+        return items
+    }
+
     fun setActiveMotor(id: Long) {
         writableDatabase.beginTransaction()
         try {
@@ -292,6 +339,20 @@ class MotoCareDbHelper(context: Context) : SQLiteOpenHelper(
         }
     }
 
+    private fun Bensin.toValues(): ContentValues {
+        return ContentValues().apply {
+            put("motor_id", motorId)
+            put("fuel_date", fuelDate)
+            put("fuel_type", fuelType)
+            put("fuel_brand", fuelBrand)
+            put("octane", octane)
+            put("price_per_liter", pricePerLiter)
+            put("liter", liter)
+            put("cost", cost)
+            put("kilometer", kilometer)
+        }
+    }
+
     private fun Cursor.toServis(): Servis {
         return Servis(
             id = getLong(getColumnIndexOrThrow("id")),
@@ -317,6 +378,21 @@ class MotoCareDbHelper(context: Context) : SQLiteOpenHelper(
             intervalMonth = getInt(getColumnIndexOrThrow("interval_month")),
             oilType = getString(getColumnIndexOrThrow("oil_type")),
             cost = getInt(getColumnIndexOrThrow("cost"))
+        )
+    }
+
+    private fun Cursor.toBensin(): Bensin {
+        return Bensin(
+            id = getLong(getColumnIndexOrThrow("id")),
+            motorId = getLong(getColumnIndexOrThrow("motor_id")),
+            fuelDate = getString(getColumnIndexOrThrow("fuel_date")),
+            fuelType = getString(getColumnIndexOrThrow("fuel_type")),
+            fuelBrand = getString(getColumnIndexOrThrow("fuel_brand")),
+            octane = getString(getColumnIndexOrThrow("octane")),
+            pricePerLiter = getInt(getColumnIndexOrThrow("price_per_liter")),
+            liter = getDouble(getColumnIndexOrThrow("liter")),
+            cost = getInt(getColumnIndexOrThrow("cost")),
+            kilometer = getInt(getColumnIndexOrThrow("kilometer"))
         )
     }
 

@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.motocare.R
+import com.example.motocare.bensin.BensinListActivity
 import com.example.motocare.data.MotoCareDbHelper
 import com.example.motocare.navigation.BottomNavBinder
 import com.example.motocare.servis.ServisListActivity
@@ -43,6 +44,9 @@ class OliListActivity : AppCompatActivity() {
         }
         findViewById<TextView>(R.id.tabRiwayatServis).setOnClickListener {
             startActivity(Intent(this, ServisListActivity::class.java))
+        }
+        findViewById<TextView>(R.id.tabRiwayatBensin).setOnClickListener {
+            startActivity(Intent(this, BensinListActivity::class.java))
         }
         BottomNavBinder.bind(this, BottomNavBinder.MENU_RIWAYAT)
     }

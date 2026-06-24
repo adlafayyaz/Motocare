@@ -17,14 +17,14 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/history_service_title"
+            android:text="@string/history_fuel_title"
             android:textColor="#F4F5FA"
             android:textSize="28sp"
             android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="78dp"
+            android:layout_height="88dp"
             android:layout_marginTop="24dp"
             android:background="@drawable/bg_card_dark"
             android:gravity="center_vertical"
@@ -34,10 +34,10 @@
             <TextView
                 android:layout_width="46dp"
                 android:layout_height="46dp"
-                android:background="@drawable/bg_circle_yellow"
+                android:background="@drawable/bg_dot_orange"
                 android:gravity="center"
-                android:text="@string/catat_servis_short"
-                android:textColor="#070A12"
+                android:text="B"
+                android:textColor="#FFFFFF"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -49,16 +49,15 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/textServisSummaryTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/next_service_title"
+                    android:text="@string/fuel_month_title"
                     android:textColor="#F4F5FA"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/textServisSummaryMeta"
+                    android:id="@+id/textBensinSummaryMeta"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
@@ -67,11 +66,11 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/textServisSummaryValue"
+                android:id="@+id/textBensinSummaryValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#F4F5FA"
-                android:textSize="17sp"
+                android:textSize="18sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -88,10 +87,10 @@
                 android:layout_height="match_parent"
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
-                android:background="@drawable/bg_circle_yellow"
+                android:background="@drawable/bg_segment_active"
                 android:gravity="center"
                 android:text="@string/servis_label"
-                android:textColor="#070A12"
+                android:textColor="#F4F5FA"
                 android:textStyle="bold" />
 
             <TextView
@@ -111,34 +110,34 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/bg_segment_active"
+                android:background="@drawable/bg_circle_yellow"
                 android:gravity="center"
                 android:text="@string/bensin_label"
-                android:textColor="#F4F5FA"
+                android:textColor="#070A12"
                 android:textStyle="bold" />
         </LinearLayout>
 
         <Button
-            android:id="@+id/buttonAddServis"
+            android:id="@+id/buttonAddBensin"
             android:layout_width="match_parent"
             android:layout_height="52dp"
             android:layout_marginTop="18dp"
             android:backgroundTint="#FFCB25"
-            android:text="@string/add_service_record"
+            android:text="@string/add_fuel_record"
             android:textColor="#070A12"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/textEmptyServis"
+            android:id="@+id/textEmptyBensin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:gravity="center"
-            android:text="@string/empty_servis"
+            android:text="@string/empty_bensin"
             android:textColor="#9AA0B5" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerServis"
+            android:id="@+id/recyclerBensin"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="14dp"
