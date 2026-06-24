@@ -8,7 +8,7 @@
     <ImageView
         android:id="@+id/imageOnboarding"
         android:layout_width="match_parent"
-        android:layout_height="312dp"
+        android:layout_height="276dp"
         android:adjustViewBounds="true"
         android:contentDescription="@string/onboarding_image"
         android:scaleType="fitCenter" />
@@ -17,20 +17,20 @@
         android:id="@+id/textOnboardingTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="34dp"
+        android:layout_marginTop="42dp"
         android:gravity="center"
         android:textColor="#F4F5FA"
-        android:textSize="28sp"
+        android:textSize="32sp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/textOnboardingBody"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="18dp"
         android:gravity="center"
         android:lineSpacingExtra="4dp"
         android:textColor="#9AA0B5"
-        android:textSize="14sp" />
+        android:textSize="16sp" />
 
 </LinearLayout>

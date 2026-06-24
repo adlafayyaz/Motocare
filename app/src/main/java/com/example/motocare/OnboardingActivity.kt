@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -34,7 +33,7 @@ class OnboardingActivity : AppCompatActivity() {
     )
 
     private lateinit var viewPager: ViewPager2
-    private lateinit var dotsContainer: LinearLayout
+    private lateinit var dots: List<View>
     private lateinit var nextButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,7 +41,11 @@ class OnboardingActivity : AppCompatActivity() {
         setContentView(R.layout.activity_onboarding)
 
         viewPager = findViewById(R.id.viewPagerOnboarding)
-        dotsContainer = findViewById(R.id.layoutOnboardingDots)
+        dots = listOf(
+            findViewById(R.id.dotOnboardingOne),
+            findViewById(R.id.dotOnboardingTwo),
+            findViewById(R.id.dotOnboardingThree)
+        )
         nextButton = findViewById(R.id.buttonOnboardingNext)
         viewPager.adapter = OnboardingAdapter(pages)
         viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
@@ -74,19 +77,16 @@ class OnboardingActivity : AppCompatActivity() {
     }
 
     private fun bindDots(activePosition: Int) {
-        dotsContainer.removeAllViews()
-        pages.forEachIndexed { index, _ ->
-            val dot = View(this)
-            val width = if (index == activePosition) dp(80) else dp(34)
-            val params = LinearLayout.LayoutParams(width, dp(34)).apply {
-                marginStart = dp(10)
-                marginEnd = dp(10)
-            }
+        dots.forEachIndexed { index, dot ->
+            val width = if (index == activePosition) dp(24) else dp(10)
+            val params = dot.layoutParams
+            params.width = width
+            params.height = dp(10)
+            dot.layoutParams = params
             dot.background = ContextCompat.getDrawable(
                 this,
                 if (index == activePosition) R.drawable.bg_dot_active else R.drawable.bg_dot_inactive
             )
-            dotsContainer.addView(dot, params)
         }
     }
 
