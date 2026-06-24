@@ -13,6 +13,7 @@ import com.example.motocare.bensin.BensinListActivity
 import com.example.motocare.data.MotoCareDbHelper
 import com.example.motocare.navigation.BottomNavBinder
 import com.example.motocare.oli.OliListActivity
+import com.example.motocare.pajak.PajakListActivity
 
 class ServisListActivity : AppCompatActivity() {
     private lateinit var dbHelper: MotoCareDbHelper
@@ -49,6 +50,9 @@ class ServisListActivity : AppCompatActivity() {
         }
         findViewById<TextView>(R.id.tabRiwayatBensin).setOnClickListener {
             startActivity(Intent(this, BensinListActivity::class.java))
+        }
+        findViewById<TextView>(R.id.tabRiwayatPajak).setOnClickListener {
+            startActivity(Intent(this, PajakListActivity::class.java))
         }
         BottomNavBinder.bind(this, BottomNavBinder.MENU_RIWAYAT)
     }

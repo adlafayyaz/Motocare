@@ -14,6 +14,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Motocare">
         <activity
+            android:name=".pajak.PajakDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".pajak.PajakFormActivity"
+            android:exported="false" />
+        <activity
+            android:name=".pajak.PajakListActivity"
+            android:exported="false" />
+        <activity
             android:name=".bensin.BensinDetailActivity"
             android:exported="false" />
         <activity

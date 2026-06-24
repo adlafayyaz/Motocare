@@ -85,7 +85,7 @@
                 android:id="@+id/tabRiwayatServis"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="6dp"
                 android:layout_weight="1"
                 android:background="@drawable/bg_segment_active"
                 android:gravity="center"
@@ -97,7 +97,7 @@
                 android:id="@+id/tabRiwayatOli"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="6dp"
                 android:layout_weight="1"
                 android:background="@drawable/bg_segment_active"
                 android:gravity="center"
@@ -109,11 +109,23 @@
                 android:id="@+id/tabRiwayatBensin"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_marginEnd="6dp"
                 android:layout_weight="1"
                 android:background="@drawable/bg_circle_yellow"
                 android:gravity="center"
                 android:text="@string/bensin_label"
                 android:textColor="#070A12"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tabRiwayatPajak"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/bg_segment_active"
+                android:gravity="center"
+                android:text="@string/pajak_label"
+                android:textColor="#F4F5FA"
                 android:textStyle="bold" />
         </LinearLayout>
 

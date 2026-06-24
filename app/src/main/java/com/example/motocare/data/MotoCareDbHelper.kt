@@ -105,7 +105,7 @@ class MotoCareDbHelper(context: Context) : SQLiteOpenHelper(
 
     fun getFuelMonthlyTotal(): Int = sumCost(TABLE_FUEL_RECORDS)
 
-    fun getTaxMonthlyTotal(): Int = 0
+    fun getTaxMonthlyTotal(): Int = sumCost(TABLE_TAX_RECORDS)
 
     fun getOilMonthlyTotal(): Int = sumCost(TABLE_OIL_RECORDS)
 
@@ -282,6 +282,53 @@ class MotoCareDbHelper(context: Context) : SQLiteOpenHelper(
         return items
     }
 
+    fun insertPajak(pajak: Pajak): Long {
+        return writableDatabase.insert(TABLE_TAX_RECORDS, null, pajak.toValues())
+    }
+
+    fun updatePajak(pajak: Pajak): Int {
+        return writableDatabase.update(
+            TABLE_TAX_RECORDS,
+            pajak.toValues(),
+            "id = ?",
+            arrayOf(pajak.id.toString())
+        )
+    }
+
+    fun deletePajak(id: Long): Int {
+        return writableDatabase.delete(TABLE_TAX_RECORDS, "id = ?", arrayOf(id.toString()))
+    }
+
+    fun getPajak(id: Long): Pajak? {
+        readableDatabase.query(
+            TABLE_TAX_RECORDS,
+            null,
+            "id = ?",
+            arrayOf(id.toString()),
+            null,
+            null,
+            null
+        ).use { cursor ->
+            return if (cursor.moveToFirst()) cursor.toPajak() else null
+        }
+    }
+
+    fun getPajakByMotor(motorId: Long): List<Pajak> {
+        val items = mutableListOf<Pajak>()
+        readableDatabase.query(
+            TABLE_TAX_RECORDS,
+            null,
+            "motor_id = ?",
+            arrayOf(motorId.toString()),
+            null,
+            null,
+            "due_date ASC, id DESC"
+        ).use { cursor ->
+            while (cursor.moveToNext()) items.add(cursor.toPajak())
+        }
+        return items
+    }
+
     fun setActiveMotor(id: Long) {
         writableDatabase.beginTransaction()
         try {
@@ -353,6 +400,15 @@ class MotoCareDbHelper(context: Context) : SQLiteOpenHelper(
         }
     }
 
+    private fun Pajak.toValues(): ContentValues {
+        return ContentValues().apply {
+            put("motor_id", motorId)
+            put("due_date", dueDate)
+            put("cost", cost)
+            put("status", status)
+        }
+    }
+
     private fun Cursor.toServis(): Servis {
         return Servis(
             id = getLong(getColumnIndexOrThrow("id")),
@@ -393,6 +449,16 @@ class MotoCareDbHelper(context: Context) : SQLiteOpenHelper(
             liter = getDouble(getColumnIndexOrThrow("liter")),
             cost = getInt(getColumnIndexOrThrow("cost")),
             kilometer = getInt(getColumnIndexOrThrow("kilometer"))
+        )
+    }
+
+    private fun Cursor.toPajak(): Pajak {
+        return Pajak(
+            id = getLong(getColumnIndexOrThrow("id")),
+            motorId = getLong(getColumnIndexOrThrow("motor_id")),
+            dueDate = getString(getColumnIndexOrThrow("due_date")),
+            cost = getInt(getColumnIndexOrThrow("cost")),
+            status = getString(getColumnIndexOrThrow("status"))
         )
     }
 

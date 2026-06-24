@@ -12,6 +12,7 @@ import com.example.motocare.R
 import com.example.motocare.data.MotoCareDbHelper
 import com.example.motocare.navigation.BottomNavBinder
 import com.example.motocare.oli.OliListActivity
+import com.example.motocare.pajak.PajakListActivity
 import com.example.motocare.servis.ServisListActivity
 
 class BensinListActivity : AppCompatActivity() {
@@ -45,6 +46,9 @@ class BensinListActivity : AppCompatActivity() {
         }
         findViewById<TextView>(R.id.tabRiwayatOli).setOnClickListener {
             startActivity(Intent(this, OliListActivity::class.java))
+        }
+        findViewById<TextView>(R.id.tabRiwayatPajak).setOnClickListener {
+            startActivity(Intent(this, PajakListActivity::class.java))
         }
         BottomNavBinder.bind(this, BottomNavBinder.MENU_RIWAYAT)
     }

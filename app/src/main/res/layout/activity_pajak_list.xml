@@ -17,7 +17,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/history_oil_title"
+            android:text="@string/history_tax_title"
             android:textColor="#F4F5FA"
             android:textSize="28sp"
             android:textStyle="bold" />
@@ -34,10 +34,10 @@
             <TextView
                 android:layout_width="46dp"
                 android:layout_height="46dp"
-                android:background="@drawable/bg_feature_circle_dark"
+                android:background="@drawable/bg_circle_yellow"
                 android:gravity="center"
-                android:text="@string/catat_oli_short"
-                android:textColor="#F4F5FA"
+                android:text="@string/catat_pajak_short"
+                android:textColor="#070A12"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -51,27 +51,26 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/oil_remaining_title"
+                    android:text="@string/tax_next_title"
                     android:textColor="#F4F5FA"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/textOliSummaryValue"
+                    android:id="@+id/textPajakSummaryMeta"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:textColor="#F4F5FA"
-                    android:textSize="26sp"
-                    android:textStyle="bold" />
+                    android:textColor="#9AA0B5"
+                    android:textSize="13sp" />
             </LinearLayout>
 
             <TextView
-                android:id="@+id/textOliSummaryMeta"
+                android:id="@+id/textPajakSummaryValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#FFCB25"
-                android:textSize="12sp"
+                android:textColor="#F4F5FA"
+                android:textSize="18sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -100,10 +99,10 @@
                 android:layout_height="match_parent"
                 android:layout_marginEnd="6dp"
                 android:layout_weight="1"
-                android:background="@drawable/bg_circle_yellow"
+                android:background="@drawable/bg_segment_active"
                 android:gravity="center"
                 android:text="@string/oli_label"
-                android:textColor="#070A12"
+                android:textColor="#F4F5FA"
                 android:textStyle="bold" />
 
             <TextView
@@ -123,34 +122,34 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/bg_segment_active"
+                android:background="@drawable/bg_circle_yellow"
                 android:gravity="center"
                 android:text="@string/pajak_label"
-                android:textColor="#F4F5FA"
+                android:textColor="#070A12"
                 android:textStyle="bold" />
         </LinearLayout>
 
         <Button
-            android:id="@+id/buttonAddOli"
+            android:id="@+id/buttonAddPajak"
             android:layout_width="match_parent"
             android:layout_height="52dp"
             android:layout_marginTop="18dp"
             android:backgroundTint="#FFCB25"
-            android:text="@string/add_oil_record"
+            android:text="@string/add_tax_record"
             android:textColor="#070A12"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/textEmptyOli"
+            android:id="@+id/textEmptyPajak"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:gravity="center"
-            android:text="@string/empty_oli"
+            android:text="@string/empty_pajak"
             android:textColor="#9AA0B5" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerOli"
+            android:id="@+id/recyclerPajak"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="14dp"

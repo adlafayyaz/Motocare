@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.motocare.bensin.BensinFormActivity
 import com.example.motocare.motor.MotorFormActivity
 import com.example.motocare.oli.OliFormActivity
+import com.example.motocare.pajak.PajakFormActivity
 import com.example.motocare.servis.ServisFormActivity
 
 class CatatActivity : AppCompatActivity() {
@@ -27,7 +28,9 @@ class CatatActivity : AppCompatActivity() {
         findViewById<Button>(R.id.buttonCatatBensin).setOnClickListener {
             startActivity(Intent(this, BensinFormActivity::class.java))
         }
-        findViewById<Button>(R.id.buttonCatatPajak).setOnClickListener { showNextStepToast() }
+        findViewById<Button>(R.id.buttonCatatPajak).setOnClickListener {
+            startActivity(Intent(this, PajakFormActivity::class.java))
+        }
     }
 
     private fun showNextStepToast() {
