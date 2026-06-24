@@ -184,4 +184,24 @@
     <string name="error_tax_status_required">Status wajib diisi.</string>
     <string name="delete_pajak_title">Hapus pajak?</string>
     <string name="delete_pajak_message">Data pajak ini akan dihapus.</string>
+    <string name="profile_title">Profil</string>
+    <string name="edit_profile_title">Edit profil</string>
+    <string name="settings_title">Pengaturan</string>
+    <string name="backup_title">Backup data</string>
+    <string name="about_title">Tentang aplikasi</string>
+    <string name="profile_name">Nama</string>
+    <string name="profile_email">Email</string>
+    <string name="profile_name_hint">Adla</string>
+    <string name="profile_email_hint">nama@email.com</string>
+    <string name="profile_saved">Profil tersimpan.</string>
+    <string name="error_profile_name_required">Nama wajib diisi.</string>
+    <string name="error_profile_email_required">Email wajib diisi.</string>
+    <string name="local_data_setting">Data kendaraan tersimpan lokal</string>
+    <string name="no_notification_setting">Pengingat tidak digunakan</string>
+    <string name="backup_body">Export dan import disiapkan untuk file lokal.</string>
+    <string name="export_data">Export data</string>
+    <string name="import_data">Import data</string>
+    <string name="export_ready_state">Export disiapkan di step final.</string>
+    <string name="import_ready_state">Import disiapkan di step final.</string>
+    <string name="about_body">MotoCare membantu mencatat motor, servis, oli, bensin, dan pajak secara lokal di perangkat.</string>
 </resources>

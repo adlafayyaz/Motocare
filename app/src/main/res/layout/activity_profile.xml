@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#070A12"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:padding="22dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="34dp"
+            android:text="@string/profile_title"
+            android:textColor="#F4F5FA"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="104dp"
+            android:layout_marginTop="22dp"
+            android:background="@drawable/bg_card_dark"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="18dp">
+
+            <TextView
+                android:id="@+id/textProfileInitial"
+                android:layout_width="54dp"
+                android:layout_height="54dp"
+                android:background="@drawable/bg_circle_yellow"
+                android:gravity="center"
+                android:textColor="#070A12"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textProfileName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#F4F5FA"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textProfileEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:textColor="#9AA0B5"
+                    android:textSize="13sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/rowEditProfile"
+            style="@style/ProfileRow"
+            android:layout_marginTop="22dp"
+            android:text="@string/edit_profile_title" />
+
+        <TextView
+            android:id="@+id/rowSettings"
+            style="@style/ProfileRow"
+            android:text="@string/settings_title" />
+
+        <TextView
+            android:id="@+id/rowBackup"
+            style="@style/ProfileRow"
+            android:text="@string/backup_title" />
+
+        <TextView
+            android:id="@+id/rowAbout"
+            style="@style/ProfileRow"
+            android:text="@string/about_title" />
+    </LinearLayout>
+
+    <include layout="@layout/include_bottom_nav" />
+</LinearLayout>
