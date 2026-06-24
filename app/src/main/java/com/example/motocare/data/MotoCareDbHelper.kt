@@ -1,5 +1,6 @@
 package com.example.motocare.data
 
+import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
@@ -17,6 +18,100 @@ class MotoCareDbHelper(context: Context) : SQLiteOpenHelper(
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         DROP_TABLES.forEach(db::execSQL)
         onCreate(db)
+    }
+
+    fun insertMotor(motor: Motor): Long {
+        val db = writableDatabase
+        val shouldBeActive = getMotorCount(db) == 0
+        val values = ContentValues().apply {
+            put("name", motor.name)
+            put("plate_number", motor.plateNumber)
+            put("current_kilometer", motor.currentKilometer)
+            put("is_active", if (shouldBeActive || motor.isActive) 1 else 0)
+        }
+        return db.insert(TABLE_MOTORS, null, values)
+    }
+
+    fun updateMotor(motor: Motor): Int {
+        val values = ContentValues().apply {
+            put("name", motor.name)
+            put("plate_number", motor.plateNumber)
+            put("current_kilometer", motor.currentKilometer)
+            put("is_active", if (motor.isActive) 1 else 0)
+        }
+        return writableDatabase.update(
+            TABLE_MOTORS,
+            values,
+            "id = ?",
+            arrayOf(motor.id.toString())
+        )
+    }
+
+    fun deleteMotor(id: Long): Int {
+        return writableDatabase.delete(TABLE_MOTORS, "id = ?", arrayOf(id.toString()))
+    }
+
+    fun getMotor(id: Long): Motor? {
+        readableDatabase.query(
+            TABLE_MOTORS,
+            null,
+            "id = ?",
+            arrayOf(id.toString()),
+            null,
+            null,
+            null
+        ).use { cursor ->
+            return if (cursor.moveToFirst()) cursor.toMotor() else null
+        }
+    }
+
+    fun getAllMotors(): List<Motor> {
+        val motors = mutableListOf<Motor>()
+        readableDatabase.query(
+            TABLE_MOTORS,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "is_active DESC, name ASC"
+        ).use { cursor ->
+            while (cursor.moveToNext()) {
+                motors.add(cursor.toMotor())
+            }
+        }
+        return motors
+    }
+
+    fun setActiveMotor(id: Long) {
+        writableDatabase.beginTransaction()
+        try {
+            val inactive = ContentValues().apply { put("is_active", 0) }
+            writableDatabase.update(TABLE_MOTORS, inactive, null, null)
+
+            val active = ContentValues().apply { put("is_active", 1) }
+            writableDatabase.update(TABLE_MOTORS, active, "id = ?", arrayOf(id.toString()))
+            writableDatabase.setTransactionSuccessful()
+        } finally {
+            writableDatabase.endTransaction()
+        }
+    }
+
+    private fun getMotorCount(db: SQLiteDatabase): Int {
+        db.rawQuery("SELECT COUNT(*) FROM $TABLE_MOTORS", null).use { cursor ->
+            cursor.moveToFirst()
+            return cursor.getInt(0)
+        }
+    }
+
+    private fun android.database.Cursor.toMotor(): Motor {
+        return Motor(
+            id = getLong(getColumnIndexOrThrow("id")),
+            name = getString(getColumnIndexOrThrow("name")),
+            plateNumber = getString(getColumnIndexOrThrow("plate_number")),
+            currentKilometer = getInt(getColumnIndexOrThrow("current_kilometer")),
+            isActive = getInt(getColumnIndexOrThrow("is_active")) == 1
+        )
     }
 
     companion object {

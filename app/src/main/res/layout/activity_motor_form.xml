@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#070A12">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="44dp"
+            android:text="@string/motor_form_title"
+            android:textColor="#F4F5FA"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/editMotorName"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="34dp"
+            android:backgroundTint="#FFCB25"
+            android:hint="@string/motor_name"
+            android:inputType="textCapWords"
+            android:textColor="#F4F5FA"
+            android:textColorHint="#8B91A5" />
+
+        <EditText
+            android:id="@+id/editPlateNumber"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="18dp"
+            android:backgroundTint="#FFCB25"
+            android:hint="@string/plate_number"
+            android:inputType="textCapCharacters"
+            android:textColor="#F4F5FA"
+            android:textColorHint="#8B91A5" />
+
+        <EditText
+            android:id="@+id/editCurrentKilometer"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="18dp"
+            android:backgroundTint="#FFCB25"
+            android:hint="@string/current_kilometer"
+            android:inputType="number"
+            android:textColor="#F4F5FA"
+            android:textColorHint="#8B91A5" />
+
+        <Button
+            android:id="@+id/buttonSaveMotor"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="42dp"
+            android:backgroundTint="#FFCB25"
+            android:text="@string/save"
+            android:textColor="#070A12"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+</ScrollView>

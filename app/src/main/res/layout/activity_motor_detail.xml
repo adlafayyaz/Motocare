@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#070A12"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <TextView
+        android:id="@+id/textDetailMotorName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:textColor="#F4F5FA"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textDetailPlateNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textColor="#9AA0B5"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/textDetailKilometer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:textColor="#F4F5FA"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textDetailActive"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textColor="#FFCB25"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/buttonSetActiveMotor"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="#FFCB25"
+        android:text="@string/set_active_motor"
+        android:textColor="#070A12"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/buttonEditMotor"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="#2A2D3B"
+        android:text="@string/edit"
+        android:textColor="#F4F5FA"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/buttonDeleteMotor"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="#FF7A1A"
+        android:text="@string/delete"
+        android:textColor="#070A12"
+        android:textStyle="bold" />
+
+</LinearLayout>

@@ -20,4 +20,19 @@
     <string name="error_motor_name_required">Nama motor wajib diisi.</string>
     <string name="error_plate_number_required">Plat nomor wajib diisi.</string>
     <string name="error_kilometer_required">Kilometer wajib diisi.</string>
+    <string name="motor_page_title">Motor</string>
+    <string name="add_motor">Tambah motor</string>
+    <string name="empty_motor">Belum ada motor.</string>
+    <string name="motor_form_title">Data Motor</string>
+    <string name="motor_saved">Motor tersimpan.</string>
+    <string name="motor_updated">Motor diperbarui.</string>
+    <string name="motor_kilometer_value">%1$d km sekarang</string>
+    <string name="motor_active">Motor aktif</string>
+    <string name="motor_inactive">Bukan motor aktif</string>
+    <string name="set_active_motor">Jadikan motor aktif</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Hapus</string>
+    <string name="cancel">Batal</string>
+    <string name="delete_motor_title">Hapus motor?</string>
+    <string name="delete_motor_message">Data motor ini akan dihapus.</string>
 </resources>
