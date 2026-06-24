@@ -1,3 +1,23 @@
 <resources>
     <string name="app_name">Motocare</string>
+    <string name="app_initial">M</string>
+    <string name="onboarding_visual">M</string>
+    <string name="login_visual">M</string>
+    <string name="next">Lanjut</string>
+    <string name="start">Mulai</string>
+    <string name="skip_intro">Lewati intro</string>
+    <string name="login_title">Rawat motor lebih rapi</string>
+    <string name="login_body">Masuk untuk mulai mencatat motor, servis, oli, bensin, dan pajak.</string>
+    <string name="google_login">Masuk dengan Google</string>
+    <string name="local_data_note">Data kendaraan tersimpan di perangkat.</string>
+    <string name="setup_motor_title">Setup Motor</string>
+    <string name="setup_motor_body">Masukkan data motor pertama kamu.</string>
+    <string name="motor_name">Nama motor</string>
+    <string name="plate_number">Plat nomor</string>
+    <string name="current_kilometer">Kilometer sekarang</string>
+    <string name="save">Simpan</string>
+    <string name="setup_motor_saved">Data motor tersimpan untuk tahap awal.</string>
+    <string name="error_motor_name_required">Nama motor wajib diisi.</string>
+    <string name="error_plate_number_required">Plat nomor wajib diisi.</string>
+    <string name="error_kilometer_required">Kilometer wajib diisi.</string>
 </resources>

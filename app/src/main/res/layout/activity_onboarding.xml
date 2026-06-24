@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#070A12"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@drawable/bg_card_dark"
+        android:gravity="center"
+        android:text="@string/onboarding_visual"
+        android:textColor="#FFCB25"
+        android:textSize="72sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textOnboardingTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="34dp"
+        android:gravity="center"
+        android:textColor="#F4F5FA"
+        android:textSize="28sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textOnboardingBody"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:lineSpacingExtra="4dp"
+        android:textColor="#9AA0B5"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/textOnboardingIndicator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:gravity="center"
+        android:textColor="#FFCB25"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/buttonOnboardingNext"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="34dp"
+        android:backgroundTint="#FFCB25"
+        android:textColor="#070A12"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textSkipIntro"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="center"
+        android:text="@string/skip_intro"
+        android:textColor="#8B91A5"
+        android:textStyle="bold" />
+
+</LinearLayout>
