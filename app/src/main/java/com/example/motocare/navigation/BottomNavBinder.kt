@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.view.View
 import android.widget.TextView
 import com.example.motocare.CatatActivity
 import com.example.motocare.DashboardActivity
@@ -22,9 +23,7 @@ object BottomNavBinder {
             setActiveStyle(activeMenu == MENU_MOTOR)
             setOnClickListener { open(activity, MotorListActivity::class.java) }
         }
-        activity.findViewById<TextView?>(R.id.navCatat)?.apply {
-            setTextColor(CENTER_COLOR)
-            compoundDrawableTintList = ColorStateList.valueOf(CENTER_COLOR)
+        activity.findViewById<View?>(R.id.navCatat)?.apply {
             setOnClickListener { CatatSheet.show(activity) }
         }
         activity.findViewById<TextView?>(R.id.navRiwayat)?.apply {
@@ -60,5 +59,4 @@ object BottomNavBinder {
 
     private val ACTIVE_COLOR = Color.parseColor("#FFCB25")
     private val INACTIVE_COLOR = Color.parseColor("#8B91A5")
-    private val CENTER_COLOR = Color.parseColor("#070A12")
 }

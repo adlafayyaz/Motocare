@@ -19,7 +19,7 @@
             android:layout_marginTop="0dp"
             android:text="@string/motor_form_title"
             android:textColor="#F4F5FA"
-            android:textSize="28sp"
+            android:textSize="26sp"
             android:textStyle="bold" />
 
         <TextView

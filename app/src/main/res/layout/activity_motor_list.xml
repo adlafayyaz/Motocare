@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:text="@string/motor_page_title"
             android:textColor="#F4F5FA"
-            android:textSize="30sp"
+            android:textSize="26sp"
             android:textStyle="bold" />
 
         <TextView

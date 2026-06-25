@@ -28,15 +28,16 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <TextView
+            <ImageView
                 android:id="@+id/buttonBack"
                 android:layout_width="32dp"
                 android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="&lt;"
-                android:textColor="#F4F5FA"
-                android:textSize="28sp"
-                android:textStyle="bold" />
+                android:clickable="true"
+                android:contentDescription="@string/back"
+                android:focusable="true"
+                android:padding="6dp"
+                android:src="@drawable/ic_back"
+                android:tint="#F4F5FA" />
 
             <TextView
                 android:layout_width="0dp"

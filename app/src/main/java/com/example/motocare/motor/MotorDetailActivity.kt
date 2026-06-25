@@ -27,7 +27,7 @@ class MotorDetailActivity : AppCompatActivity() {
         dbHelper = MotoCareDbHelper(this)
         motorId = intent.getLongExtra(EXTRA_MOTOR_ID, 0)
 
-        findViewById<TextView>(R.id.buttonBack).setOnClickListener { finish() }
+        findViewById<View>(R.id.buttonBack).setOnClickListener { finish() }
         findViewById<Button>(R.id.buttonEditMotor).setOnClickListener {
             val intent = Intent(this, MotorFormActivity::class.java)
             intent.putExtra(MotorFormActivity.EXTRA_MOTOR_ID, motorId)

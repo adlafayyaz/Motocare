@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/history_service_title"
                 android:textColor="#F4F5FA"
-                android:textSize="30sp"
+                android:textSize="26sp"
                 android:textStyle="bold" />
 
             <LinearLayout

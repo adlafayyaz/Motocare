@@ -23,7 +23,9 @@ class LoginActivity : AppCompatActivity() {
                     } else {
                         DashboardActivity::class.java
                     }
-                    startActivity(Intent(this, next))
+                    startActivity(Intent(this, next).apply {
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    })
                     finish()
                 },
                 onError = { message ->

@@ -63,6 +63,7 @@
         android:paddingStart="28dp"
         android:paddingEnd="28dp"
         android:text="@string/google_login"
+        android:textAllCaps="false"
         android:textColor="#070A12"
         android:textSize="17sp"
         android:textStyle="bold" />

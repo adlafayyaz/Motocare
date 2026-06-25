@@ -10,6 +10,7 @@ import kotlin.concurrent.thread
 
 object ProfileAvatarLoader {
     fun load(image: ImageView, avatarUri: String?) {
+        image.clipToOutline = true
         if (avatarUri.isNullOrBlank()) {
             image.showFallback()
             return
@@ -39,6 +40,7 @@ object ProfileAvatarLoader {
     }
 
     private fun ImageView.showFallback() {
+        clipToOutline = true
         val padding = (20 * resources.displayMetrics.density).toInt()
         setPadding(padding, padding, padding, padding)
         setImageResource(R.drawable.ic_user)

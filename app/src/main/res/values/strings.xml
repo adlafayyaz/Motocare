@@ -48,6 +48,7 @@
     <string name="edit">Edit</string>
     <string name="delete">Hapus</string>
     <string name="cancel">Batal</string>
+    <string name="back">Kembali</string>
     <string name="delete_motor_title">Hapus motor?</string>
     <string name="delete_motor_message">Data motor ini akan dihapus.</string>
     <string name="dashboard">Dashboard</string>

@@ -32,7 +32,7 @@ class EditProfileActivity : AppCompatActivity() {
         bindAvatar()
 
         findViewById<Button>(R.id.buttonSaveProfile).setOnClickListener { saveProfile() }
-        findViewById<TextView>(R.id.buttonBack).setOnClickListener { finish() }
+        findViewById<View>(R.id.buttonBack).setOnClickListener { finish() }
         BottomNavBinder.bind(this, BottomNavBinder.MENU_PROFILE)
     }
 

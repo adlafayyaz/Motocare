@@ -29,24 +29,25 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <TextView
+                <ImageView
                     android:id="@+id/buttonBack"
                     android:layout_width="32dp"
                     android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="&lt;"
-                    android:textColor="#F4F5FA"
-                    android:textSize="28sp"
-                    android:textStyle="bold" />
+                    android:clickable="true"
+                    android:contentDescription="@string/back"
+                    android:focusable="true"
+                    android:padding="6dp"
+                    android:src="@drawable/ic_back"
+                    android:tint="#F4F5FA" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:text="Tentang"
+                    android:text="@string/about_title"
                     android:textColor="#F4F5FA"
-                    android:textSize="24sp"
+                    android:textSize="26sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -55,10 +56,9 @@
                 android:layout_height="78dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="34dp"
-                android:background="@drawable/bg_circle_white"
                 android:contentDescription="@string/app_name"
-                android:padding="14dp"
-                android:src="@drawable/ic_launcher_foreground" />
+                android:scaleType="fitCenter"
+                android:src="@drawable/logo" />
 
             <TextView
                 android:layout_width="match_parent"

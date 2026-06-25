@@ -1,9 +1,10 @@
 package com.example.motocare.profile
 
 import android.content.Context
+import com.google.firebase.auth.FirebaseAuth
 
 class ProfileStore(context: Context) {
-    private val prefs = context.getSharedPreferences("profile", Context.MODE_PRIVATE)
+    private val prefs = context.getSharedPreferences("profile_${accountKey()}", Context.MODE_PRIVATE)
 
     fun getName(): String = prefs.getString(KEY_NAME, "Adla") ?: "Adla"
 
@@ -29,5 +30,11 @@ class ProfileStore(context: Context) {
         private const val KEY_NAME = "name"
         private const val KEY_EMAIL = "email"
         private const val KEY_AVATAR_URI = "avatar_uri"
+
+        private fun accountKey(): String {
+            val user = FirebaseAuth.getInstance().currentUser
+            val raw = user?.uid ?: user?.email ?: "local"
+            return raw.replace(Regex("[^A-Za-z0-9_]"), "_")
+        }
     }
 }

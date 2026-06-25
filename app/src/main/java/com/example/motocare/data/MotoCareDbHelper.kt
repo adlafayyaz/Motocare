@@ -5,10 +5,11 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import com.google.firebase.auth.FirebaseAuth
 
 class MotoCareDbHelper(context: Context) : SQLiteOpenHelper(
     context,
-    DATABASE_NAME,
+    databaseName(),
     null,
     DATABASE_VERSION
 ) {
@@ -486,6 +487,13 @@ class MotoCareDbHelper(context: Context) : SQLiteOpenHelper(
     companion object {
         const val DATABASE_NAME = "motocare.db"
         const val DATABASE_VERSION = 1
+
+        private fun databaseName(): String {
+            val user = FirebaseAuth.getInstance().currentUser
+            val accountKey = user?.uid ?: user?.email ?: "local"
+            val safeKey = accountKey.replace(Regex("[^A-Za-z0-9_]"), "_")
+            return "motocare_$safeKey.db"
+        }
 
         const val TABLE_USERS = "users"
         const val TABLE_MOTORS = "motors"

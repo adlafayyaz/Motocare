@@ -39,7 +39,9 @@ class ProfileActivity : AppCompatActivity() {
         }
         findViewById<View>(R.id.rowLogout).setOnClickListener {
             authManager.signOut()
-            startActivity(Intent(this, LoginActivity::class.java))
+            startActivity(Intent(this, LoginActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            })
             finish()
         }
         BottomNavBinder.bind(this, BottomNavBinder.MENU_PROFILE)

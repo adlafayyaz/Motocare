@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/profile_title"
                 android:textColor="#F4F5FA"
-                android:textSize="30sp"
+                android:textSize="26sp"
                 android:textStyle="bold" />
 
             <FrameLayout
@@ -42,6 +42,7 @@
                     android:id="@+id/imageProfileAvatar"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="@drawable/bg_circle_yellow"
                     android:clipToOutline="true"
                     android:scaleType="centerCrop"
                     android:src="@drawable/ic_user" />
