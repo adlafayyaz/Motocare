@@ -133,7 +133,7 @@ class BensinFormActivity : AppCompatActivity() {
             runOnUiThread {
                 result.onSuccess { price ->
                     priceInput.setText(price.price.toString())
-                    apiStatus.text = getString(R.string.fuel_api_success, price.product, price.update)
+                    apiStatus.text = price.product
                 }.onFailure { error ->
                     apiStatus.text = getString(R.string.fuel_api_failed_detail, error.message ?: "-")
                 }

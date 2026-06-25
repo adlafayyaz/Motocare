@@ -194,7 +194,7 @@
     <string name="fetch_fuel_price">Ambil harga realtime</string>
     <string name="fuel_api_hint">Bisa isi manual kalau API gagal.</string>
     <string name="fuel_api_loading">Mengambil harga...</string>
-    <string name="fuel_api_success">%1$s - update %2$s</string>
+    <string name="fuel_api_success">%1$s</string>
     <string name="fuel_api_failed">API gagal. Isi harga manual.</string>
     <string name="fuel_api_failed_detail">API gagal: %1$s. Pakai harga fallback/manual.</string>
     <string name="fuel_price_hint">12400</string>

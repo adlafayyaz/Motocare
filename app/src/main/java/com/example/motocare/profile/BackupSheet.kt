@@ -30,10 +30,7 @@ object BackupSheet {
             val sideMargin = activity.resources.getDimensionPixelSize(R.dimen.screen_padding)
             val width = activity.resources.displayMetrics.widthPixels - (sideMargin * 2)
             setLayout(width, WindowManager.LayoutParams.WRAP_CONTENT)
-            setGravity(Gravity.BOTTOM)
-            attributes = attributes.apply {
-                y = activity.resources.getDimensionPixelSize(R.dimen.bottom_nav_float_gap)
-            }
+            setGravity(Gravity.CENTER)
         }
     }
 }
