@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.motocare.bensin.BensinListActivity
@@ -13,8 +14,11 @@ import com.example.motocare.motor.MotorListActivity
 import com.example.motocare.navigation.BottomNavBinder
 import com.example.motocare.oli.OliListActivity
 import com.example.motocare.pajak.PajakListActivity
+import com.example.motocare.profile.ProfileAvatarLoader
+import com.example.motocare.profile.ProfileStore
 import com.example.motocare.servis.ServisListActivity
 import com.example.motocare.ui.DashboardDonutView
+import com.google.firebase.auth.FirebaseAuth
 import java.text.SimpleDateFormat
 import java.util.Locale
 import kotlin.math.ceil
@@ -30,7 +34,7 @@ class DashboardActivity : AppCompatActivity() {
         findViewById<Button>(R.id.buttonDashboardAddMotor).setOnClickListener {
             openNoAnim(com.example.motocare.motor.MotorFormActivity::class.java)
         }
-        findViewById<TextView>(R.id.buttonDashboardProfile).setOnClickListener {
+        findViewById<View>(R.id.buttonDashboardProfile).setOnClickListener {
             openNoAnim(com.example.motocare.profile.ProfileActivity::class.java)
         }
         findViewById<View>(R.id.actionDashboardMotor).setOnClickListener { openNoAnim(MotorListActivity::class.java) }
@@ -50,6 +54,7 @@ class DashboardActivity : AppCompatActivity() {
     private fun bindDashboard() {
         val activeMotor = dbHelper.getActiveMotor()
         val hasMotor = activeMotor != null
+        bindProfileAvatar()
 
         findViewById<TextView>(R.id.textDashboardMotorName).text = activeMotor?.name
             ?: getString(R.string.no_active_motor)
@@ -95,6 +100,15 @@ class DashboardActivity : AppCompatActivity() {
         }
         findViewById<Button>(R.id.buttonDashboardAddMotor).visibility =
             if (hasMotor) View.GONE else View.VISIBLE
+    }
+
+    private fun bindProfileAvatar() {
+        val store = ProfileStore(this)
+        FirebaseAuth.getInstance().currentUser?.let { user ->
+            store.saveGoogleProfile(user.displayName, user.email, user.photoUrl?.toString())
+        }
+        val image = findViewById<ImageView>(R.id.imageDashboardProfile)
+        ProfileAvatarLoader.load(image, store.getAvatarUri())
     }
 
     private fun selectCostMode(costMode: Boolean) {

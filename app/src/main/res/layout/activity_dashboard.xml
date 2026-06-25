@@ -1,11 +1,19 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#070A12"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <LinearLayout
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:background="#070A12"
+    android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+<LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -15,255 +23,260 @@
         android:paddingEnd="18dp"
         android:paddingBottom="6dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/dashboard_greeting"
-                android:textColor="#8B91A5"
-                android:textSize="13sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:text="@string/dashboard"
-                android:textColor="#F4F5FA"
-                android:textSize="26sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/buttonDashboardProfile"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:background="@drawable/bg_circle_yellow"
-            android:gravity="center"
-            android:text="@string/profile_initial"
-            android:textColor="#070A12"
-            android:textSize="19sp"
-            android:textStyle="bold" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="96dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/bg_card_dark"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:paddingStart="14dp"
-        android:paddingEnd="14dp">
-
-        <LinearLayout
-            android:id="@+id/actionDashboardMotor"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <FrameLayout
-                android:layout_width="56dp"
-                android:layout_height="56dp"
-                android:background="@drawable/bg_feature_circle_dark">
-
-                <ImageView
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
-                    android:layout_gravity="center"
-                    android:contentDescription="@string/nav_motor_label"
-                    android:src="@drawable/ic_motor"
-                    android:tint="#FFCB25" />
-            </FrameLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:gravity="center"
-                android:text="@string/nav_motor_label"
-                android:textColor="#F4F5FA"
-                android:textSize="13sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/actionDashboardServis"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <FrameLayout
-                android:layout_width="56dp"
-                android:layout_height="56dp"
-                android:background="@drawable/bg_feature_circle_dark">
-
-                <ImageView
-                    android:layout_width="27dp"
-                    android:layout_height="27dp"
-                    android:layout_gravity="center"
-                    android:contentDescription="@string/servis_label"
-                    android:src="@drawable/ic_service"
-                    android:tint="#FFCB25" />
-            </FrameLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:gravity="center"
-                android:text="@string/servis_label"
-                android:textColor="#F4F5FA"
-                android:textSize="13sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/actionDashboardOli"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <FrameLayout
-                android:layout_width="56dp"
-                android:layout_height="56dp"
-                android:background="@drawable/bg_feature_circle_dark">
-
-                <ImageView
-                    android:layout_width="27dp"
-                    android:layout_height="27dp"
-                    android:layout_gravity="center"
-                    android:contentDescription="@string/oli_label"
-                    android:src="@drawable/ic_oil"
-                    android:tint="#FFCB25" />
-            </FrameLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:gravity="center"
-                android:text="@string/oli_label"
-                android:textColor="#F4F5FA"
-                android:textSize="13sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/actionDashboardPajak"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <FrameLayout
-                android:layout_width="56dp"
-                android:layout_height="56dp"
-                android:background="@drawable/bg_feature_circle_dark">
-
-                <ImageView
-                    android:layout_width="27dp"
-                    android:layout_height="27dp"
-                    android:layout_gravity="center"
-                    android:contentDescription="@string/pajak_label"
-                    android:src="@drawable/ic_tax"
-                    android:tint="#FFCB25" />
-            </FrameLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:gravity="center"
-                android:text="@string/pajak_label"
-                android:textColor="#F4F5FA"
-                android:textSize="13sp" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/buttonDashboardAddMotor"
-        android:layout_width="match_parent"
-        android:layout_height="46dp"
-        android:layout_marginTop="10dp"
-        android:backgroundTint="#FFCB25"
-        android:text="@string/add_motor"
-        android:textColor="#070A12"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        android:visibility="gone" />
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="220dp"
-        android:layout_marginTop="14dp"
-        android:background="@drawable/bg_card_dark"
-        android:padding="20dp">
-
-        <LinearLayout
-            android:layout_width="190dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/monthly_expense"
-                android:textColor="#9AA0B5"
-                android:textSize="15sp" />
-
-            <TextView
-                android:id="@+id/textMonthlyTotal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:textColor="#F4F5FA"
-                android:textSize="34sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/textTransactionCount"
-                android:layout_width="162dp"
-                android:layout_height="32dp"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/bg_segment_dark"
-                android:gravity="center"
-                android:text="@string/transactions_recorded"
-                android:textColor="#F4F5FA"
-                android:textSize="12sp" />
-        </LinearLayout>
-
-        <com.example.motocare.ui.DashboardDonutView
-            android:id="@+id/dashboardDonut"
-            android:layout_width="104dp"
-            android:layout_height="104dp"
-            android:layout_gravity="top|end"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="4dp"
-            android:contentDescription="@string/monthly_expense" />
-
-        <LinearLayout
-            android:id="@+id/dashboardSegment"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_gravity="bottom"
-            android:background="@drawable/bg_segment_dark"
+            android:layout_height="64dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dashboard_greeting"
+                    android:textColor="#8B91A5"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:text="@string/dashboard"
+                    android:textColor="#F4F5FA"
+                    android:textSize="26sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <FrameLayout
+                android:id="@+id/buttonDashboardProfile"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_circle_yellow"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:id="@+id/imageDashboardProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_user" />
+            </FrameLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="95dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_card_dark"
+            android:gravity="center"
             android:orientation="horizontal"
-            android:padding="4dp">
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp">
+
+            <LinearLayout
+                android:id="@+id/actionDashboardMotor"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:background="@drawable/bg_feature_circle_dark">
+
+                    <ImageView
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/nav_motor_label"
+                        android:src="@drawable/ic_motor"
+                        android:tint="#FFCB25" />
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:gravity="center"
+                    android:text="@string/nav_motor_label"
+                    android:textColor="#F4F5FA"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/actionDashboardServis"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:background="@drawable/bg_feature_circle_dark">
+
+                    <ImageView
+                        android:layout_width="27dp"
+                        android:layout_height="27dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/servis_label"
+                        android:src="@drawable/ic_service"
+                        android:tint="#FFCB25" />
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:gravity="center"
+                    android:text="@string/servis_label"
+                    android:textColor="#F4F5FA"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/actionDashboardOli"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:background="@drawable/bg_feature_circle_dark">
+
+                    <ImageView
+                        android:layout_width="27dp"
+                        android:layout_height="27dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/oli_label"
+                        android:src="@drawable/ic_oil"
+                        android:tint="#FFCB25" />
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:gravity="center"
+                    android:text="@string/oli_label"
+                    android:textColor="#F4F5FA"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/actionDashboardPajak"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:background="@drawable/bg_feature_circle_dark">
+
+                    <ImageView
+                        android:layout_width="27dp"
+                        android:layout_height="27dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/pajak_label"
+                        android:src="@drawable/ic_tax"
+                        android:tint="#FFCB25" />
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:gravity="center"
+                    android:text="@string/pajak_label"
+                    android:textColor="#F4F5FA"
+                    android:textSize="13sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/buttonDashboardAddMotor"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="#FFCB25"
+            android:text="@string/add_motor"
+            android:textColor="#070A12"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/bg_card_dark"
+            android:padding="20dp">
+
+            <LinearLayout
+                android:layout_width="190dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/monthly_expense"
+                    android:textColor="#9AA0B5"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/textMonthlyTotal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:textColor="#F4F5FA"
+                    android:textSize="34sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textTransactionCount"
+                    android:layout_width="162dp"
+                    android:layout_height="32dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/bg_segment_dark"
+                    android:gravity="center"
+                    android:text="@string/transactions_recorded"
+                    android:textColor="#F4F5FA"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <com.example.motocare.ui.DashboardDonutView
+                android:id="@+id/dashboardDonut"
+                android:layout_width="104dp"
+                android:layout_height="104dp"
+                android:layout_gravity="top|end"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="4dp"
+                android:contentDescription="@string/monthly_expense" />
+
+            <LinearLayout
+                android:id="@+id/dashboardSegment"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="bottom"
+                android:background="@drawable/bg_segment_dark"
+                android:orientation="horizontal"
+                android:padding="4dp">
 
                 <TextView
                     android:id="@+id/buttonCostTab"
@@ -286,219 +299,232 @@
                     android:text="@string/distance_tab"
                     android:textColor="#8B91A5"
                     android:textSize="14sp" />
-        </LinearLayout>
-    </FrameLayout>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_marginTop="12dp"
-        android:background="@drawable/bg_card_dark">
-
-        <FrameLayout
-            android:layout_width="50dp"
-            android:layout_height="52dp"
-            android:layout_gravity="start|center_vertical"
-            android:layout_marginStart="16dp"
-            android:background="@drawable/bg_circle_yellow">
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="25dp"
-                android:layout_gravity="center"
-                android:contentDescription="@string/servis_label"
-                android:src="@drawable/ic_service"
-                android:tint="#070A12" />
+            </LinearLayout>
         </FrameLayout>
 
-        <TextView
-            android:id="@+id/textNextService"
-            android:layout_width="170dp"
-            android:layout_height="24dp"
-            android:layout_marginStart="92dp"
-            android:layout_marginTop="20dp"
-            android:textColor="#F4F5FA"
-            android:textSize="17sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textNextServiceMeta"
-            android:layout_width="170dp"
-            android:layout_height="18dp"
-            android:layout_marginStart="92dp"
-            android:layout_marginTop="46dp"
-            android:textColor="#8B91A5"
-            android:textSize="12sp" />
-
-        <TextView
-            android:id="@+id/textNextServiceValue"
-            android:layout_width="96dp"
-            android:layout_height="22dp"
-            android:layout_gravity="top|end"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="18dp"
-            android:gravity="end"
-            android:textColor="#F4F5FA"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textNextServiceLabel"
-            android:layout_width="96dp"
-            android:layout_height="18dp"
-            android:layout_gravity="top|end"
-            android:layout_marginTop="48dp"
-            android:layout_marginEnd="18dp"
-            android:gravity="end"
-            android:text="@string/target_label"
-            android:textColor="#8B91A5"
-            android:textSize="12sp" />
-    </FrameLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:orientation="vertical">
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="77dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_card_dark"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingStart="16dp"
+            android:paddingEnd="18dp">
 
-            <TextView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:background="@drawable/bg_dot_orange" />
+            <FrameLayout
+                android:layout_width="50dp"
+                android:layout_height="52dp"
+                android:background="@drawable/bg_circle_yellow">
 
-            <TextView
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/servis_label"
+                    android:src="@drawable/ic_service"
+                    android:tint="#070A12" />
+            </FrameLayout>
+
+            <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginStart="10dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
                 android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="@string/bensin_label"
-                android:textColor="#F4F5FA"
-                android:textSize="15sp" />
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textFuelTotal"
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical|end"
-                android:textColor="#9AA0B5"
-                android:textSize="15sp" />
+                <TextView
+                    android:id="@+id/textNextService"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:textColor="#F4F5FA"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textNextServiceMeta"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:singleLine="true"
+                    android:textColor="#8B91A5"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="94dp"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textNextServiceValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:singleLine="true"
+                    android:textColor="#F4F5FA"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textNextServiceLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:gravity="end"
+                    android:singleLine="true"
+                    android:text="@string/target_label"
+                    android:textColor="#8B91A5"
+                    android:textSize="12sp" />
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical">
 
-            <TextView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:background="@drawable/bg_dot_pink" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginStart="10dp"
-                android:layout_weight="1"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
                 android:gravity="center_vertical"
-                android:text="@string/pajak_label"
-                android:textColor="#F4F5FA"
-                android:textSize="15sp" />
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/textTaxTotal"
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical|end"
-                android:textColor="#9AA0B5"
-                android:textSize="15sp" />
-        </LinearLayout>
+                <TextView
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:background="@drawable/bg_dot_orange" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="@string/bensin_label"
+                    android:textColor="#F4F5FA"
+                    android:textSize="15sp" />
 
-            <TextView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:background="@drawable/bg_dot_purple" />
+                <TextView
+                    android:id="@+id/textFuelTotal"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|end"
+                    android:textColor="#9AA0B5"
+                    android:textSize="15sp" />
+            </LinearLayout>
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginStart="10dp"
-                android:layout_weight="1"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
                 android:gravity="center_vertical"
-                android:text="@string/oli_label"
-                android:textColor="#F4F5FA"
-                android:textSize="15sp" />
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/textOilTotal"
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical|end"
-                android:textColor="#9AA0B5"
-                android:textSize="15sp" />
-        </LinearLayout>
+                <TextView
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:background="@drawable/bg_dot_pink" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="@string/pajak_label"
+                    android:textColor="#F4F5FA"
+                    android:textSize="15sp" />
 
-            <TextView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:background="@drawable/bg_dot_yellow" />
+                <TextView
+                    android:id="@+id/textTaxTotal"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|end"
+                    android:textColor="#9AA0B5"
+                    android:textSize="15sp" />
+            </LinearLayout>
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginStart="10dp"
-                android:layout_weight="1"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
                 android:gravity="center_vertical"
-                android:text="@string/servis_label"
-                android:textColor="#F4F5FA"
-                android:textSize="15sp" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:background="@drawable/bg_dot_purple" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="@string/oli_label"
+                    android:textColor="#F4F5FA"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/textOilTotal"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|end"
+                    android:textColor="#9AA0B5"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:background="@drawable/bg_dot_yellow" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="@string/servis_label"
+                    android:textColor="#F4F5FA"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/textServiceTotal"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|end"
+                    android:textColor="#9AA0B5"
+                    android:textSize="15sp" />
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/textServiceTotal"
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical|end"
-                android:textColor="#9AA0B5"
-                android:textSize="15sp" />
+                android:id="@+id/textDashboardMotorName"
+                android:layout_width="1dp"
+                android:layout_height="1dp"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/textDashboardMotorPlate"
+                android:layout_width="1dp"
+                android:layout_height="1dp"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/textDashboardKilometer"
+                android:layout_width="1dp"
+                android:layout_height="1dp"
+                android:visibility="invisible" />
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/textDashboardMotorName"
-            android:layout_width="1dp"
-            android:layout_height="1dp"
-            android:visibility="invisible" />
-
-        <TextView
-            android:id="@+id/textDashboardMotorPlate"
-            android:layout_width="1dp"
-            android:layout_height="1dp"
-            android:visibility="invisible" />
-
-        <TextView
-            android:id="@+id/textDashboardKilometer"
-            android:layout_width="1dp"
-            android:layout_height="1dp"
-            android:visibility="invisible" />
-    </LinearLayout>
 
     </LinearLayout>
 
@@ -508,4 +534,5 @@
         android:layout_height="104dp"
         android:layout_marginStart="0dp"
         android:layout_marginEnd="0dp" />
-</LinearLayout>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
