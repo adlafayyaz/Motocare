@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.motocare.R
 import com.example.motocare.data.MotoCareDbHelper
 import com.example.motocare.data.Oli
+import com.example.motocare.ui.FormDialogHelper
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -36,6 +37,16 @@ class OliFormActivity : AppCompatActivity() {
         bindMotor()
         bindExisting()
 
+        dateInput.setOnClickListener {
+            FormDialogHelper.showDatePicker(this, dateInput.text.toString()) { dateInput.setText(it) }
+        }
+        typeInput.setOnClickListener {
+            FormDialogHelper.showOptionPicker(
+                this,
+                getString(R.string.oil_type),
+                listOf("Oli mesin", "Oli gardan", "Filter oli")
+            ) { typeInput.setText(it) }
+        }
         findViewById<Button>(R.id.buttonSaveOli).setOnClickListener { saveOli() }
         findViewById<Button>(R.id.buttonDeleteOli).setOnClickListener { confirmDelete() }
     }

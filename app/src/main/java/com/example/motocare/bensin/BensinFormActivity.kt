@@ -1,6 +1,5 @@
 package com.example.motocare.bensin
 
-import android.app.DatePickerDialog
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -11,8 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.motocare.R
 import com.example.motocare.data.Bensin
 import com.example.motocare.data.MotoCareDbHelper
+import com.example.motocare.ui.FormDialogHelper
 import java.text.SimpleDateFormat
-import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 import kotlin.math.roundToInt
@@ -100,48 +99,28 @@ class BensinFormActivity : AppCompatActivity() {
     }
 
     private fun showDatePicker() {
-        val format = SimpleDateFormat("yyyy-MM-dd", Locale.US)
-        val calendar = Calendar.getInstance()
-        runCatching {
-            val current = format.parse(dateInput.text.toString())
-            if (current != null) calendar.time = current
+        FormDialogHelper.showDatePicker(this, dateInput.text.toString()) {
+            dateInput.setText(it)
         }
-        DatePickerDialog(
-            this,
-            { _, year, month, day ->
-                calendar.set(year, month, day)
-                dateInput.setText(format.format(calendar.time))
-            },
-            calendar.get(Calendar.YEAR),
-            calendar.get(Calendar.MONTH),
-            calendar.get(Calendar.DAY_OF_MONTH)
-        ).show()
     }
 
     private fun showBrandPicker() {
-        val brands = FUEL_OPTIONS.keys.toTypedArray()
-        AlertDialog.Builder(this)
-            .setTitle(R.string.fuel_brand)
-            .setItems(brands) { _, which ->
-                val brand = brands[which]
-                brandInput.setText(brand)
-                val octanes = FUEL_OPTIONS.getValue(brand)
-                if (!octanes.contains(octaneInput.text.toString())) {
-                    octaneInput.setText(octanes.first())
-                }
+        val brands = FUEL_OPTIONS.keys.toList()
+        FormDialogHelper.showOptionPicker(this, getString(R.string.fuel_brand), brands) { brand ->
+            brandInput.setText(brand)
+            val octanes = FUEL_OPTIONS.getValue(brand)
+            if (!octanes.contains(octaneInput.text.toString())) {
+                octaneInput.setText(octanes.first())
             }
-            .show()
+        }
     }
 
     private fun showOctanePicker() {
         val brand = brandInput.text.toString().ifBlank { getString(R.string.default_fuel_brand) }
         val octanes = FUEL_OPTIONS[brand] ?: FUEL_OPTIONS.getValue(getString(R.string.default_fuel_brand))
-        AlertDialog.Builder(this)
-            .setTitle(R.string.fuel_octane)
-            .setItems(octanes.toTypedArray()) { _, which ->
-                octaneInput.setText(octanes[which])
-            }
-            .show()
+        FormDialogHelper.showOptionPicker(this, getString(R.string.fuel_octane), octanes) {
+            octaneInput.setText(it)
+        }
     }
 
     private fun fetchPrice() {
@@ -155,8 +134,8 @@ class BensinFormActivity : AppCompatActivity() {
                 result.onSuccess { price ->
                     priceInput.setText(price.price.toString())
                     apiStatus.text = getString(R.string.fuel_api_success, price.product, price.update)
-                }.onFailure {
-                    apiStatus.text = getString(R.string.fuel_api_failed)
+                }.onFailure { error ->
+                    apiStatus.text = getString(R.string.fuel_api_failed_detail, error.message ?: "-")
                 }
             }
         }
@@ -227,7 +206,8 @@ class BensinFormActivity : AppCompatActivity() {
         private val FUEL_OPTIONS = linkedMapOf(
             "Pertamina" to listOf("90", "92", "95", "98"),
             "Vivo" to listOf("92", "95"),
-            "BP" to listOf("92", "95")
+            "BP" to listOf("90", "92", "95"),
+            "Shell" to listOf("92", "95", "98")
         )
     }
 }

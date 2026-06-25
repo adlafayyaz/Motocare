@@ -10,6 +10,10 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.motocare.R
 import com.example.motocare.data.MotoCareDbHelper
 import com.example.motocare.data.Pajak
+import com.example.motocare.ui.FormDialogHelper
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class PajakFormActivity : AppCompatActivity() {
     private lateinit var dbHelper: MotoCareDbHelper
@@ -33,6 +37,16 @@ class PajakFormActivity : AppCompatActivity() {
         bindMotor()
         bindExisting()
 
+        dueDateInput.setOnClickListener {
+            FormDialogHelper.showDatePicker(this, dueDateInput.text.toString()) { dueDateInput.setText(it) }
+        }
+        statusInput.setOnClickListener {
+            FormDialogHelper.showOptionPicker(
+                this,
+                getString(R.string.tax_status),
+                listOf(getString(R.string.default_tax_status), "Lunas", "Aktif")
+            ) { statusInput.setText(it) }
+        }
         findViewById<Button>(R.id.buttonSavePajak).setOnClickListener { savePajak() }
         findViewById<Button>(R.id.buttonDeletePajak).setOnClickListener { confirmDelete() }
     }
@@ -60,6 +74,7 @@ class PajakFormActivity : AppCompatActivity() {
                 statusInput.setText(pajak.status)
             }
         } else {
+            dueDateInput.setText(SimpleDateFormat("yyyy-MM-dd", Locale.US).format(Date()))
             statusInput.setText(getString(R.string.default_tax_status))
         }
     }

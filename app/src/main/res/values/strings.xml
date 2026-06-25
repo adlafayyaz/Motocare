@@ -125,7 +125,9 @@
     <string name="oli_item_meta">Terakhir %1$d km</string>
     <string name="rupiah_value_compact">Rp %1$d</string>
     <string name="service_form_title">Catat Servis</string>
+    <string name="service_form_hint">Pilih tanggal, jenis servis, kilometer, dan target berikutnya.</string>
     <string name="oil_form_title">Catat Oli</string>
+    <string name="oil_form_hint">Pilih tanggal ganti oli, jenis oli, dan jarak penggantian berikutnya.</string>
     <string name="active_motor_value">%1$s - %2$s</string>
     <string name="service_date">Tanggal servis</string>
     <string name="oil_date">Tanggal ganti oli</string>
@@ -173,6 +175,7 @@
     <string name="liter_value_short">%1$.1f liter</string>
     <string name="fuel_price_value">Rp %1$d / liter</string>
     <string name="fuel_form_title">Catat Bensin</string>
+    <string name="fuel_form_hint">Pilih merek, oktan, lalu ambil harga atau isi manual.</string>
     <string name="fuel_date">Tanggal isi bensin</string>
     <string name="fuel_type">Jenis BBM</string>
     <string name="fuel_brand">Merek BBM</string>
@@ -189,6 +192,7 @@
     <string name="fuel_api_loading">Mengambil harga...</string>
     <string name="fuel_api_success">%1$s - update %2$s</string>
     <string name="fuel_api_failed">API gagal. Isi harga manual.</string>
+    <string name="fuel_api_failed_detail">API gagal: %1$s. Pakai harga fallback/manual.</string>
     <string name="fuel_price_hint">12400</string>
     <string name="fuel_liter_hint">2.5</string>
     <string name="fuel_cost_hint">Otomatis jika kosong</string>
@@ -206,6 +210,7 @@
     <string name="empty_pajak">Belum ada riwayat pajak.</string>
     <string name="tax_due_value">Jatuh tempo %1$s</string>
     <string name="tax_form_title">Catat Pajak</string>
+    <string name="tax_form_hint">Pilih tanggal jatuh tempo dan status pembayaran pajak.</string>
     <string name="tax_due_date">Tanggal jatuh tempo</string>
     <string name="tax_cost">Estimasi biaya pajak</string>
     <string name="tax_status">Status</string>

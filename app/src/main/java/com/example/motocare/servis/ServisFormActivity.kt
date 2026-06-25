@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.motocare.R
 import com.example.motocare.data.MotoCareDbHelper
 import com.example.motocare.data.Servis
+import com.example.motocare.ui.FormDialogHelper
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -41,6 +42,16 @@ class ServisFormActivity : AppCompatActivity() {
         bindMotor()
         bindExisting()
 
+        dateInput.setOnClickListener {
+            FormDialogHelper.showDatePicker(this, dateInput.text.toString()) { dateInput.setText(it) }
+        }
+        typeInput.setOnClickListener {
+            FormDialogHelper.showOptionPicker(
+                this,
+                getString(R.string.service_type),
+                listOf("Tune up", "Cek rem", "Ganti kampas", "Servis rutin")
+            ) { typeInput.setText(it) }
+        }
         findViewById<Button>(R.id.buttonSaveServis).setOnClickListener { saveServis() }
         findViewById<Button>(R.id.buttonDeleteServis).setOnClickListener { confirmDelete() }
     }

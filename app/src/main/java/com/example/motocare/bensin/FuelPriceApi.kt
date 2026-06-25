@@ -21,6 +21,9 @@ object FuelPriceApi {
         connection.connectTimeout = 8000
         connection.readTimeout = 8000
         connection.requestMethod = "GET"
+        if (connection.responseCode !in 200..299) {
+            throw IllegalStateException("HTTP ${connection.responseCode}")
+        }
 
         val body = connection.inputStream.bufferedReader().use { it.readText() }
         val json = JSONObject(body)
@@ -33,4 +36,41 @@ object FuelPriceApi {
             update = json.optString("update", "-")
         )
     }
+
+    fun localFallback(fuelType: String, brand: String, octane: String): FuelPriceResult? {
+        if (!fuelType.equals("bensin", true)) return null
+        val normalizedBrand = brand.replaceFirstChar { it.uppercase() }
+        val data = LOCAL_BENSIN[normalizedBrand]?.get(octane) ?: return null
+        return FuelPriceResult(
+            brand = normalizedBrand,
+            product = data.first,
+            octane = octane,
+            price = data.second,
+            update = "fallback lokal"
+        )
+    }
+
+    private val LOCAL_BENSIN = mapOf(
+        "Pertamina" to mapOf(
+            "90" to ("Pertalite" to 10000),
+            "92" to ("Pertamax" to 12400),
+            "95" to ("Pertamax Green" to 13500),
+            "98" to ("Pertamax Turbo" to 14400)
+        ),
+        "Vivo" to mapOf(
+            "90" to ("Revvo90" to 11300),
+            "92" to ("Revvo92" to 13087),
+            "95" to ("Revvo95" to 13995)
+        ),
+        "BP" to mapOf(
+            "90" to ("BP 90" to 12740),
+            "92" to ("BP 92" to 12990),
+            "95" to ("BP Ultimate" to 14190)
+        ),
+        "Shell" to mapOf(
+            "92" to ("Super" to 13280),
+            "95" to ("V-Power" to 14190),
+            "98" to ("V-Power Nitro+" to 14540)
+        )
+    )
 }
