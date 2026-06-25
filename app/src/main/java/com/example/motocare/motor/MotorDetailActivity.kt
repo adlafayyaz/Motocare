@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.motocare.R
@@ -35,6 +36,7 @@ class MotorDetailActivity : AppCompatActivity() {
         findViewById<Button>(R.id.buttonSetActiveMotor).setOnClickListener {
             dbHelper.setActiveMotor(motorId)
             bindMotor()
+            Toast.makeText(this, R.string.motor_active, Toast.LENGTH_SHORT).show()
         }
         findViewById<Button>(R.id.buttonDeleteMotor).setOnClickListener {
             showDeleteConfirm()
