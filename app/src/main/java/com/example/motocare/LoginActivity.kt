@@ -2,7 +2,7 @@ package com.example.motocare
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -39,7 +39,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         authManager = GoogleAuthManager(this)
-        findViewById<Button>(R.id.buttonGoogleLogin).setOnClickListener {
+        findViewById<View>(R.id.buttonGoogleLogin).setOnClickListener {
             googleSignInLauncher.launch(authManager.getSignInIntent())
         }
     }
