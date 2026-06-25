@@ -72,6 +72,7 @@
     <string name="pajak_label">Pajak</string>
     <string name="bensin_label">Bensin</string>
     <string name="transactions_recorded">36 transaksi tercatat</string>
+    <string name="transactions_count_value">%1$d transaksi tercatat</string>
     <string name="cost_tab">Biaya</string>
     <string name="distance_tab">Jarak</string>
     <string name="service_meta_sample">1.200 km / 18 hari</string>
@@ -90,6 +91,9 @@
     <string name="no_service_data_short">Catat servis pertama.</string>
     <string name="no_oli_data_short">Catat oli pertama.</string>
     <string name="km_remaining_value">%1$d km</string>
+    <string name="km_value_short">%1$d km</string>
+    <string name="days_value">%1$d hari</string>
+    <string name="service_remaining_meta">%1$d km lagi</string>
     <string name="target_km_value">Target %1$d km</string>
     <string name="oli_next_km_value">Next %1$d km</string>
     <string name="servis_item_meta">%1$d km terakhir</string>

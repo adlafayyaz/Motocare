@@ -38,6 +38,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/buttonDashboardProfile"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:background="@drawable/bg_circle_yellow"
@@ -224,6 +225,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/textTransactionCount"
                 android:layout_width="162dp"
                 android:layout_height="30dp"
                 android:layout_marginTop="10dp"
@@ -316,27 +318,28 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/textNextServiceMeta"
             android:layout_width="150dp"
             android:layout_height="18dp"
             android:layout_marginStart="84dp"
             android:layout_marginTop="40dp"
-            android:text="@string/service_meta_sample"
             android:textColor="#8B91A5"
             android:textSize="12sp" />
 
         <TextView
+            android:id="@+id/textNextServiceValue"
             android:layout_width="96dp"
             android:layout_height="22dp"
             android:layout_gravity="top|end"
             android:layout_marginTop="18dp"
             android:layout_marginEnd="18dp"
             android:gravity="end"
-            android:text="@string/service_target_sample"
             android:textColor="#F4F5FA"
             android:textSize="16sp"
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/textNextServiceLabel"
             android:layout_width="96dp"
             android:layout_height="18dp"
             android:layout_gravity="top|end"

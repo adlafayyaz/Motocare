@@ -103,6 +103,13 @@ class MotoCareDbHelper(context: Context) : SQLiteOpenHelper(
         return getServiceMonthlyTotal() + getOilMonthlyTotal() + getFuelMonthlyTotal() + getTaxMonthlyTotal()
     }
 
+    fun getRecordCount(): Int {
+        return countRows(TABLE_SERVICE_RECORDS) +
+            countRows(TABLE_OIL_RECORDS) +
+            countRows(TABLE_FUEL_RECORDS) +
+            countRows(TABLE_TAX_RECORDS)
+    }
+
     fun getFuelMonthlyTotal(): Int = sumCost(TABLE_FUEL_RECORDS)
 
     fun getTaxMonthlyTotal(): Int = sumCost(TABLE_TAX_RECORDS)
@@ -464,6 +471,13 @@ class MotoCareDbHelper(context: Context) : SQLiteOpenHelper(
 
     private fun sumCost(table: String): Int {
         readableDatabase.rawQuery("SELECT COALESCE(SUM(cost), 0) FROM $table", null).use { cursor ->
+            cursor.moveToFirst()
+            return cursor.getInt(0)
+        }
+    }
+
+    private fun countRows(table: String): Int {
+        readableDatabase.rawQuery("SELECT COUNT(*) FROM $table", null).use { cursor ->
             cursor.moveToFirst()
             return cursor.getInt(0)
         }

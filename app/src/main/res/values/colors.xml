@@ -2,4 +2,13 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="motocare_background">#070A12</color>
+    <color name="motocare_surface">#202331</color>
+    <color name="motocare_card">#1E2130</color>
+    <color name="motocare_yellow">#FFCB25</color>
+    <color name="motocare_orange">#FF7A1A</color>
+    <color name="motocare_purple">#6047F5</color>
+    <color name="motocare_text">#F4F5FA</color>
+    <color name="motocare_muted">#9AA0B5</color>
+    <color name="motocare_error">#F23D47</color>
 </resources>
