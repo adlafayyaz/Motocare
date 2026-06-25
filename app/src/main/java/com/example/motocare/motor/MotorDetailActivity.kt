@@ -9,6 +9,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.motocare.R
 import com.example.motocare.data.MotoCareDbHelper
 import com.example.motocare.data.Motor
+import com.example.motocare.navigation.BottomNavBinder
+import java.text.NumberFormat
+import java.util.Locale
 
 class MotorDetailActivity : AppCompatActivity() {
     private lateinit var dbHelper: MotoCareDbHelper
@@ -26,6 +29,7 @@ class MotorDetailActivity : AppCompatActivity() {
             val intent = Intent(this, MotorFormActivity::class.java)
             intent.putExtra(MotorFormActivity.EXTRA_MOTOR_ID, motorId)
             startActivity(intent)
+            overridePendingTransition(0, 0)
         }
         findViewById<Button>(R.id.buttonSetActiveMotor).setOnClickListener {
             dbHelper.setActiveMotor(motorId)
@@ -34,6 +38,7 @@ class MotorDetailActivity : AppCompatActivity() {
         findViewById<Button>(R.id.buttonDeleteMotor).setOnClickListener {
             showDeleteConfirm()
         }
+        BottomNavBinder.bind(this, BottomNavBinder.MENU_MOTOR)
     }
 
     override fun onResume() {
@@ -50,10 +55,8 @@ class MotorDetailActivity : AppCompatActivity() {
 
         findViewById<TextView>(R.id.textDetailMotorName).text = current.name
         findViewById<TextView>(R.id.textDetailPlateNumber).text = current.plateNumber
-        findViewById<TextView>(R.id.textDetailKilometer).text = getString(
-            R.string.motor_kilometer_value,
-            current.currentKilometer
-        )
+        val kilometer = NumberFormat.getNumberInstance(Locale("id", "ID")).format(current.currentKilometer)
+        findViewById<TextView>(R.id.textDetailKilometer).text = getString(R.string.km_value_short, kilometer)
         findViewById<TextView>(R.id.textDetailActive).text = if (current.isActive) {
             getString(R.string.motor_active)
         } else {

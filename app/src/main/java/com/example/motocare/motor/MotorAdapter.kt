@@ -7,6 +7,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.motocare.R
 import com.example.motocare.data.Motor
+import java.text.NumberFormat
+import java.util.Locale
 
 class MotorAdapter(
     private val onClick: (Motor) -> Unit
@@ -39,10 +41,8 @@ class MotorAdapter(
         fun bind(motor: Motor, onClick: (Motor) -> Unit) {
             nameText.text = motor.name
             plateText.text = motor.plateNumber
-            kilometerText.text = itemView.context.getString(
-                R.string.motor_kilometer_value,
-                motor.currentKilometer
-            )
+            kilometerText.text = NumberFormat.getNumberInstance(Locale("id", "ID"))
+                .format(motor.currentKilometer)
             activeText.visibility = if (motor.isActive) View.VISIBLE else View.GONE
             itemView.setOnClickListener { onClick(motor) }
         }

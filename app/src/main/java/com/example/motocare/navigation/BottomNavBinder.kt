@@ -25,7 +25,7 @@ object BottomNavBinder {
         activity.findViewById<TextView?>(R.id.navCatat)?.apply {
             setTextColor(CENTER_COLOR)
             compoundDrawableTintList = ColorStateList.valueOf(CENTER_COLOR)
-            setOnClickListener { open(activity, CatatActivity::class.java) }
+            setOnClickListener { CatatSheet.show(activity) }
         }
         activity.findViewById<TextView?>(R.id.navRiwayat)?.apply {
             setActiveStyle(activeMenu == MENU_RIWAYAT)
