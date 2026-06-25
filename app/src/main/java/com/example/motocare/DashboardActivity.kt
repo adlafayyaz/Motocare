@@ -6,9 +6,15 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.motocare.bensin.BensinListActivity
 import com.example.motocare.data.MotoCareDbHelper
 import com.example.motocare.data.Pajak
+import com.example.motocare.motor.MotorListActivity
 import com.example.motocare.navigation.BottomNavBinder
+import com.example.motocare.oli.OliListActivity
+import com.example.motocare.pajak.PajakListActivity
+import com.example.motocare.servis.ServisListActivity
+import com.example.motocare.ui.DashboardDonutView
 import java.text.SimpleDateFormat
 import java.util.Locale
 import kotlin.math.ceil
@@ -22,12 +28,17 @@ class DashboardActivity : AppCompatActivity() {
         dbHelper = MotoCareDbHelper(this)
 
         findViewById<Button>(R.id.buttonDashboardAddMotor).setOnClickListener {
-            startActivity(Intent(this, com.example.motocare.motor.MotorFormActivity::class.java))
+            openNoAnim(com.example.motocare.motor.MotorFormActivity::class.java)
         }
         findViewById<TextView>(R.id.buttonDashboardProfile).setOnClickListener {
-            startActivity(Intent(this, com.example.motocare.profile.ProfileActivity::class.java))
-            overridePendingTransition(0, 0)
+            openNoAnim(com.example.motocare.profile.ProfileActivity::class.java)
         }
+        findViewById<View>(R.id.actionDashboardMotor).setOnClickListener { openNoAnim(MotorListActivity::class.java) }
+        findViewById<View>(R.id.actionDashboardServis).setOnClickListener { openNoAnim(ServisListActivity::class.java) }
+        findViewById<View>(R.id.actionDashboardOli).setOnClickListener { openNoAnim(OliListActivity::class.java) }
+        findViewById<View>(R.id.actionDashboardPajak).setOnClickListener { openNoAnim(PajakListActivity::class.java) }
+        findViewById<TextView>(R.id.buttonCostTab).setOnClickListener { selectCostMode(true) }
+        findViewById<TextView>(R.id.buttonDistanceTab).setOnClickListener { selectCostMode(false) }
         BottomNavBinder.bind(this, BottomNavBinder.MENU_HOME)
     }
 
@@ -48,9 +59,13 @@ class DashboardActivity : AppCompatActivity() {
             getString(R.string.motor_kilometer_value, it.currentKilometer)
         } ?: "-"
 
+        val fuelTotal = dbHelper.getFuelMonthlyTotal()
+        val serviceTotal = dbHelper.getServiceMonthlyTotal()
+        val oilTotal = dbHelper.getOilMonthlyTotal()
+        val taxTotal = dbHelper.getTaxMonthlyTotal()
         findViewById<TextView>(R.id.textMonthlyTotal).text = getString(
             R.string.rupiah_value,
-            dbHelper.getMonthlyExpenseTotal()
+            fuelTotal + serviceTotal + oilTotal + taxTotal
         )
         findViewById<TextView>(R.id.textTransactionCount).text = getString(
             R.string.transactions_count_value,
@@ -58,7 +73,17 @@ class DashboardActivity : AppCompatActivity() {
         )
         findViewById<TextView>(R.id.textFuelTotal).text = getString(
             R.string.rupiah_value,
-            dbHelper.getFuelMonthlyTotal()
+            fuelTotal
+        )
+        findViewById<TextView>(R.id.textServiceTotal).text = getString(
+            R.string.rupiah_value,
+            serviceTotal
+        )
+        findViewById<DashboardDonutView>(R.id.dashboardDonut).setData(
+            fuel = fuelTotal,
+            service = serviceTotal,
+            oil = oilTotal,
+            tax = taxTotal
         )
 
         if (activeMotor == null) {
@@ -70,6 +95,24 @@ class DashboardActivity : AppCompatActivity() {
         }
         findViewById<Button>(R.id.buttonDashboardAddMotor).visibility =
             if (hasMotor) View.GONE else View.VISIBLE
+    }
+
+    private fun selectCostMode(costMode: Boolean) {
+        val cost = findViewById<TextView>(R.id.buttonCostTab)
+        val distance = findViewById<TextView>(R.id.buttonDistanceTab)
+        cost.setBackgroundResource(if (costMode) R.drawable.bg_segment_active else 0)
+        distance.setBackgroundResource(if (costMode) 0 else R.drawable.bg_segment_active)
+        cost.setTextColor(getColor(if (costMode) R.color.motocare_text else R.color.motocare_muted))
+        distance.setTextColor(getColor(if (costMode) R.color.motocare_muted else R.color.motocare_text))
+        val active = if (costMode) cost else distance
+        active.animate().scaleX(1.03f).scaleY(1.03f).setDuration(90).withEndAction {
+            active.animate().scaleX(1f).scaleY(1f).setDuration(90).start()
+        }.start()
+    }
+
+    private fun openNoAnim(target: Class<out AppCompatActivity>) {
+        startActivity(Intent(this, target))
+        overridePendingTransition(0, 0)
     }
 
     private fun bindEmptyEstimate() {

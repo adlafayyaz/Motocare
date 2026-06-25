@@ -23,6 +23,8 @@ object BottomNavBinder {
             setOnClickListener { open(activity, MotorListActivity::class.java) }
         }
         activity.findViewById<TextView?>(R.id.navCatat)?.apply {
+            setTextColor(CENTER_COLOR)
+            compoundDrawableTintList = ColorStateList.valueOf(CENTER_COLOR)
             setOnClickListener { open(activity, CatatActivity::class.java) }
         }
         activity.findViewById<TextView?>(R.id.navRiwayat)?.apply {
@@ -52,9 +54,11 @@ object BottomNavBinder {
 
     const val MENU_HOME = "home"
     const val MENU_MOTOR = "motor"
+    const val MENU_CATAT = "catat"
     const val MENU_RIWAYAT = "riwayat"
     const val MENU_PROFILE = "profile"
 
     private val ACTIVE_COLOR = Color.parseColor("#FFCB25")
     private val INACTIVE_COLOR = Color.parseColor("#8B91A5")
+    private val CENTER_COLOR = Color.parseColor("#070A12")
 }

@@ -1,73 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="78dp"
-    android:background="#070A12"
-    android:gravity="center"
-    android:orientation="horizontal"
-    android:paddingStart="12dp"
-    android:paddingEnd="12dp">
+    android:layout_height="88dp"
+    android:background="#070A12">
 
-    <TextView
-        android:id="@+id/navHome"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:drawableTop="@drawable/ic_home"
-        android:drawablePadding="4dp"
-        android:gravity="center"
-        android:text="@string/nav_home_label"
-        android:textColor="#8B91A5"
-        android:textSize="10sp"
-        android:textStyle="bold" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="top"
+        android:layout_marginTop="22dp"
+        android:background="#1F2230" />
 
-    <TextView
-        android:id="@+id/navMotor"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:drawableTop="@drawable/ic_motor"
-        android:drawablePadding="4dp"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="58dp"
+        android:layout_gravity="bottom"
         android:gravity="center"
-        android:text="@string/nav_motor_label"
-        android:textColor="#8B91A5"
-        android:textSize="10sp"
-        android:textStyle="bold" />
+        android:orientation="horizontal"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:paddingBottom="1dp">
+
+        <TextView
+            android:id="@+id/navHome"
+            style="@style/BottomNavItem"
+            android:drawableTop="@drawable/ic_home"
+            android:text="@string/nav_home_label" />
+
+        <TextView
+            android:id="@+id/navMotor"
+            style="@style/BottomNavItem"
+            android:drawableTop="@drawable/ic_motor"
+            android:text="@string/nav_motor_label" />
+
+        <Space
+            android:layout_width="72dp"
+            android:layout_height="1dp" />
+
+        <TextView
+            android:id="@+id/navRiwayat"
+            style="@style/BottomNavItem"
+            android:drawableTop="@drawable/ic_history"
+            android:text="@string/nav_riwayat_label" />
+
+        <TextView
+            android:id="@+id/navProfile"
+            style="@style/BottomNavItem"
+            android:drawableTop="@drawable/ic_profile"
+            android:text="@string/nav_profile_label" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/navCatat"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
+        android:layout_width="58dp"
+        android:layout_height="58dp"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_marginTop="0dp"
         android:background="@drawable/bg_circle_yellow"
         android:gravity="center"
         android:text="@string/nav_add"
         android:textColor="#070A12"
-        android:textSize="22sp"
+        android:textSize="24sp"
         android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/navRiwayat"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:drawableTop="@drawable/ic_history"
-        android:drawablePadding="4dp"
-        android:gravity="center"
-        android:text="@string/nav_riwayat_label"
-        android:textColor="#FFCB25"
-        android:textSize="10sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/navProfile"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:drawableTop="@drawable/ic_profile"
-        android:drawablePadding="4dp"
-        android:gravity="center"
-        android:text="@string/nav_profile_label"
-        android:textColor="#8B91A5"
-        android:textSize="10sp"
-        android:textStyle="bold" />
-</LinearLayout>
+</FrameLayout>
