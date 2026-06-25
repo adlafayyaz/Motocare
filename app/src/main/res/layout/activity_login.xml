@@ -64,11 +64,18 @@
         android:paddingStart="28dp"
         android:paddingEnd="28dp">
 
-        <ImageView
-            android:layout_width="22dp"
-            android:layout_height="22dp"
-            android:contentDescription="@string/google"
-            android:src="@drawable/ic_google" />
+        <FrameLayout
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/bg_circle_white">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:contentDescription="@string/google"
+                android:src="@drawable/ic_google" />
+        </FrameLayout>
 
         <TextView
             android:layout_width="wrap_content"
