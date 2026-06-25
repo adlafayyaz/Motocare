@@ -2,6 +2,7 @@ package com.example.motocare.servis
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -20,6 +21,7 @@ class ServisDetailActivity : AppCompatActivity() {
         dbHelper = MotoCareDbHelper(this)
         servisId = intent.getLongExtra(EXTRA_SERVIS_ID, 0)
 
+        findViewById<View>(R.id.buttonBack).setOnClickListener { finish() }
         findViewById<Button>(R.id.buttonEditServis).setOnClickListener {
             startActivity(Intent(this, ServisFormActivity::class.java).putExtra(ServisFormActivity.EXTRA_SERVIS_ID, servisId))
         }

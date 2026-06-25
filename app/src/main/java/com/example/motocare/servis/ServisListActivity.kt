@@ -105,7 +105,7 @@ class ServisListActivity : AppCompatActivity() {
             summaryMeta.text = getString(R.string.no_service_data_short)
         } else {
             val targetKm = serviceTargetKm(latest.kilometer, latest.intervalKm)
-            val remainingKm = (targetKm - motor.currentKilometer).coerceAtLeast(0)
+            val remainingKm = (targetKm - latest.kilometer).coerceAtLeast(0)
             summaryTitle.text = getString(R.string.next_service_title)
             summaryValue.text = getString(R.string.km_remaining_value, remainingKm)
             summaryMeta.text = getString(R.string.target_km_value, targetKm)
