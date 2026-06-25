@@ -6,6 +6,8 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import com.google.firebase.auth.FirebaseAuth
+import org.json.JSONArray
+import org.json.JSONObject
 
 class MotoCareDbHelper(context: Context) : SQLiteOpenHelper(
     context,
@@ -348,6 +350,80 @@ class MotoCareDbHelper(context: Context) : SQLiteOpenHelper(
             writableDatabase.setTransactionSuccessful()
         } finally {
             writableDatabase.endTransaction()
+        }
+    }
+
+    fun resetAllData() {
+        writableDatabase.beginTransaction()
+        try {
+            DROP_TABLES.forEach(writableDatabase::execSQL)
+            CREATE_TABLES.forEach(writableDatabase::execSQL)
+            writableDatabase.setTransactionSuccessful()
+        } finally {
+            writableDatabase.endTransaction()
+        }
+    }
+
+    fun exportJson(): JSONObject {
+        return JSONObject().apply {
+            put("motors", tableToJson(TABLE_MOTORS))
+            put("service_records", tableToJson(TABLE_SERVICE_RECORDS))
+            put("oil_records", tableToJson(TABLE_OIL_RECORDS))
+            put("fuel_records", tableToJson(TABLE_FUEL_RECORDS))
+            put("tax_records", tableToJson(TABLE_TAX_RECORDS))
+        }
+    }
+
+    fun importJson(root: JSONObject) {
+        writableDatabase.beginTransaction()
+        try {
+            listOf(TABLE_TAX_RECORDS, TABLE_FUEL_RECORDS, TABLE_OIL_RECORDS, TABLE_SERVICE_RECORDS, TABLE_MOTORS)
+                .forEach { writableDatabase.delete(it, null, null) }
+            importTable(TABLE_MOTORS, root.optJSONArray("motors") ?: JSONArray())
+            importTable(TABLE_SERVICE_RECORDS, root.optJSONArray("service_records") ?: JSONArray())
+            importTable(TABLE_OIL_RECORDS, root.optJSONArray("oil_records") ?: JSONArray())
+            importTable(TABLE_FUEL_RECORDS, root.optJSONArray("fuel_records") ?: JSONArray())
+            importTable(TABLE_TAX_RECORDS, root.optJSONArray("tax_records") ?: JSONArray())
+            writableDatabase.setTransactionSuccessful()
+        } finally {
+            writableDatabase.endTransaction()
+        }
+    }
+
+    private fun tableToJson(table: String): JSONArray {
+        val rows = JSONArray()
+        readableDatabase.query(table, null, null, null, null, null, null).use { cursor ->
+            while (cursor.moveToNext()) {
+                val row = JSONObject()
+                cursor.columnNames.forEach { column ->
+                    val index = cursor.getColumnIndexOrThrow(column)
+                    when (cursor.getType(index)) {
+                        Cursor.FIELD_TYPE_INTEGER -> row.put(column, cursor.getLong(index))
+                        Cursor.FIELD_TYPE_FLOAT -> row.put(column, cursor.getDouble(index))
+                        Cursor.FIELD_TYPE_NULL -> row.put(column, JSONObject.NULL)
+                        else -> row.put(column, cursor.getString(index))
+                    }
+                }
+                rows.put(row)
+            }
+        }
+        return rows
+    }
+
+    private fun importTable(table: String, rows: JSONArray) {
+        repeat(rows.length()) { index ->
+            val row = rows.getJSONObject(index)
+            val values = ContentValues()
+            row.keys().forEach { key ->
+                when (val value = row.get(key)) {
+                    JSONObject.NULL -> values.putNull(key)
+                    is Int -> values.put(key, value)
+                    is Long -> values.put(key, value)
+                    is Double -> values.put(key, value)
+                    else -> values.put(key, value.toString())
+                }
+            }
+            writableDatabase.insert(table, null, values)
         }
     }
 

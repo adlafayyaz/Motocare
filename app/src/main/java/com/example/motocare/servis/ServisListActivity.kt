@@ -97,7 +97,7 @@ class ServisListActivity : AppCompatActivity() {
         emptyText.visibility = View.GONE
         val isEmpty = items.isEmpty()
         emptyState.visibility = if (isEmpty) View.VISIBLE else View.GONE
-        motorCard.visibility = if (isEmpty) View.GONE else View.VISIBLE
+        motorCard.visibility = View.VISIBLE
         summaryCard.visibility = if (isEmpty) View.GONE else View.VISIBLE
         recycler.visibility = if (isEmpty) View.GONE else View.VISIBLE
 
@@ -118,7 +118,7 @@ class ServisListActivity : AppCompatActivity() {
     private fun showEmptyState() {
         emptyText.visibility = View.GONE
         emptyState.visibility = View.VISIBLE
-        motorCard.visibility = View.GONE
+        motorCard.visibility = View.VISIBLE
         summaryCard.visibility = View.GONE
         recycler.visibility = View.GONE
     }

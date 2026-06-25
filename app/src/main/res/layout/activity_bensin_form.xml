@@ -34,18 +34,6 @@
             android:textColor="#FFCB25"
             android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="58dp"
-            android:layout_marginTop="14dp"
-            android:background="@drawable/bg_card_dark"
-            android:gravity="center_vertical"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:text="@string/fuel_form_hint"
-            android:textColor="#9AA0B5"
-            android:textSize="13sp" />
-
         <TextView style="@style/FormLabel" android:text="@string/fuel_date" />
         <EditText
             android:id="@+id/editBensinDate"

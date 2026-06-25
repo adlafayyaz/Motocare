@@ -23,6 +23,10 @@ class OliListActivity : AppCompatActivity() {
     private lateinit var summaryMeta: TextView
     private lateinit var motorName: TextView
     private lateinit var motorPlate: TextView
+    private lateinit var motorCard: View
+    private lateinit var summaryCard: View
+    private lateinit var emptyState: View
+    private lateinit var recycler: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,13 +38,17 @@ class OliListActivity : AppCompatActivity() {
         summaryMeta = findViewById(R.id.textOliSummaryMeta)
         motorName = findViewById(R.id.textHistoryMotorName)
         motorPlate = findViewById(R.id.textHistoryMotorPlate)
+        motorCard = findViewById(R.id.historyMotorCard)
+        summaryCard = findViewById(R.id.historySummaryCard)
+        emptyState = findViewById(R.id.historyEmptyState)
+        recycler = findViewById(R.id.recyclerOli)
         adapter = OliAdapter { oli ->
             val intent = Intent(this, OliDetailActivity::class.java)
             intent.putExtra(OliDetailActivity.EXTRA_OLI_ID, oli.id)
             startActivity(intent)
         }
 
-        findViewById<RecyclerView>(R.id.recyclerOli).apply {
+        recycler.apply {
             layoutManager = LinearLayoutManager(this@OliListActivity)
             adapter = this@OliListActivity.adapter
         }
@@ -68,7 +76,7 @@ class OliListActivity : AppCompatActivity() {
         val motor = dbHelper.getActiveMotor()
         if (motor == null) {
             adapter.submitList(emptyList())
-            emptyText.visibility = View.VISIBLE
+            showEmptyState()
             summaryValue.text = "-"
             summaryMeta.text = getString(R.string.add_motor_first)
             motorName.text = getString(R.string.no_active_motor)
@@ -80,7 +88,7 @@ class OliListActivity : AppCompatActivity() {
         motorPlate.text = motor.plateNumber
         val items = dbHelper.getOliByMotor(motor.id)
         adapter.submitList(items)
-        emptyText.visibility = if (items.isEmpty()) View.VISIBLE else View.GONE
+        bindEmptyVisibility(items.isEmpty())
 
         val latest = dbHelper.getLatestOli(motor.id)
         if (latest == null) {
@@ -91,5 +99,17 @@ class OliListActivity : AppCompatActivity() {
             summaryValue.text = getString(R.string.km_remaining_value, remainingKm)
             summaryMeta.text = getString(R.string.oli_next_km_value, latest.nextKilometer)
         }
+    }
+
+    private fun bindEmptyVisibility(isEmpty: Boolean) {
+        emptyText.visibility = View.GONE
+        emptyState.visibility = if (isEmpty) View.VISIBLE else View.GONE
+        motorCard.visibility = View.VISIBLE
+        summaryCard.visibility = if (isEmpty) View.GONE else View.VISIBLE
+        recycler.visibility = if (isEmpty) View.GONE else View.VISIBLE
+    }
+
+    private fun showEmptyState() {
+        bindEmptyVisibility(true)
     }
 }

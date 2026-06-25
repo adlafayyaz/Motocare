@@ -239,6 +239,9 @@
     <string name="backup_setting_subtitle">Simpan salinan data lokal</string>
     <string name="reset_data">Reset data</string>
     <string name="reset_data_subtitle">Hapus semua catatan motor</string>
+    <string name="reset_confirm_title">Reset semua data?</string>
+    <string name="reset_confirm_body">Semua motor dan catatan akan dihapus. Data tidak bisa dikembalikan.</string>
+    <string name="reset_done">Data direset.</string>
     <string name="profile_name">Nama</string>
     <string name="profile_email">Email</string>
     <string name="profile_name_hint">Adla</string>
@@ -258,6 +261,10 @@
     <string name="import_data">Import data</string>
     <string name="export_ready_state">Export disiapkan di step final.</string>
     <string name="import_ready_state">Import disiapkan di step final.</string>
+    <string name="export_done">Backup tersimpan.</string>
+    <string name="export_failed">Backup gagal.</string>
+    <string name="import_done">Backup berhasil diimport.</string>
+    <string name="import_failed">Import gagal. Cek file JSON.</string>
     <string name="about_body">MotoCare membantu mencatat motor, servis, oli, bensin, dan pajak secara lokal di perangkat.</string>
     <string name="history_empty_title">Belum ada riwayat</string>
     <string name="history_empty_body">Catatan yang kamu simpan akan muncul di sini.</string>

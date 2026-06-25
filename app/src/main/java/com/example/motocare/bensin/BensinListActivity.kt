@@ -23,6 +23,10 @@ class BensinListActivity : AppCompatActivity() {
     private lateinit var summaryMeta: TextView
     private lateinit var motorName: TextView
     private lateinit var motorPlate: TextView
+    private lateinit var motorCard: View
+    private lateinit var summaryCard: View
+    private lateinit var emptyState: View
+    private lateinit var recycler: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,11 +38,15 @@ class BensinListActivity : AppCompatActivity() {
         summaryMeta = findViewById(R.id.textBensinSummaryMeta)
         motorName = findViewById(R.id.textHistoryMotorName)
         motorPlate = findViewById(R.id.textHistoryMotorPlate)
+        motorCard = findViewById(R.id.historyMotorCard)
+        summaryCard = findViewById(R.id.historySummaryCard)
+        emptyState = findViewById(R.id.historyEmptyState)
+        recycler = findViewById(R.id.recyclerBensin)
         adapter = BensinAdapter { bensin ->
             startActivity(Intent(this, BensinDetailActivity::class.java).putExtra(BensinDetailActivity.EXTRA_BENSIN_ID, bensin.id))
         }
 
-        findViewById<RecyclerView>(R.id.recyclerBensin).apply {
+        recycler.apply {
             layoutManager = LinearLayoutManager(this@BensinListActivity)
             adapter = this@BensinListActivity.adapter
         }
@@ -66,7 +74,7 @@ class BensinListActivity : AppCompatActivity() {
         val motor = dbHelper.getActiveMotor()
         if (motor == null) {
             adapter.submitList(emptyList())
-            emptyText.visibility = View.VISIBLE
+            showEmptyState()
             summaryValue.text = "-"
             summaryMeta.text = getString(R.string.add_motor_first)
             motorName.text = getString(R.string.no_active_motor)
@@ -78,8 +86,20 @@ class BensinListActivity : AppCompatActivity() {
         motorPlate.text = motor.plateNumber
         val items = dbHelper.getBensinByMotor(motor.id)
         adapter.submitList(items)
-        emptyText.visibility = if (items.isEmpty()) View.VISIBLE else View.GONE
+        bindEmptyVisibility(items.isEmpty())
         summaryValue.text = getString(R.string.rupiah_value_compact, items.sumOf { it.cost })
         summaryMeta.text = getString(R.string.fuel_count_value, items.size)
+    }
+
+    private fun bindEmptyVisibility(isEmpty: Boolean) {
+        emptyText.visibility = View.GONE
+        emptyState.visibility = if (isEmpty) View.VISIBLE else View.GONE
+        motorCard.visibility = View.VISIBLE
+        summaryCard.visibility = if (isEmpty) View.GONE else View.VISIBLE
+        recycler.visibility = if (isEmpty) View.GONE else View.VISIBLE
+    }
+
+    private fun showEmptyState() {
+        bindEmptyVisibility(true)
     }
 }
