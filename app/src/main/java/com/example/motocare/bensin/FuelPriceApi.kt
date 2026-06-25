@@ -1,6 +1,5 @@
 package com.example.motocare.bensin
 
-import org.json.JSONObject
 import java.net.HttpURLConnection
 import java.net.URL
 
@@ -13,34 +12,16 @@ data class FuelPriceResult(
 )
 
 object FuelPriceApi {
-    private const val BASE_URL = "https://api.alifmaulidanar.my.id"
     private const val LIVE_SOURCE_URL = "https://isibens.in/"
 
     fun fetchFuelPrice(fuelType: String, brand: String, octane: String): FuelPriceResult {
-        val path = "/api-bbm/${fuelType.lowercase()}/${brand.lowercase()}/$octane"
-        val connection = URL(BASE_URL + path).openConnection() as HttpURLConnection
-        connection.connectTimeout = 8000
-        connection.readTimeout = 8000
-        connection.requestMethod = "GET"
-        if (connection.responseCode !in 200..299) {
-            throw IllegalStateException("HTTP ${connection.responseCode}")
-        }
-
-        val body = connection.inputStream.bufferedReader().use { it.readText() }
-        val json = JSONObject(body)
-        val priceText = json.optString("harga")
-        return FuelPriceResult(
-            brand = json.optString("brand", brand),
-            product = json.optString("produk", "-"),
-            octane = json.optString("ron", json.optString("cn", octane)),
-            price = priceText.filter(Char::isDigit).toIntOrNull() ?: 0,
-            update = json.optString("update", "-")
-        )
+        if (!fuelType.equals("bensin", true)) throw IllegalArgumentException("Jenis BBM belum tersedia.")
+        return fetchFromIsibensin(brand, octane) ?: throw IllegalStateException("Harga tidak ditemukan.")
     }
 
     fun localFallback(fuelType: String, brand: String, octane: String): FuelPriceResult? {
         if (!fuelType.equals("bensin", true)) return null
-        return fetchFromIsibensin(brand, octane) ?: staticFallback(brand, octane)
+        return staticFallback(brand, octane)
     }
 
     private fun fetchFromIsibensin(brand: String, octane: String): FuelPriceResult? {

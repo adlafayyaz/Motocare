@@ -46,6 +46,14 @@
             android:layout_marginTop="12dp"
             android:textColor="#F4F5FA"
             android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/textDetailPajakPaymentStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColor="#9AA0B5"
+            android:textSize="15sp" />
     </LinearLayout>
 
     <Button

@@ -35,9 +35,10 @@ class PajakDetailActivity : AppCompatActivity() {
             finish()
             return
         }
-        findViewById<TextView>(R.id.textDetailPajakTitle).text = getString(R.string.tax_due_value, pajak.dueDate)
+        findViewById<TextView>(R.id.textDetailPajakTitle).text = pajak.taxType
         findViewById<TextView>(R.id.textDetailPajakCost).text = getString(R.string.rupiah_value_compact, pajak.cost)
-        findViewById<TextView>(R.id.textDetailPajakStatus).text = pajak.status
+        findViewById<TextView>(R.id.textDetailPajakStatus).text = getString(R.string.tax_due_value, pajak.dueDate)
+        findViewById<TextView>(R.id.textDetailPajakPaymentStatus).text = pajak.status
     }
 
     private fun confirmDelete() {

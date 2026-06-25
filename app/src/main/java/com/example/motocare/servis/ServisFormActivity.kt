@@ -38,6 +38,8 @@ class ServisFormActivity : AppCompatActivity() {
 
         dbHelper = MotoCareDbHelper(this)
         servisId = intent.getLongExtra(EXTRA_SERVIS_ID, 0)
+        findViewById<View>(R.id.buttonBack).setOnClickListener { finish() }
+        findViewById<View>(R.id.textTitleBack).setOnClickListener { finish() }
         bindViews()
         bindMotor()
         bindExisting()

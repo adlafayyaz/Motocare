@@ -1,6 +1,7 @@
 package com.example.motocare.oli
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -33,6 +34,8 @@ class OliFormActivity : AppCompatActivity() {
 
         dbHelper = MotoCareDbHelper(this)
         oliId = intent.getLongExtra(EXTRA_OLI_ID, 0)
+        findViewById<View>(R.id.buttonBack).setOnClickListener { finish() }
+        findViewById<View>(R.id.textTitleBack).setOnClickListener { finish() }
         bindViews()
         bindMotor()
         bindExisting()

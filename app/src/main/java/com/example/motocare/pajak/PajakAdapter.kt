@@ -37,8 +37,8 @@ class PajakAdapter(
         private val status: TextView = itemView.findViewById(R.id.textPajakStatus)
 
         fun bind(pajak: Pajak, onClick: (Pajak) -> Unit) {
-            title.text = itemView.context.getString(R.string.tax_due_value, pajak.dueDate)
-            meta.text = pajak.status
+            title.text = pajak.taxType
+            meta.text = itemView.context.getString(R.string.tax_due_value, pajak.dueDate)
             cost.text = itemView.context.getString(R.string.rupiah_value_compact, pajak.cost)
             status.text = pajak.status
             itemView.setOnClickListener { onClick(pajak) }

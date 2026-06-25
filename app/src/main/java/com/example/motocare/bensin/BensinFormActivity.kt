@@ -1,6 +1,7 @@
 package com.example.motocare.bensin
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -38,6 +39,8 @@ class BensinFormActivity : AppCompatActivity() {
 
         dbHelper = MotoCareDbHelper(this)
         bensinId = intent.getLongExtra(EXTRA_BENSIN_ID, 0)
+        findViewById<View>(R.id.buttonBack).setOnClickListener { finish() }
+        findViewById<View>(R.id.textTitleBack).setOnClickListener { finish() }
         bindViews()
         bindMotor()
         bindExisting()

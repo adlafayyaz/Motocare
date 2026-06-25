@@ -20,6 +20,10 @@ class MotoCareDbHelper(context: Context) : SQLiteOpenHelper(
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+        if (oldVersion < 2) {
+            db.execSQL("ALTER TABLE $TABLE_TAX_RECORDS ADD COLUMN tax_type TEXT NOT NULL DEFAULT 'STNK tahunan'")
+            return
+        }
         DROP_TABLES.forEach(db::execSQL)
         onCreate(db)
     }
@@ -487,6 +491,7 @@ class MotoCareDbHelper(context: Context) : SQLiteOpenHelper(
     private fun Pajak.toValues(): ContentValues {
         return ContentValues().apply {
             put("motor_id", motorId)
+            put("tax_type", taxType)
             put("due_date", dueDate)
             put("cost", cost)
             put("status", status)
@@ -540,6 +545,7 @@ class MotoCareDbHelper(context: Context) : SQLiteOpenHelper(
         return Pajak(
             id = getLong(getColumnIndexOrThrow("id")),
             motorId = getLong(getColumnIndexOrThrow("motor_id")),
+            taxType = getString(getColumnIndexOrThrow("tax_type")),
             dueDate = getString(getColumnIndexOrThrow("due_date")),
             cost = getInt(getColumnIndexOrThrow("cost")),
             status = getString(getColumnIndexOrThrow("status"))
@@ -562,7 +568,7 @@ class MotoCareDbHelper(context: Context) : SQLiteOpenHelper(
 
     companion object {
         const val DATABASE_NAME = "motocare.db"
-        const val DATABASE_VERSION = 1
+        const val DATABASE_VERSION = 2
 
         private fun databaseName(): String {
             val user = FirebaseAuth.getInstance().currentUser
@@ -642,6 +648,7 @@ class MotoCareDbHelper(context: Context) : SQLiteOpenHelper(
             CREATE TABLE $TABLE_TAX_RECORDS (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 motor_id INTEGER NOT NULL,
+                tax_type TEXT NOT NULL,
                 due_date TEXT NOT NULL,
                 cost INTEGER NOT NULL,
                 status TEXT NOT NULL,
