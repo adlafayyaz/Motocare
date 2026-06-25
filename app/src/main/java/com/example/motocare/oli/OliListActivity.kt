@@ -3,7 +3,6 @@ package com.example.motocare.oli
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,6 +11,7 @@ import com.example.motocare.R
 import com.example.motocare.bensin.BensinListActivity
 import com.example.motocare.data.MotoCareDbHelper
 import com.example.motocare.navigation.BottomNavBinder
+import com.example.motocare.navigation.CatatSheet
 import com.example.motocare.pajak.PajakListActivity
 import com.example.motocare.servis.ServisListActivity
 
@@ -21,6 +21,8 @@ class OliListActivity : AppCompatActivity() {
     private lateinit var emptyText: TextView
     private lateinit var summaryValue: TextView
     private lateinit var summaryMeta: TextView
+    private lateinit var motorName: TextView
+    private lateinit var motorPlate: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +32,8 @@ class OliListActivity : AppCompatActivity() {
         emptyText = findViewById(R.id.textEmptyOli)
         summaryValue = findViewById(R.id.textOliSummaryValue)
         summaryMeta = findViewById(R.id.textOliSummaryMeta)
+        motorName = findViewById(R.id.textHistoryMotorName)
+        motorPlate = findViewById(R.id.textHistoryMotorPlate)
         adapter = OliAdapter { oli ->
             val intent = Intent(this, OliDetailActivity::class.java)
             intent.putExtra(OliDetailActivity.EXTRA_OLI_ID, oli.id)
@@ -40,8 +44,8 @@ class OliListActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(this@OliListActivity)
             adapter = this@OliListActivity.adapter
         }
-        findViewById<Button>(R.id.buttonAddOli).setOnClickListener {
-            startActivity(Intent(this, OliFormActivity::class.java))
+        findViewById<TextView>(R.id.buttonChangeMotor).setOnClickListener {
+            CatatSheet.showMotorPicker(this) { bindData() }
         }
         findViewById<TextView>(R.id.tabRiwayatServis).setOnClickListener {
             startActivity(Intent(this, ServisListActivity::class.java))
@@ -67,9 +71,13 @@ class OliListActivity : AppCompatActivity() {
             emptyText.visibility = View.VISIBLE
             summaryValue.text = "-"
             summaryMeta.text = getString(R.string.add_motor_first)
+            motorName.text = getString(R.string.no_active_motor)
+            motorPlate.text = ""
             return
         }
 
+        motorName.text = motor.name
+        motorPlate.text = motor.plateNumber
         val items = dbHelper.getOliByMotor(motor.id)
         adapter.submitList(items)
         emptyText.visibility = if (items.isEmpty()) View.VISIBLE else View.GONE

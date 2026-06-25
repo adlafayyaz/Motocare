@@ -59,7 +59,7 @@ object CatatSheet {
         dialog.show()
     }
 
-    private fun showMotorPicker(activity: Activity) {
+    fun showMotorPicker(activity: Activity, onMotorChanged: (() -> Unit)? = null) {
         val dialog = BottomSheetDialog(activity)
         val view = activity.layoutInflater.inflate(R.layout.sheet_motor_picker, null)
         val db = MotoCareDbHelper(activity)
@@ -74,7 +74,11 @@ object CatatSheet {
             row.setOnClickListener {
                 db.setActiveMotor(motor.id)
                 dialog.dismiss()
-                show(activity)
+                if (onMotorChanged == null) {
+                    show(activity)
+                } else {
+                    onMotorChanged()
+                }
             }
             container.addView(row)
         }
