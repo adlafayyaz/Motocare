@@ -229,15 +229,6 @@
                     android:textColor="#9AA0B5"
                     android:textSize="13sp" />
 
-                <Button
-                    android:id="@+id/buttonCatatSekarang"
-                    android:layout_width="match_parent"
-                    android:layout_height="56dp"
-                    android:layout_marginTop="112dp"
-                    android:backgroundTint="#FFCB25"
-                    android:text="@string/catat_now"
-                    android:textColor="#070A12"
-                    android:textStyle="bold" />
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView

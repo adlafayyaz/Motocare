@@ -1,7 +1,11 @@
 package com.example.motocare.profile
 
+import android.app.Dialog
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +16,7 @@ import org.json.JSONObject
 
 class BackupActivity : AppCompatActivity() {
     private lateinit var dbHelper: MotoCareDbHelper
+    private var sheet: Dialog? = null
     private val exportLauncher = registerForActivityResult(ActivityResultContracts.CreateDocument("application/json")) { uri ->
         if (uri == null) return@registerForActivityResult
         runCatching {
@@ -42,12 +47,33 @@ class BackupActivity : AppCompatActivity() {
         dbHelper = MotoCareDbHelper(this)
         findViewById<View>(R.id.buttonBack).setOnClickListener { finish() }
         findViewById<View>(R.id.textTitleBack).setOnClickListener { finish() }
-        findViewById<View>(R.id.rowExportData).setOnClickListener {
+        findViewById<View?>(R.id.rowExportData)?.setOnClickListener {
             exportLauncher.launch("motocare-backup.json")
         }
-        findViewById<View>(R.id.rowImportData).setOnClickListener {
+        findViewById<View?>(R.id.rowImportData)?.setOnClickListener {
             importLauncher.launch(arrayOf("application/json", "text/*"))
         }
         BottomNavBinder.bind(this, BottomNavBinder.MENU_PROFILE)
+        showBackupSheet()
+    }
+
+    private fun showBackupSheet() {
+        val dialog = Dialog(this)
+        sheet = dialog
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.dialog_backup_data)
+        dialog.findViewById<View>(R.id.rowExportData).setOnClickListener {
+            exportLauncher.launch("motocare-backup.json")
+        }
+        dialog.findViewById<View>(R.id.rowImportData).setOnClickListener {
+            importLauncher.launch(arrayOf("application/json", "text/*"))
+        }
+        dialog.setOnDismissListener { finish() }
+        dialog.show()
+        dialog.window?.apply {
+            setBackgroundDrawableResource(android.R.color.transparent)
+            setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
+            setGravity(Gravity.BOTTOM)
+        }
     }
 }

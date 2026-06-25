@@ -54,9 +54,6 @@ class ServisListActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(this@ServisListActivity)
             adapter = this@ServisListActivity.adapter
         }
-        findViewById<View>(R.id.buttonCatatSekarang).setOnClickListener {
-            startActivity(Intent(this, ServisFormActivity::class.java))
-        }
         findViewById<TextView>(R.id.buttonChangeMotor).setOnClickListener {
             CatatSheet.showMotorPicker(this) { bindData() }
         }
