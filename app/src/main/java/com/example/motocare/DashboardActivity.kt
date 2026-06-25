@@ -150,7 +150,7 @@ class DashboardActivity : AppCompatActivity() {
     private fun bindOilEstimate(motorId: Long, currentKilometer: Int) {
         val latest = dbHelper.getLatestOli(motorId)
         findViewById<TextView>(R.id.textOilTotal).text = if (latest == null) {
-            getString(R.string.no_data_short)
+            "-"
         } else {
             val remainingKm = (latest.nextKilometer - currentKilometer).coerceAtLeast(0)
             getString(R.string.km_remaining_value, remainingKm)
@@ -163,7 +163,7 @@ class DashboardActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.textTaxTotal).text = nearest?.let { pajak ->
             val days = daysUntil(pajak)
             if (days == null) getString(R.string.rupiah_value, pajak.cost) else getString(R.string.days_value, days)
-        } ?: getString(R.string.no_data_short)
+        } ?: "-"
     }
 
     private fun daysUntil(pajak: Pajak): Int? {

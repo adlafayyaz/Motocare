@@ -7,6 +7,7 @@ import android.widget.TextView
 import com.example.motocare.R
 import com.example.motocare.bensin.BensinFormActivity
 import com.example.motocare.data.MotoCareDbHelper
+import com.example.motocare.data.Motor
 import com.example.motocare.motor.MotorFormActivity
 import com.example.motocare.oli.OliFormActivity
 import com.example.motocare.pajak.PajakFormActivity
@@ -22,11 +23,18 @@ object CatatSheet {
 
         view.findViewById<TextView>(R.id.textSheetMotorName).text = activeMotor?.name
             ?: activity.getString(R.string.no_active_motor)
-        view.findViewById<TextView>(R.id.textSheetMotorMeta).text = activeMotor?.let {
-            activity.getString(R.string.motor_kilometer_value, it.currentKilometer)
-        } ?: activity.getString(R.string.add_motor_first)
+        view.findViewById<TextView>(R.id.textSheetMotorMeta).text =
+            activeMotor?.plateNumber ?: activity.getString(R.string.add_motor_first)
 
         view.findViewById<View>(R.id.sheetMotorSelector).setOnClickListener {
+            dialog.dismiss()
+            showMotorPicker(activity)
+        }
+        view.findViewById<TextView>(R.id.textSheetChangeMotor).setOnClickListener {
+            dialog.dismiss()
+            showMotorPicker(activity)
+        }
+        view.findViewById<View>(R.id.sheetAddMotor).setOnClickListener {
             dialog.dismiss()
             activity.openNoAnim(MotorFormActivity::class.java)
         }
@@ -47,6 +55,33 @@ object CatatSheet {
             activity.openNoAnim(PajakFormActivity::class.java)
         }
 
+        dialog.setContentView(view)
+        dialog.show()
+    }
+
+    private fun showMotorPicker(activity: Activity) {
+        val dialog = BottomSheetDialog(activity)
+        val view = activity.layoutInflater.inflate(R.layout.sheet_motor_picker, null)
+        val db = MotoCareDbHelper(activity)
+        val container = view.findViewById<android.widget.LinearLayout>(R.id.motorPickerList)
+        db.getAllMotors().forEach { motor ->
+            val row = activity.layoutInflater.inflate(R.layout.item_motor_picker, container, false)
+            row.findViewById<TextView>(R.id.textPickerMotorName).text = motor.name
+            row.findViewById<TextView>(R.id.textPickerMotorPlate).text = motor.plateNumber
+            row.findViewById<TextView>(R.id.textPickerMotorKm).text = motor.currentKilometer.toString()
+            row.findViewById<TextView>(R.id.textPickerMotorActive).visibility =
+                if (motor.isActive) View.VISIBLE else View.GONE
+            row.setOnClickListener {
+                db.setActiveMotor(motor.id)
+                dialog.dismiss()
+                show(activity)
+            }
+            container.addView(row)
+        }
+        view.findViewById<View>(R.id.buttonPickerAddMotor).setOnClickListener {
+            dialog.dismiss()
+            activity.openNoAnim(MotorFormActivity::class.java)
+        }
         dialog.setContentView(view)
         dialog.show()
     }

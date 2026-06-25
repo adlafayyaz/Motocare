@@ -35,7 +35,7 @@
     <LinearLayout
         android:id="@+id/sheetMotorSelector"
         android:layout_width="match_parent"
-        android:layout_height="54dp"
+        android:layout_height="60dp"
         android:layout_marginTop="14dp"
         android:background="@drawable/bg_card_dark"
         android:clickable="true"
@@ -69,6 +69,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/textSheetChangeMotor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/change_motor"
@@ -87,24 +88,34 @@
             android:id="@+id/sheetActionServis"
             style="@style/SheetActionCard"
             android:drawableStart="@drawable/ic_service"
+            android:drawableTint="#FFCB25"
             android:text="@string/servis_label" />
 
         <TextView
             android:id="@+id/sheetActionOli"
             style="@style/SheetActionCard"
             android:drawableStart="@drawable/ic_oil"
+            android:drawableTint="#6045F4"
             android:text="@string/oli_label" />
 
         <TextView
             android:id="@+id/sheetActionBensin"
             style="@style/SheetActionCard"
             android:drawableStart="@drawable/ic_fuel"
+            android:drawableTint="#FF7D19"
             android:text="@string/bensin_label" />
 
         <TextView
             android:id="@+id/sheetActionPajak"
             style="@style/SheetActionCard"
             android:drawableStart="@drawable/ic_tax"
+            android:drawableTint="#FFCB25"
             android:text="@string/pajak_label" />
     </GridLayout>
+
+    <TextView
+        android:id="@+id/sheetAddMotor"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:visibility="gone" />
 </LinearLayout>

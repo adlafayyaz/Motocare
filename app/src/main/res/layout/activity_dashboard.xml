@@ -155,7 +155,7 @@
                     android:layout_gravity="center"
                     android:contentDescription="@string/oli_label"
                     android:src="@drawable/ic_oil"
-                    android:tint="#6045F4" />
+                    android:tint="#FFCB25" />
             </FrameLayout>
 
             <TextView
@@ -406,7 +406,7 @@
             <TextView
                 android:layout_width="10dp"
                 android:layout_height="10dp"
-                android:background="@drawable/bg_dot_yellow" />
+                android:background="@drawable/bg_dot_pink" />
 
             <TextView
                 android:layout_width="0dp"

@@ -31,7 +31,7 @@
     <string name="add_motor_meta">Nama, plat, kilometer</string>
     <string name="empty_motor">Belum ada motor.</string>
     <string name="motor_form_title">Data Motor</string>
-    <string name="motor_detail_title">Motor Detail</string>
+    <string name="motor_detail_title">Detail Motor</string>
     <string name="km_current_label">KM sekarang</string>
     <string name="summary_title">Ringkasan</string>
     <string name="service_summary_placeholder">Servis terakhir        Belum ada</string>
@@ -44,6 +44,7 @@
     <string name="motor_active_short">Aktif</string>
     <string name="motor_inactive">Bukan motor aktif</string>
     <string name="set_active_motor">Jadikan motor aktif</string>
+    <string name="set_active_motor_short">Aktifkan</string>
     <string name="edit">Edit</string>
     <string name="delete">Hapus</string>
     <string name="cancel">Batal</string>
@@ -74,6 +75,8 @@
     <string name="catat_subtitle">Pilih data yang mau dicatat.</string>
     <string name="catat_vehicle_title">Catat kendaraan</string>
     <string name="catat_vehicle_subtitle">Pilih motor dan jenis catatan.</string>
+    <string name="choose_motor_title">Pilih motor</string>
+    <string name="choose_motor_subtitle">Catatan masuk ke motor aktif.</string>
     <string name="change_motor">Ganti</string>
     <string name="catat_servis">Catat servis</string>
     <string name="catat_oli">Catat oli</string>
