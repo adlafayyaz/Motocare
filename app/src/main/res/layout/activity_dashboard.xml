@@ -36,6 +36,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/textDashboardGreeting"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/dashboard_greeting"
@@ -64,6 +65,8 @@
                     android:id="@+id/imageDashboardProfile"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="@drawable/bg_circle_yellow"
+                    android:clipToOutline="true"
                     android:scaleType="centerCrop"
                     android:src="@drawable/ic_user" />
             </FrameLayout>
@@ -80,7 +83,7 @@
             android:paddingEnd="14dp">
 
             <LinearLayout
-                android:id="@+id/actionDashboardMotor"
+                android:id="@+id/actionDashboardServis"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -95,38 +98,6 @@
                     <ImageView
                         android:layout_width="28dp"
                         android:layout_height="28dp"
-                        android:layout_gravity="center"
-                        android:contentDescription="@string/nav_motor_label"
-                        android:src="@drawable/ic_motor"
-                        android:tint="#FFCB25" />
-                </FrameLayout>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:gravity="center"
-                    android:text="@string/nav_motor_label"
-                    android:textColor="#F4F5FA"
-                    android:textSize="13sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/actionDashboardServis"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <FrameLayout
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
-                    android:background="@drawable/bg_feature_circle_dark">
-
-                    <ImageView
-                        android:layout_width="27dp"
-                        android:layout_height="27dp"
                         android:layout_gravity="center"
                         android:contentDescription="@string/servis_label"
                         android:src="@drawable/ic_service"
@@ -206,6 +177,38 @@
                     android:textColor="#F4F5FA"
                     android:textSize="13sp" />
             </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/actionDashboardBensin"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:background="@drawable/bg_feature_circle_dark">
+
+                    <ImageView
+                        android:layout_width="27dp"
+                        android:layout_height="27dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/bensin_label"
+                        android:src="@drawable/ic_fuel"
+                        android:tint="#FFCB25" />
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:gravity="center"
+                    android:text="@string/bensin_label"
+                    android:textColor="#F4F5FA"
+                    android:textSize="13sp" />
+            </LinearLayout>
         </LinearLayout>
 
         <Button
@@ -233,6 +236,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/textDashboardMetricTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/monthly_expense"
@@ -396,7 +400,7 @@
                 <TextView
                     android:layout_width="10dp"
                     android:layout_height="10dp"
-                    android:background="@drawable/bg_dot_orange" />
+                    android:background="@drawable/bg_dot_yellow" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -404,42 +408,12 @@
                     android:layout_marginStart="10dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:text="@string/bensin_label"
+                    android:text="@string/servis_label"
                     android:textColor="#F4F5FA"
                     android:textSize="15sp" />
 
                 <TextView
-                    android:id="@+id/textFuelTotal"
-                    android:layout_width="100dp"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical|end"
-                    android:textColor="#9AA0B5"
-                    android:textSize="15sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    android:background="@drawable/bg_dot_pink" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="10dp"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="@string/pajak_label"
-                    android:textColor="#F4F5FA"
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:id="@+id/textTaxTotal"
+                    android:id="@+id/textServiceTotal"
                     android:layout_width="100dp"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical|end"
@@ -486,7 +460,7 @@
                 <TextView
                     android:layout_width="10dp"
                     android:layout_height="10dp"
-                    android:background="@drawable/bg_dot_yellow" />
+                    android:background="@drawable/bg_dot_pink" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -494,12 +468,42 @@
                     android:layout_marginStart="10dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:text="@string/servis_label"
+                    android:text="@string/pajak_label"
                     android:textColor="#F4F5FA"
                     android:textSize="15sp" />
 
                 <TextView
-                    android:id="@+id/textServiceTotal"
+                    android:id="@+id/textTaxTotal"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|end"
+                    android:textColor="#9AA0B5"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:background="@drawable/bg_dot_orange" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="@string/bensin_label"
+                    android:textColor="#F4F5FA"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/textFuelTotal"
                     android:layout_width="100dp"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical|end"

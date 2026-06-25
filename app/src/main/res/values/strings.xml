@@ -67,6 +67,7 @@
     <string name="nav_riwayat_label">Riwayat</string>
     <string name="nav_profile_label">Profil</string>
     <string name="dashboard_greeting">Halo, Adla</string>
+    <string name="dashboard_greeting_name">Halo, %1$s</string>
     <string name="profile_initial">A</string>
     <string name="catat_servis_short">S</string>
     <string name="catat_oli_short">O</string>
@@ -90,6 +91,8 @@
     <string name="transactions_count_value">%1$d transaksi tercatat</string>
     <string name="cost_tab">Biaya</string>
     <string name="distance_tab">Jarak</string>
+    <string name="distance_overview">Jarak dan tenggat</string>
+    <string name="active_motor_distance">Motor aktif sekarang</string>
     <string name="service_meta_sample">1.200 km / 18 hari</string>
     <string name="service_target_sample">13.650 km</string>
     <string name="target_label">Target</string>
@@ -159,6 +162,7 @@
     <string name="fuel_title_value">%1$s %2$s</string>
     <string name="fuel_item_meta">%1$.1f liter - %2$d km</string>
     <string name="fuel_liter_value">%1$.1f liter</string>
+    <string name="liter_value_short">%1$.1f liter</string>
     <string name="fuel_price_value">Rp %1$d / liter</string>
     <string name="fuel_form_title">Catat Bensin</string>
     <string name="fuel_date">Tanggal isi bensin</string>

@@ -27,10 +27,10 @@ class DashboardDonutView @JvmOverloads constructor(
         tax: Int
     ) {
         segments = listOf(
-            Segment(fuel, Color.parseColor("#FF8125")),
             Segment(service, Color.parseColor("#FFCB25")),
             Segment(oil, Color.parseColor("#6045F4")),
-            Segment(tax, Color.parseColor("#E936A7"))
+            Segment(tax, Color.parseColor("#E936A7")),
+            Segment(fuel, Color.parseColor("#FF8125"))
         ).filter { it.value > 0 }
         invalidate()
     }
