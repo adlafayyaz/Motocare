@@ -107,7 +107,7 @@ class OliFormActivity : AppCompatActivity() {
             motorId = motorId,
             oilChangeDate = date,
             kilometer = kilometer,
-            nextKilometer = kilometer + intervalKm,
+            nextKilometer = if (intervalKm > kilometer) intervalKm else kilometer + intervalKm,
             intervalKm = intervalKm,
             intervalMonth = intervalMonth,
             oilType = type,

@@ -104,7 +104,7 @@ class ServisListActivity : AppCompatActivity() {
             summaryValue.text = getString(R.string.no_data_short)
             summaryMeta.text = getString(R.string.no_service_data_short)
         } else {
-            val targetKm = latest.kilometer + latest.intervalKm
+            val targetKm = serviceTargetKm(latest.kilometer, latest.intervalKm)
             val remainingKm = (targetKm - motor.currentKilometer).coerceAtLeast(0)
             summaryTitle.text = getString(R.string.next_service_title)
             summaryValue.text = getString(R.string.km_remaining_value, remainingKm)
@@ -118,5 +118,9 @@ class ServisListActivity : AppCompatActivity() {
         motorCard.visibility = View.VISIBLE
         summaryCard.visibility = View.GONE
         recycler.visibility = View.GONE
+    }
+
+    private fun serviceTargetKm(kilometer: Int, targetOrInterval: Int): Int {
+        return if (targetOrInterval > kilometer) targetOrInterval else kilometer + targetOrInterval
     }
 }

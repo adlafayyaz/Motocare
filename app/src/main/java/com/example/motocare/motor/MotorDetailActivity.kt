@@ -70,8 +70,36 @@ class MotorDetailActivity : AppCompatActivity() {
         } else {
             getString(R.string.motor_inactive)
         }
+        bindSummary(current)
         findViewById<Button>(R.id.buttonSetActiveMotor).visibility =
             if (current.isActive) View.GONE else View.VISIBLE
+    }
+
+    private fun bindSummary(current: Motor) {
+        val serviceValue = dbHelper.getLatestServis(current.id)?.let { servis ->
+            val targetKm = serviceTargetKm(servis.kilometer, servis.intervalKm)
+            getString(R.string.service_remaining_meta, (targetKm - current.currentKilometer).coerceAtLeast(0))
+        } ?: getString(R.string.no_data_short)
+
+        val oilValue = dbHelper.getLatestOli(current.id)?.let { oli ->
+            getString(R.string.km_remaining_value, (oli.nextKilometer - current.currentKilometer).coerceAtLeast(0))
+        } ?: getString(R.string.no_data_short)
+
+        val taxValue = dbHelper.getPajakByMotor(current.id).firstOrNull()?.dueDate
+            ?: getString(R.string.no_data_short)
+
+        val fuelValue = dbHelper.getBensinByMotor(current.id).firstOrNull()?.let { bensin ->
+            getString(R.string.fuel_liter_value, bensin.liter)
+        } ?: getString(R.string.no_data_short)
+
+        findViewById<TextView>(R.id.textSummaryServiceValue).text = serviceValue
+        findViewById<TextView>(R.id.textSummaryOilValue).text = oilValue
+        findViewById<TextView>(R.id.textSummaryTaxValue).text = taxValue
+        findViewById<TextView>(R.id.textSummaryFuelValue).text = fuelValue
+    }
+
+    private fun serviceTargetKm(kilometer: Int, targetOrInterval: Int): Int {
+        return if (targetOrInterval > kilometer) targetOrInterval else kilometer + targetOrInterval
     }
 
     private fun showDeleteConfirm() {

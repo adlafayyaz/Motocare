@@ -199,7 +199,7 @@ class DashboardActivity : AppCompatActivity() {
             return
         }
 
-        val targetKm = latest.kilometer + latest.intervalKm
+        val targetKm = serviceTargetKm(latest.kilometer, latest.intervalKm)
         val remainingKm = (targetKm - currentKilometer).coerceAtLeast(0)
         findViewById<TextView>(R.id.textNextServiceMeta).text = getString(
             R.string.service_remaining_meta,
@@ -243,7 +243,7 @@ class DashboardActivity : AppCompatActivity() {
 
     private fun serviceRemainingKm(motorId: Long, currentKilometer: Int): Int? {
         val latest = dbHelper.getLatestServis(motorId) ?: return null
-        return (latest.kilometer + latest.intervalKm - currentKilometer).coerceAtLeast(0)
+        return (serviceTargetKm(latest.kilometer, latest.intervalKm) - currentKilometer).coerceAtLeast(0)
     }
 
     private fun oilRemainingKm(motorId: Long, currentKilometer: Int): Int? {
@@ -259,6 +259,10 @@ class DashboardActivity : AppCompatActivity() {
 
     private fun fuelLiters(motorId: Long): Double {
         return dbHelper.getBensinByMotor(motorId).sumOf { it.liter }
+    }
+
+    private fun serviceTargetKm(kilometer: Int, targetOrInterval: Int): Int {
+        return if (targetOrInterval > kilometer) targetOrInterval else kilometer + targetOrInterval
     }
 
     private companion object {
