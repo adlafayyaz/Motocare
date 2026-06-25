@@ -14,6 +14,7 @@ data class FuelPriceResult(
 
 object FuelPriceApi {
     private const val BASE_URL = "https://api.alifmaulidanar.my.id"
+    private const val LIVE_SOURCE_URL = "https://isibens.in/"
 
     fun fetchFuelPrice(fuelType: String, brand: String, octane: String): FuelPriceResult {
         val path = "/api-bbm/${fuelType.lowercase()}/${brand.lowercase()}/$octane"
@@ -39,18 +40,66 @@ object FuelPriceApi {
 
     fun localFallback(fuelType: String, brand: String, octane: String): FuelPriceResult? {
         if (!fuelType.equals("bensin", true)) return null
+        return fetchFromIsibensin(brand, octane) ?: staticFallback(brand, octane)
+    }
+
+    private fun fetchFromIsibensin(brand: String, octane: String): FuelPriceResult? {
+        val body = (URL(LIVE_SOURCE_URL).openConnection() as HttpURLConnection).run {
+            connectTimeout = 8000
+            readTimeout = 8000
+            requestMethod = "GET"
+            inputStream.bufferedReader().use { it.readText() }
+        }
+        val update = Regex("Update harga per\\s+([^<]+)").find(body)
+            ?.groupValues
+            ?.get(1)
+            ?.trim()
+            ?: "-"
+        val table = body.substringAfter("<h4>Bensin")
+            .substringBefore("<h4>Diesel")
+        val row = Regex("<tr>\\s*<th scope=\"row\">$octane</th>(.*?)</tr>", RegexOption.DOT_MATCHES_ALL)
+            .find(table)
+            ?.groupValues
+            ?.get(1)
+            ?: return null
+        val brandIndex = listOf("Pertamina", "Vivo", "BP", "Shell").indexOfFirst {
+            it.equals(brand, true)
+        }
+        if (brandIndex < 0) return null
+        val cells = Regex("<td>(.*?)</td>", RegexOption.DOT_MATCHES_ALL)
+            .findAll(row)
+            .map { it.groupValues[1] }
+            .toList()
+        val cell = cells.getOrNull(brandIndex) ?: return null
+        if (cell.contains("-")) return null
+        val priceText = Regex("(\\d{1,3}(?:\\.\\d{3})*)").find(cell)?.value ?: return null
+        val product = Regex("<small>\\s*([^<]+)\\s*</small>").find(cell)
+            ?.groupValues
+            ?.get(1)
+            ?.trim()
+            ?: "-"
+        return FuelPriceResult(
+            brand = listOf("Pertamina", "Vivo", "BP", "Shell")[brandIndex],
+            product = product,
+            octane = octane,
+            price = priceText.filter(Char::isDigit).toInt(),
+            update = update
+        )
+    }
+
+    private fun staticFallback(brand: String, octane: String): FuelPriceResult? {
         val normalizedBrand = brand.replaceFirstChar { it.uppercase() }
-        val data = LOCAL_BENSIN[normalizedBrand]?.get(octane) ?: return null
+        val data = STATIC_BENSIN[normalizedBrand]?.get(octane) ?: return null
         return FuelPriceResult(
             brand = normalizedBrand,
             product = data.first,
             octane = octane,
             price = data.second,
-            update = "fallback lokal"
+            update = "fallback statis"
         )
     }
 
-    private val LOCAL_BENSIN = mapOf(
+    private val STATIC_BENSIN = mapOf(
         "Pertamina" to mapOf(
             "90" to ("Pertalite" to 10000),
             "92" to ("Pertamax" to 12400),
