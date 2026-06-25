@@ -1,12 +1,15 @@
 package com.example.motocare.motor
 
+import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.motocare.R
 import com.example.motocare.data.MotoCareDbHelper
@@ -72,15 +75,23 @@ class MotorDetailActivity : AppCompatActivity() {
     }
 
     private fun showDeleteConfirm() {
-        AlertDialog.Builder(this)
-            .setTitle(R.string.delete_motor_title)
-            .setMessage(R.string.delete_motor_message)
-            .setNegativeButton(R.string.cancel, null)
-            .setPositiveButton(R.string.delete) { _, _ ->
-                dbHelper.deleteMotor(motorId)
-                finish()
-            }
-            .show()
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.dialog_delete_motor)
+        dialog.findViewById<Button>(R.id.buttonConfirmDelete).setOnClickListener {
+            dbHelper.deleteMotor(motorId)
+            dialog.dismiss()
+            finish()
+        }
+        dialog.findViewById<Button>(R.id.buttonCancelDelete).setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.show()
+        dialog.window?.apply {
+            setBackgroundDrawableResource(android.R.color.transparent)
+            setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
+            setGravity(Gravity.BOTTOM)
+        }
     }
 
     companion object {

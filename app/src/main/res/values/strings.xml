@@ -22,6 +22,12 @@
     <string name="current_kilometer_hint">12450</string>
     <string name="save">Simpan</string>
     <string name="setup_motor_saved">Data motor tersimpan untuk tahap awal.</string>
+    <string name="setup_schedule_title">Untuk jadwal</string>
+    <string name="setup_schedule_body">Kami bantu ingatkan kapan motor perlu servis lagi.</string>
+    <string name="setup_reminder_title">Untuk reminder</string>
+    <string name="setup_reminder_body">Kami bantu pantau kapan oli perlu diganti lagi.</string>
+    <string name="setup_tax_title">Status pajak</string>
+    <string name="setup_tax_body">Kami bantu ingatkan sebelum pajak jatuh tempo.</string>
     <string name="error_motor_name_required">Nama motor wajib diisi.</string>
     <string name="error_plate_number_required">Plat nomor wajib diisi.</string>
     <string name="error_kilometer_required">Kilometer wajib diisi.</string>
@@ -150,6 +156,7 @@
     <string name="error_oil_type_required">Jenis oli wajib diisi.</string>
     <string name="error_interval_required">Interval wajib angka.</string>
     <string name="error_cost_required">Biaya wajib angka.</string>
+    <string name="error_cost_number">Biaya harus berupa angka</string>
     <string name="delete_servis_title">Hapus servis?</string>
     <string name="delete_servis_message">Data servis ini akan dihapus.</string>
     <string name="delete_oli_title">Hapus oli?</string>
@@ -237,9 +244,19 @@
     <string name="local_data_setting">Data kendaraan tersimpan lokal</string>
     <string name="no_notification_setting">Pengingat tidak digunakan</string>
     <string name="backup_body">Export dan import disiapkan untuk file lokal.</string>
+    <string name="backup_action_title">Pilih aksi data</string>
+    <string name="backup_action_body">Export untuk menyimpan salinan. Import untuk memulihkan data.</string>
+    <string name="export_file_subtitle">Simpan file cadangan</string>
+    <string name="import_file_subtitle">Pilih file cadangan</string>
+    <string name="json_extension">.json</string>
     <string name="export_data">Export data</string>
     <string name="import_data">Import data</string>
     <string name="export_ready_state">Export disiapkan di step final.</string>
     <string name="import_ready_state">Import disiapkan di step final.</string>
     <string name="about_body">MotoCare membantu mencatat motor, servis, oli, bensin, dan pajak secara lokal di perangkat.</string>
+    <string name="history_empty_title">Belum ada riwayat</string>
+    <string name="history_empty_body">Catatan yang kamu simpan akan muncul di sini.</string>
+    <string name="catat_now">Catat sekarang</string>
+    <string name="delete_data_title">Hapus data?</string>
+    <string name="delete_data_body">Data yang dihapus tidak bisa dikembalikan.</string>
 </resources>

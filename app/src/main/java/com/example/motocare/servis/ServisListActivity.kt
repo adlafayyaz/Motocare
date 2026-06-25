@@ -24,6 +24,10 @@ class ServisListActivity : AppCompatActivity() {
     private lateinit var summaryMeta: TextView
     private lateinit var motorName: TextView
     private lateinit var motorPlate: TextView
+    private lateinit var motorCard: View
+    private lateinit var summaryCard: View
+    private lateinit var emptyState: View
+    private lateinit var recycler: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,15 +40,22 @@ class ServisListActivity : AppCompatActivity() {
         summaryMeta = findViewById(R.id.textServisSummaryMeta)
         motorName = findViewById(R.id.textHistoryMotorName)
         motorPlate = findViewById(R.id.textHistoryMotorPlate)
+        motorCard = findViewById(R.id.historyMotorCard)
+        summaryCard = findViewById(R.id.historySummaryCard)
+        emptyState = findViewById(R.id.historyEmptyState)
+        recycler = findViewById(R.id.recyclerServis)
         adapter = ServisAdapter { servis ->
             val intent = Intent(this, ServisDetailActivity::class.java)
             intent.putExtra(ServisDetailActivity.EXTRA_SERVIS_ID, servis.id)
             startActivity(intent)
         }
 
-        findViewById<RecyclerView>(R.id.recyclerServis).apply {
+        recycler.apply {
             layoutManager = LinearLayoutManager(this@ServisListActivity)
             adapter = this@ServisListActivity.adapter
+        }
+        findViewById<View>(R.id.buttonCatatSekarang).setOnClickListener {
+            startActivity(Intent(this, ServisFormActivity::class.java))
         }
         findViewById<TextView>(R.id.buttonChangeMotor).setOnClickListener {
             CatatSheet.showMotorPicker(this) { bindData() }
@@ -70,7 +81,7 @@ class ServisListActivity : AppCompatActivity() {
         val motor = dbHelper.getActiveMotor()
         if (motor == null) {
             adapter.submitList(emptyList())
-            emptyText.visibility = View.VISIBLE
+            showEmptyState()
             summaryTitle.text = getString(R.string.no_active_motor)
             summaryValue.text = "-"
             summaryMeta.text = getString(R.string.add_motor_first)
@@ -83,7 +94,12 @@ class ServisListActivity : AppCompatActivity() {
         motorPlate.text = motor.plateNumber
         val items = dbHelper.getServisByMotor(motor.id)
         adapter.submitList(items)
-        emptyText.visibility = if (items.isEmpty()) View.VISIBLE else View.GONE
+        emptyText.visibility = View.GONE
+        val isEmpty = items.isEmpty()
+        emptyState.visibility = if (isEmpty) View.VISIBLE else View.GONE
+        motorCard.visibility = if (isEmpty) View.GONE else View.VISIBLE
+        summaryCard.visibility = if (isEmpty) View.GONE else View.VISIBLE
+        recycler.visibility = if (isEmpty) View.GONE else View.VISIBLE
 
         val latest = dbHelper.getLatestServis(motor.id)
         if (latest == null) {
@@ -97,5 +113,13 @@ class ServisListActivity : AppCompatActivity() {
             summaryValue.text = getString(R.string.km_remaining_value, remainingKm)
             summaryMeta.text = getString(R.string.target_km_value, targetKm)
         }
+    }
+
+    private fun showEmptyState() {
+        emptyText.visibility = View.GONE
+        emptyState.visibility = View.VISIBLE
+        motorCard.visibility = View.GONE
+        summaryCard.visibility = View.GONE
+        recycler.visibility = View.GONE
     }
 }

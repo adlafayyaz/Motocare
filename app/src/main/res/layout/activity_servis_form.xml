@@ -55,6 +55,15 @@
             android:inputType="textCapWords" />
 
         <TextView
+            android:id="@+id/errorServisType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textColor="#F23D47"
+            android:textSize="11sp"
+            android:visibility="gone" />
+
+        <TextView
             style="@style/FormLabel"
             android:text="@string/service_kilometer" />
 
@@ -63,6 +72,15 @@
             style="@style/FormInput"
             android:hint="@string/current_kilometer_hint"
             android:inputType="number" />
+
+        <TextView
+            android:id="@+id/errorServisKilometer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textColor="#F23D47"
+            android:textSize="11sp"
+            android:visibility="gone" />
 
         <TextView
             style="@style/FormLabel"
@@ -92,7 +110,16 @@
             android:id="@+id/editServisCost"
             style="@style/FormInput"
             android:hint="@string/cost_hint"
-            android:inputType="number" />
+            android:inputType="text" />
+
+        <TextView
+            android:id="@+id/errorServisCost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textColor="#F23D47"
+            android:textSize="11sp"
+            android:visibility="gone" />
 
         <TextView
             style="@style/FormLabel"

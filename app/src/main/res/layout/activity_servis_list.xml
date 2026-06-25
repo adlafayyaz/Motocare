@@ -32,6 +32,7 @@
                 android:textStyle="bold" />
 
             <LinearLayout
+                android:id="@+id/historyMotorCard"
                 android:layout_width="match_parent"
                 android:layout_height="72dp"
                 android:layout_marginTop="24dp"
@@ -131,6 +132,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/historySummaryCard"
                 android:layout_width="match_parent"
                 android:layout_height="86dp"
                 android:layout_marginTop="24dp"
@@ -184,6 +186,56 @@
                 android:gravity="center"
                 android:text="@string/empty_servis"
                 android:textColor="#9AA0B5" />
+
+            <LinearLayout
+                android:id="@+id/historyEmptyState"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="84dp"
+                    android:layout_height="84dp"
+                    android:background="@drawable/bg_feature_circle_dark"
+                    android:gravity="center"
+                    android:text="@string/nav_riwayat"
+                    android:textColor="#FFCB25"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:gravity="center"
+                    android:text="@string/history_empty_title"
+                    android:textColor="#F4F5FA"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="260dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:lineSpacingExtra="2dp"
+                    android:text="@string/history_empty_body"
+                    android:textColor="#9AA0B5"
+                    android:textSize="13sp" />
+
+                <Button
+                    android:id="@+id/buttonCatatSekarang"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="112dp"
+                    android:backgroundTint="#FFCB25"
+                    android:text="@string/catat_now"
+                    android:textColor="#070A12"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerServis"

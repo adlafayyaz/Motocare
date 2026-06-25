@@ -1,6 +1,7 @@
 package com.example.motocare.servis
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -24,6 +25,9 @@ class ServisFormActivity : AppCompatActivity() {
     private lateinit var intervalMonthInput: EditText
     private lateinit var costInput: EditText
     private lateinit var noteInput: EditText
+    private lateinit var typeError: TextView
+    private lateinit var kilometerError: TextView
+    private lateinit var costError: TextView
     private var servisId: Long = 0
     private var motorId: Long = 0
 
@@ -50,6 +54,9 @@ class ServisFormActivity : AppCompatActivity() {
         intervalMonthInput = findViewById(R.id.editServisIntervalMonth)
         costInput = findViewById(R.id.editServisCost)
         noteInput = findViewById(R.id.editServisNote)
+        typeError = findViewById(R.id.errorServisType)
+        kilometerError = findViewById(R.id.errorServisKilometer)
+        costError = findViewById(R.id.errorServisCost)
     }
 
     private fun bindMotor() {
@@ -87,12 +94,13 @@ class ServisFormActivity : AppCompatActivity() {
     }
 
     private fun saveServis() {
+        clearInputErrors()
         val date = required(dateInput, R.string.error_date_required) ?: return
-        val type = required(typeInput, R.string.error_service_type_required) ?: return
-        val kilometer = requiredInt(kilometerInput, R.string.error_kilometer_required) ?: return
+        val type = required(typeInput, R.string.error_service_type_required, typeError) ?: return
+        val kilometer = requiredInt(kilometerInput, R.string.error_kilometer_required, kilometerError) ?: return
         val intervalKm = requiredInt(intervalKmInput, R.string.error_interval_required) ?: return
         val intervalMonth = requiredInt(intervalMonthInput, R.string.error_interval_required) ?: return
-        val cost = requiredInt(costInput, R.string.error_cost_required) ?: return
+        val cost = requiredInt(costInput, R.string.error_cost_number, costError) ?: return
 
         val servis = Servis(
             id = servisId,
@@ -132,10 +140,44 @@ class ServisFormActivity : AppCompatActivity() {
         return value
     }
 
+    private fun required(input: EditText, errorRes: Int, errorView: TextView): String? {
+        val value = input.text.toString().trim()
+        if (value.isEmpty()) {
+            showInputError(input, errorView, getString(errorRes))
+            return null
+        }
+        return value
+    }
+
     private fun requiredInt(input: EditText, errorRes: Int): Int? {
         val value = input.text.toString().trim().toIntOrNull()
         if (value == null) input.error = getString(errorRes)
         return value
+    }
+
+    private fun requiredInt(input: EditText, errorRes: Int, errorView: TextView): Int? {
+        val raw = input.text.toString().trim()
+        val value = raw.toIntOrNull()
+        if (raw.isEmpty() || value == null) {
+            showInputError(input, errorView, getString(errorRes))
+            return null
+        }
+        return value
+    }
+
+    private fun showInputError(input: EditText, errorView: TextView, message: String) {
+        input.setBackgroundResource(R.drawable.bg_input_error)
+        errorView.text = message
+        errorView.visibility = View.VISIBLE
+    }
+
+    private fun clearInputErrors() {
+        listOf(typeInput, kilometerInput, costInput).forEach {
+            it.setBackgroundResource(R.drawable.bg_input_dark)
+        }
+        listOf(typeError, kilometerError, costError).forEach {
+            it.visibility = View.GONE
+        }
     }
 
     private fun today(): String = SimpleDateFormat("yyyy-MM-dd", Locale.US).format(Date())

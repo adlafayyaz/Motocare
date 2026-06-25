@@ -14,6 +14,12 @@ class BackupActivity : AppCompatActivity() {
         setContentView(R.layout.activity_backup)
         findViewById<View>(R.id.buttonBack).setOnClickListener { finish() }
         findViewById<View>(R.id.textTitleBack).setOnClickListener { finish() }
+        findViewById<View>(R.id.rowExportData).setOnClickListener {
+            Toast.makeText(this, R.string.export_ready_state, Toast.LENGTH_SHORT).show()
+        }
+        findViewById<View>(R.id.rowImportData).setOnClickListener {
+            Toast.makeText(this, R.string.import_ready_state, Toast.LENGTH_SHORT).show()
+        }
         findViewById<Button>(R.id.buttonExportData).setOnClickListener {
             Toast.makeText(this, R.string.export_ready_state, Toast.LENGTH_SHORT).show()
         }
