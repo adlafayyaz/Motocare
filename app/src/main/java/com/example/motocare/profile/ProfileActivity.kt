@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.example.motocare.LoginActivity
 import com.example.motocare.R
@@ -12,11 +14,35 @@ import com.example.motocare.auth.GoogleAuthManager
 import com.example.motocare.data.MotoCareDbHelper
 import com.example.motocare.navigation.BottomNavBinder
 import com.google.firebase.auth.FirebaseAuth
+import org.json.JSONObject
 
 class ProfileActivity : AppCompatActivity() {
     private lateinit var store: ProfileStore
     private lateinit var dbHelper: MotoCareDbHelper
     private lateinit var authManager: GoogleAuthManager
+    private val exportLauncher = registerForActivityResult(ActivityResultContracts.CreateDocument("application/json")) { uri ->
+        if (uri == null) return@registerForActivityResult
+        runCatching {
+            contentResolver.openOutputStream(uri)?.use {
+                it.write(dbHelper.exportJson().toString(2).toByteArray())
+            }
+        }.onSuccess {
+            Toast.makeText(this, R.string.export_done, Toast.LENGTH_SHORT).show()
+        }.onFailure {
+            Toast.makeText(this, R.string.export_failed, Toast.LENGTH_SHORT).show()
+        }
+    }
+    private val importLauncher = registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+        if (uri == null) return@registerForActivityResult
+        runCatching {
+            val text = contentResolver.openInputStream(uri)?.bufferedReader()?.use { it.readText() }.orEmpty()
+            dbHelper.importJson(JSONObject(text))
+        }.onSuccess {
+            Toast.makeText(this, R.string.import_done, Toast.LENGTH_SHORT).show()
+        }.onFailure {
+            Toast.makeText(this, R.string.import_failed, Toast.LENGTH_SHORT).show()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +58,7 @@ class ProfileActivity : AppCompatActivity() {
             startActivity(Intent(this, SettingsActivity::class.java))
         }
         findViewById<View>(R.id.rowBackup).setOnClickListener {
-            startActivity(Intent(this, BackupActivity::class.java))
+            BackupSheet.show(this, exportLauncher, importLauncher)
         }
         findViewById<View>(R.id.rowAbout).setOnClickListener {
             startActivity(Intent(this, AboutActivity::class.java))

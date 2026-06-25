@@ -43,6 +43,9 @@
     <string name="service_summary_placeholder">Servis terakhir        Belum ada</string>
     <string name="oil_summary_placeholder">Oli berikutnya        Belum ada</string>
     <string name="tax_summary_placeholder">Pajak STNK        Belum ada</string>
+    <string name="service_summary_label">Servis terakhir</string>
+    <string name="oil_summary_label">Oli berikutnya</string>
+    <string name="tax_summary_label">Pajak STNK</string>
     <string name="motor_saved">Motor tersimpan.</string>
     <string name="motor_updated">Motor diperbarui.</string>
     <string name="motor_kilometer_value">%1$d km sekarang</string>
@@ -237,6 +240,7 @@
     <string name="backup_export_title">Export data lokal</string>
     <string name="backup_export_body">Simpan data motor, riwayat servis, oli, bensin, dan pajak ke file cadangan.</string>
     <string name="backup_setting_subtitle">Simpan salinan data lokal</string>
+    <string name="backup_action_short">Backup</string>
     <string name="reset_data">Reset data</string>
     <string name="reset_data_subtitle">Hapus semua catatan motor</string>
     <string name="reset_confirm_title">Reset semua data?</string>
