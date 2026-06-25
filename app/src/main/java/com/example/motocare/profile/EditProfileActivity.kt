@@ -33,6 +33,7 @@ class EditProfileActivity : AppCompatActivity() {
 
         findViewById<Button>(R.id.buttonSaveProfile).setOnClickListener { saveProfile() }
         findViewById<View>(R.id.buttonBack).setOnClickListener { finish() }
+        findViewById<View>(R.id.textTitleBack).setOnClickListener { finish() }
         BottomNavBinder.bind(this, BottomNavBinder.MENU_PROFILE)
     }
 

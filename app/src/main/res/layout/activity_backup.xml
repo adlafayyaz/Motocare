@@ -31,23 +31,25 @@
 
                 <ImageView
                     android:id="@+id/buttonBack"
-                    android:layout_width="32dp"
+                    android:layout_width="24dp"
                     android:layout_height="match_parent"
                     android:clickable="true"
                     android:contentDescription="@string/back"
                     android:focusable="true"
-                    android:padding="6dp"
+                    android:padding="5dp"
                     android:src="@drawable/ic_back"
                     android:tint="#F4F5FA" />
 
                 <TextView
+                    android:id="@+id/textTitleBack"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_marginStart="14dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:text="@string/backup_title"
                     android:textColor="#F4F5FA"
-                    android:textSize="26sp"
+                    android:textSize="24sp"
                     android:textStyle="bold" />
             </LinearLayout>
 

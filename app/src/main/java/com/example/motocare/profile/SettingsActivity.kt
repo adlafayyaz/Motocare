@@ -13,6 +13,7 @@ class SettingsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
         findViewById<View>(R.id.buttonBack).setOnClickListener { finish() }
+        findViewById<View>(R.id.textTitleBack).setOnClickListener { finish() }
         findViewById<View>(R.id.rowBackup).setOnClickListener {
             startActivity(Intent(this, BackupActivity::class.java))
         }

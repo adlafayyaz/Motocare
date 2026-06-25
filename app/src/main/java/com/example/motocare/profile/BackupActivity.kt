@@ -13,6 +13,7 @@ class BackupActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_backup)
         findViewById<View>(R.id.buttonBack).setOnClickListener { finish() }
+        findViewById<View>(R.id.textTitleBack).setOnClickListener { finish() }
         findViewById<Button>(R.id.buttonExportData).setOnClickListener {
             Toast.makeText(this, R.string.export_ready_state, Toast.LENGTH_SHORT).show()
         }
