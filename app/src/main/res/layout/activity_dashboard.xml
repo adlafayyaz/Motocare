@@ -5,21 +5,15 @@
     android:background="#070A12"
     android:orientation="vertical">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:fillViewport="false"
-        android:overScrollMode="never">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingStart="18dp"
-            android:paddingTop="8dp"
-            android:paddingEnd="18dp"
-            android:paddingBottom="24dp">
+        android:orientation="vertical"
+        android:paddingStart="18dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="18dp"
+        android:paddingBottom="6dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -64,8 +58,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginTop="14dp"
+        android:layout_height="96dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/bg_card_dark"
         android:gravity="center"
         android:orientation="horizontal"
@@ -204,8 +198,8 @@
     <Button
         android:id="@+id/buttonDashboardAddMotor"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginTop="14dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="10dp"
         android:backgroundTint="#FFCB25"
         android:text="@string/add_motor"
         android:textColor="#070A12"
@@ -215,8 +209,8 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="240dp"
-        android:layout_marginTop="20dp"
+        android:layout_height="220dp"
+        android:layout_marginTop="14dp"
         android:background="@drawable/bg_card_dark"
         android:padding="20dp">
 
@@ -297,8 +291,8 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="86dp"
-        android:layout_marginTop="18dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="12dp"
         android:background="@drawable/bg_card_dark">
 
         <FrameLayout
@@ -364,7 +358,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="8dp"
         android:orientation="vertical">
 
         <LinearLayout
@@ -506,8 +500,7 @@
             android:visibility="invisible" />
     </LinearLayout>
 
-        </LinearLayout>
-    </ScrollView>
+    </LinearLayout>
 
     <include
         layout="@layout/include_bottom_nav"
