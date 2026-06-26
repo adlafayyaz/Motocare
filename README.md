@@ -182,7 +182,7 @@ git clone https://github.com/adlafayyaz/Motocare.git
 
 | Nama                              | NIM             | Role                                     |
 | --------------------------------- | --------------- | ---------------------------------------- |
-| Khaliz Kanigara Fathi Gunawan     | 2410512151      | Project Manager & Lead Backend Developer |
+| Khaliz Kanigara Fathi Gunawan     | 2410512151      | Product Manager & Lead Backend Developer |
 | Fathi Muhammad Luthfi Cardiana    | 2410512142      | UI/UX Designer & Frontend Developer      |
 | M. Adla Fayyaz Fauzy              | 2410512154      | Frontend Developer - List & Navigation   |
 | Rafid Abdan Syakur                | 2410512141      | Backend Developer                        |
