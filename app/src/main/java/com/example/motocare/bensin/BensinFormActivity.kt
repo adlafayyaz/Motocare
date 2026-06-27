@@ -234,11 +234,6 @@ class BensinFormActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_BENSIN_ID = "extra_bensin_id"
-        private val FUEL_OPTIONS = linkedMapOf(
-            "Pertamina" to listOf("90", "92", "95", "98"),
-            "Vivo" to listOf("92", "95"),
-            "BP" to listOf("90", "92", "95"),
-            "Shell" to listOf("92", "95", "98")
-        )
+        private val FUEL_OPTIONS = FuelPriceApi.availableBensinOptions()
     }
 }

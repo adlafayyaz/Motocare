@@ -14,16 +14,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-<LinearLayout
+<androidx.core.widget.NestedScrollView
         android:id="@+id/dashboardContent"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="vertical"
+        android:fillViewport="false"
+        android:overScrollMode="never"
         android:paddingStart="18dp"
         android:paddingTop="8dp"
         android:paddingEnd="18dp"
-        android:paddingBottom="0dp">
+        android:paddingBottom="18dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -225,88 +231,88 @@
             android:textStyle="bold"
             android:visibility="gone" />
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="238dp"
-            android:layout_marginTop="18dp"
-            android:background="@drawable/bg_card_dark"
-            android:padding="20dp">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="238dp"
+        android:layout_marginTop="18dp"
+        android:background="@drawable/bg_card_dark"
+        android:padding="20dp">
 
-            <LinearLayout
-                android:layout_width="190dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="190dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/textDashboardMetricTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/monthly_expense"
-                    android:textColor="#9AA0B5"
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:id="@+id/textMonthlyTotal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:textColor="#F4F5FA"
-                    android:textSize="34sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/textTransactionCount"
-                    android:layout_width="162dp"
-                    android:layout_height="32dp"
-                    android:layout_marginTop="12dp"
-                    android:background="@drawable/bg_segment_dark"
-                    android:gravity="center"
-                    android:text="@string/transactions_recorded"
-                    android:textColor="#F4F5FA"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-            <com.example.motocare.ui.DashboardDonutView
-                android:id="@+id/dashboardDonut"
-                android:layout_width="104dp"
-                android:layout_height="104dp"
-                android:layout_gravity="top|end"
-                android:layout_marginTop="12dp"
-                android:layout_marginEnd="4dp"
-                android:contentDescription="@string/monthly_expense" />
-
-            <LinearLayout
-                android:id="@+id/dashboardSegment"
+            <TextView
+                android:id="@+id/textDashboardMetricTitle"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_gravity="bottom"
+                android:layout_height="wrap_content"
+                android:text="@string/monthly_expense"
+                android:textColor="#9AA0B5"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/textMonthlyTotal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textColor="#F4F5FA"
+                android:textSize="34sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textTransactionCount"
+                android:layout_width="162dp"
+                android:layout_height="32dp"
+                android:layout_marginTop="12dp"
                 android:background="@drawable/bg_segment_dark"
-                android:orientation="horizontal"
-                android:padding="4dp">
+                android:gravity="center"
+                android:text="@string/transactions_recorded"
+                android:textColor="#F4F5FA"
+                android:textSize="12sp" />
+        </LinearLayout>
 
-                <TextView
-                    android:id="@+id/buttonCostTab"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_segment_active"
-                    android:gravity="center"
-                    android:text="@string/cost_tab"
-                    android:textColor="#F4F5FA"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
+        <com.example.motocare.ui.DashboardDonutView
+            android:id="@+id/dashboardDonut"
+            android:layout_width="104dp"
+            android:layout_height="104dp"
+            android:layout_gravity="top|end"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="4dp"
+            android:contentDescription="@string/monthly_expense" />
 
-                <TextView
-                    android:id="@+id/buttonDistanceTab"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/distance_tab"
-                    android:textColor="#8B91A5"
-                    android:textSize="14sp" />
-            </LinearLayout>
-        </FrameLayout>
+        <LinearLayout
+            android:id="@+id/dashboardSegment"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="bottom"
+            android:background="@drawable/bg_segment_dark"
+            android:orientation="horizontal"
+            android:padding="4dp">
+
+            <TextView
+                android:id="@+id/buttonCostTab"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/bg_segment_active"
+                android:gravity="center"
+                android:text="@string/cost_tab"
+                android:textColor="#F4F5FA"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/buttonDistanceTab"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/distance_tab"
+                android:textColor="#8B91A5"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </FrameLayout>
 
         <FrameLayout
             android:id="@+id/dashboardSkeleton"
@@ -398,7 +404,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="94dp"
+                android:layout_width="110dp"
                 android:layout_height="wrap_content"
                 android:gravity="end"
                 android:orientation="vertical">
@@ -411,7 +417,7 @@
                     android:singleLine="true"
                     android:text="@string/target_label"
                     android:textColor="#FFCB25"
-                    android:textSize="12sp"
+                    android:textSize="11sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -421,8 +427,8 @@
                     android:layout_marginTop="5dp"
                     android:gravity="end"
                     android:singleLine="true"
-                    android:textColor="#F4F5FA"
-                    android:textSize="18sp"
+                    android:textColor="#FFCB25"
+                    android:textSize="19sp"
                     android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
@@ -609,7 +615,8 @@
                 android:visibility="invisible" />
         </LinearLayout>
 
-    </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
     <include
         android:id="@+id/dashboardBottomNav"

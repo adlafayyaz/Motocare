@@ -15,11 +15,8 @@
     <string name="setup_motor_title">Setup Motor</string>
     <string name="setup_motor_body">Masukkan data motor kamu</string>
     <string name="motor_name">Nama motor</string>
-    <string name="motor_name_hint">Vario 160</string>
     <string name="plate_number">Plat nomor</string>
-    <string name="plate_number_hint">B 1234 AD</string>
     <string name="current_kilometer">Kilometer sekarang (km)</string>
-    <string name="current_kilometer_hint">12450</string>
     <string name="save">Simpan</string>
     <string name="setup_motor_saved">Data motor tersimpan untuk tahap awal.</string>
     <string name="setup_schedule_title">Untuk jadwal</string>
@@ -28,6 +25,12 @@
     <string name="setup_reminder_body">Kami bantu pantau kapan oli perlu diganti lagi.</string>
     <string name="setup_tax_title">Status pajak</string>
     <string name="setup_tax_body">Kami bantu ingatkan sebelum pajak jatuh tempo.</string>
+    <string name="setup_optional_title">Data awal opsional</string>
+    <string name="setup_optional_body">Isi kalau motor sudah pernah punya catatan.</string>
+    <string name="setup_last_service">Servis terakhir</string>
+    <string name="setup_last_oil">Oli terakhir</string>
+    <string name="setup_tax_due">Pajak/STNK</string>
+    <string name="setup_initial_record">Setup awal</string>
     <string name="error_motor_name_required">Nama motor wajib diisi.</string>
     <string name="error_plate_number_required">Plat nomor wajib diisi.</string>
     <string name="error_kilometer_required">Kilometer wajib diisi.</string>
@@ -149,16 +152,14 @@
     <string name="oil_kilometer">KM ganti oli</string>
     <string name="service_interval_km">Target servis</string>
     <string name="oil_interval_km">Target oli</string>
-    <string name="service_interval_hint">15000</string>
-    <string name="oil_interval_hint">14000</string>
     <string name="service_interval_month">Batas waktu</string>
     <string name="oil_interval_month">Batas waktu</string>
     <string name="service_interval_month_hint">6</string>
     <string name="oil_interval_month_hint">3</string>
     <string name="service_recommendation_info">ⓘ Rekomendasi target servis: %1$d km (KM servis + 4000 km).</string>
+    <string name="oil_recommendation_info">ⓘ Rekomendasi target oli: %1$d km (KM ganti oli + 3000 km).</string>
     <string name="service_cost">Biaya servis</string>
     <string name="oil_cost">Biaya oli</string>
-    <string name="cost_hint">250000</string>
     <string name="service_note">Catatan</string>
     <string name="service_note_hint">Opsional</string>
     <string name="servis_saved">Servis tersimpan.</string>
@@ -203,9 +204,6 @@
     <string name="fuel_api_success">%1$s</string>
     <string name="fuel_api_failed">API gagal. Isi harga manual.</string>
     <string name="fuel_api_failed_detail">API gagal: %1$s. Pakai harga fallback/manual.</string>
-    <string name="fuel_price_hint">12400</string>
-    <string name="fuel_liter_hint">2.5</string>
-    <string name="fuel_cost_hint">Otomatis jika kosong</string>
     <string name="bensin_saved">Bensin tersimpan.</string>
     <string name="error_fuel_type_required">Jenis BBM wajib diisi.</string>
     <string name="error_fuel_brand_required">Merek BBM wajib diisi.</string>
@@ -225,7 +223,6 @@
     <string name="tax_type">Jenis pajak</string>
     <string name="tax_cost">Estimasi biaya pajak</string>
     <string name="tax_status">Status</string>
-    <string name="tax_cost_hint">385000</string>
     <string name="default_tax_status">Pilih status</string>
     <string name="default_tax_type">Pilih jenis pajak</string>
     <string name="pajak_saved">Pajak tersimpan.</string>
@@ -247,7 +244,6 @@
     <string name="app_version_value">1.0.0</string>
     <string name="login_provider">Login</string>
     <string name="google">Google</string>
-    <string name="backup_export_title">Export data lokal</string>
     <string name="backup_export_body">Simpan data motor, riwayat servis, oli, bensin, dan pajak ke file cadangan.</string>
     <string name="backup_setting_subtitle">Simpan salinan data lokal</string>
     <string name="backup_action_short">Backup</string>
@@ -273,8 +269,6 @@
     <string name="json_extension">.json</string>
     <string name="export_data">Export data</string>
     <string name="import_data">Import data</string>
-    <string name="export_ready_state">Export disiapkan di step final.</string>
-    <string name="import_ready_state">Import disiapkan di step final.</string>
     <string name="export_done">Backup tersimpan.</string>
     <string name="export_failed">Backup gagal.</string>
     <string name="import_done">Backup berhasil diimport.</string>

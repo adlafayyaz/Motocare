@@ -8,6 +8,9 @@ import android.database.sqlite.SQLiteOpenHelper
 import com.google.firebase.auth.FirebaseAuth
 import org.json.JSONArray
 import org.json.JSONObject
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class MotoCareDbHelper(context: Context) : SQLiteOpenHelper(
     context,
@@ -15,6 +18,11 @@ class MotoCareDbHelper(context: Context) : SQLiteOpenHelper(
     null,
     DATABASE_VERSION
 ) {
+    override fun onConfigure(db: SQLiteDatabase) {
+        super.onConfigure(db)
+        db.setForeignKeyConstraintsEnabled(true)
+    }
+
     override fun onCreate(db: SQLiteDatabase) {
         CREATE_TABLES.forEach(db::execSQL)
     }
@@ -56,7 +64,32 @@ class MotoCareDbHelper(context: Context) : SQLiteOpenHelper(
     }
 
     fun deleteMotor(id: Long): Int {
-        return writableDatabase.delete(TABLE_MOTORS, "id = ?", arrayOf(id.toString()))
+        val db = writableDatabase
+        db.beginTransaction()
+        try {
+            val deleted = db.delete(TABLE_MOTORS, "id = ?", arrayOf(id.toString()))
+            if (deleted > 0 && activeMotorId(db) == null) {
+                db.query(
+                    TABLE_MOTORS,
+                    arrayOf("id"),
+                    null,
+                    null,
+                    null,
+                    null,
+                    "id DESC",
+                    "1"
+                ).use { cursor ->
+                    if (cursor.moveToFirst()) {
+                        val active = ContentValues().apply { put("is_active", 1) }
+                        db.update(TABLE_MOTORS, active, "id = ?", arrayOf(cursor.getLong(0).toString()))
+                    }
+                }
+            }
+            db.setTransactionSuccessful()
+            return deleted
+        } finally {
+            db.endTransaction()
+        }
     }
 
     fun getMotor(id: Long): Motor? {
@@ -106,24 +139,24 @@ class MotoCareDbHelper(context: Context) : SQLiteOpenHelper(
         }
     }
 
-    fun getMonthlyExpenseTotal(): Int {
-        return getServiceMonthlyTotal() + getOilMonthlyTotal() + getFuelMonthlyTotal() + getTaxMonthlyTotal()
+    fun getMonthlyExpenseTotal(motorId: Long? = null): Int {
+        return getServiceMonthlyTotal(motorId) + getOilMonthlyTotal(motorId) + getFuelMonthlyTotal(motorId) + getTaxMonthlyTotal(motorId)
     }
 
-    fun getRecordCount(): Int {
-        return countRows(TABLE_SERVICE_RECORDS) +
-            countRows(TABLE_OIL_RECORDS) +
-            countRows(TABLE_FUEL_RECORDS) +
-            countRows(TABLE_TAX_RECORDS)
+    fun getRecordCount(motorId: Long? = null): Int {
+        return countRows(TABLE_SERVICE_RECORDS, motorId) +
+            countRows(TABLE_OIL_RECORDS, motorId) +
+            countRows(TABLE_FUEL_RECORDS, motorId) +
+            countRows(TABLE_TAX_RECORDS, motorId)
     }
 
-    fun getFuelMonthlyTotal(): Int = sumCost(TABLE_FUEL_RECORDS)
+    fun getFuelMonthlyTotal(motorId: Long? = null): Int = sumCost(TABLE_FUEL_RECORDS, "fuel_date", motorId)
 
-    fun getTaxMonthlyTotal(): Int = sumCost(TABLE_TAX_RECORDS)
+    fun getTaxMonthlyTotal(motorId: Long? = null): Int = sumCost(TABLE_TAX_RECORDS, "due_date", motorId)
 
-    fun getOilMonthlyTotal(): Int = sumCost(TABLE_OIL_RECORDS)
+    fun getOilMonthlyTotal(motorId: Long? = null): Int = sumCost(TABLE_OIL_RECORDS, "oil_change_date", motorId)
 
-    fun getServiceMonthlyTotal(): Int = sumCost(TABLE_SERVICE_RECORDS)
+    fun getServiceMonthlyTotal(motorId: Long? = null): Int = sumCost(TABLE_SERVICE_RECORDS, "service_date", motorId)
 
     fun insertServis(servis: Servis): Long {
         return writableDatabase.insert(TABLE_SERVICE_RECORDS, null, servis.toValues())
@@ -438,6 +471,21 @@ class MotoCareDbHelper(context: Context) : SQLiteOpenHelper(
         }
     }
 
+    private fun activeMotorId(db: SQLiteDatabase): Long? {
+        db.query(
+            TABLE_MOTORS,
+            arrayOf("id"),
+            "is_active = 1",
+            null,
+            null,
+            null,
+            "id DESC",
+            "1"
+        ).use { cursor ->
+            return if (cursor.moveToFirst()) cursor.getLong(0) else null
+        }
+    }
+
     private fun android.database.Cursor.toMotor(): Motor {
         return Motor(
             id = getLong(getColumnIndexOrThrow("id")),
@@ -552,18 +600,40 @@ class MotoCareDbHelper(context: Context) : SQLiteOpenHelper(
         )
     }
 
-    private fun sumCost(table: String): Int {
-        readableDatabase.rawQuery("SELECT COALESCE(SUM(cost), 0) FROM $table", null).use { cursor ->
+    private fun sumCost(table: String, dateColumn: String, motorId: Long?): Int {
+        val (start, end) = currentMonthRange()
+        val where = StringBuilder("$dateColumn >= ? AND $dateColumn < ?")
+        val args = mutableListOf(start, end)
+        if (motorId != null) {
+            where.append(" AND motor_id = ?")
+            args.add(motorId.toString())
+        }
+        readableDatabase.rawQuery(
+            "SELECT COALESCE(SUM(cost), 0) FROM $table WHERE $where",
+            args.toTypedArray()
+        ).use { cursor ->
             cursor.moveToFirst()
             return cursor.getInt(0)
         }
     }
 
-    private fun countRows(table: String): Int {
-        readableDatabase.rawQuery("SELECT COUNT(*) FROM $table", null).use { cursor ->
+    private fun countRows(table: String, motorId: Long?): Int {
+        val where = if (motorId == null) "" else " WHERE motor_id = ?"
+        val args = motorId?.let { arrayOf(it.toString()) }
+        readableDatabase.rawQuery("SELECT COUNT(*) FROM $table$where", args).use { cursor ->
             cursor.moveToFirst()
             return cursor.getInt(0)
         }
+    }
+
+    private fun currentMonthRange(): Pair<String, String> {
+        val format = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.DAY_OF_MONTH, 1)
+        val start = format.format(calendar.time)
+        calendar.add(Calendar.MONTH, 1)
+        val end = format.format(calendar.time)
+        return start to end
     }
 
     companion object {

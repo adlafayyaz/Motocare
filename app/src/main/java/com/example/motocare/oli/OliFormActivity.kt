@@ -1,6 +1,8 @@
 package com.example.motocare.oli
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -25,8 +27,11 @@ class OliFormActivity : AppCompatActivity() {
     private lateinit var intervalKmInput: EditText
     private lateinit var intervalMonthInput: EditText
     private lateinit var costInput: EditText
+    private lateinit var recommendationText: TextView
     private var oliId: Long = 0
     private var motorId: Long = 0
+    private var targetEditedByUser = false
+    private var autoUpdatingTarget = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +44,7 @@ class OliFormActivity : AppCompatActivity() {
         bindViews()
         bindMotor()
         bindExisting()
+        setupOilRecommendation()
 
         dateInput.setOnClickListener {
             FormDialogHelper.showDatePicker(this, dateInput.text.toString()) { dateInput.setText(it) }
@@ -47,7 +53,7 @@ class OliFormActivity : AppCompatActivity() {
             FormDialogHelper.showOptionPicker(
                 this,
                 getString(R.string.oil_type),
-                listOf("Oli mesin", "Oli gardan", "Filter oli")
+                listOf("Oli mesin", "Oli gardan", "Filter oli", "Lainnya")
             ) { typeInput.setText(it) }
         }
         findViewById<Button>(R.id.buttonSaveOli).setOnClickListener { saveOli() }
@@ -62,6 +68,7 @@ class OliFormActivity : AppCompatActivity() {
         intervalKmInput = findViewById(R.id.editOliIntervalKm)
         intervalMonthInput = findViewById(R.id.editOliIntervalMonth)
         costInput = findViewById(R.id.editOliCost)
+        recommendationText = findViewById(R.id.textOilRecommendation)
     }
 
     private fun bindMotor() {
@@ -91,6 +98,46 @@ class OliFormActivity : AppCompatActivity() {
             }
         } else {
             dateInput.setText(today())
+        }
+    }
+
+    private fun setupOilRecommendation() {
+        targetEditedByUser = intervalKmInput.text.toString().trim().isNotEmpty()
+        intervalKmInput.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (!autoUpdatingTarget) {
+                    targetEditedByUser = s?.toString()?.trim()?.isNotEmpty() == true
+                }
+            }
+            override fun afterTextChanged(s: Editable?) = Unit
+        })
+        kilometerInput.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                updateOilRecommendation(s?.toString().orEmpty())
+            }
+            override fun afterTextChanged(s: Editable?) = Unit
+        })
+        updateOilRecommendation(kilometerInput.text.toString())
+    }
+
+    private fun updateOilRecommendation(rawKilometer: String) {
+        val kilometer = rawKilometer.trim().toIntOrNull()
+        if (kilometer == null) {
+            recommendationText.visibility = View.GONE
+            return
+        }
+
+        val recommendedTarget = kilometer + RECOMMENDED_OIL_INTERVAL_KM
+        recommendationText.text = getString(R.string.oil_recommendation_info, recommendedTarget)
+        recommendationText.visibility = View.VISIBLE
+
+        if (!targetEditedByUser || intervalKmInput.text.toString().trim().isEmpty()) {
+            autoUpdatingTarget = true
+            intervalKmInput.setText(recommendedTarget.toString())
+            intervalKmInput.setSelection(intervalKmInput.text.length)
+            autoUpdatingTarget = false
         }
     }
 
@@ -150,5 +197,6 @@ class OliFormActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_OLI_ID = "extra_oli_id"
+        private const val RECOMMENDED_OIL_INTERVAL_KM = 3000
     }
 }

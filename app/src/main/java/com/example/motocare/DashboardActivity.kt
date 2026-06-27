@@ -10,8 +10,6 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.motocare.bensin.BensinListActivity
 import com.example.motocare.data.MotoCareDbHelper
 import com.example.motocare.data.Motor
@@ -52,7 +50,6 @@ class DashboardActivity : AppCompatActivity() {
         findViewById<View>(R.id.actionDashboardBensin).setOnClickListener { openNoAnim(BensinListActivity::class.java) }
         findViewById<TextView>(R.id.buttonCostTab).setOnClickListener { selectCostMode(true) }
         findViewById<TextView>(R.id.buttonDistanceTab).setOnClickListener { selectCostMode(false) }
-        bindInsets()
         bindEstimateSwipe()
         BottomNavBinder.bind(this, BottomNavBinder.MENU_HOME)
     }
@@ -60,18 +57,6 @@ class DashboardActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         showDashboardLoading()
-    }
-
-    private fun bindInsets() {
-        val content = findViewById<View>(R.id.dashboardContent)
-        val nav = findViewById<View>(R.id.dashboardBottomNav)
-        val contentTop = content.paddingTop
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.dashboardRoot)) { _, insets ->
-            val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            content.setPadding(content.paddingLeft, contentTop + bars.top, content.paddingRight, content.paddingBottom)
-            nav.setPadding(nav.paddingLeft, nav.paddingTop, nav.paddingRight, bars.bottom)
-            insets
-        }
     }
 
     private fun bindEstimateSwipe() {
@@ -127,10 +112,10 @@ class DashboardActivity : AppCompatActivity() {
             getString(R.string.motor_kilometer_value, it.currentKilometer)
         } ?: "-"
 
-        val fuelTotal = dbHelper.getFuelMonthlyTotal()
-        val serviceTotal = dbHelper.getServiceMonthlyTotal()
-        val oilTotal = dbHelper.getOilMonthlyTotal()
-        val taxTotal = dbHelper.getTaxMonthlyTotal()
+        val fuelTotal = dbHelper.getFuelMonthlyTotal(activeMotor?.id)
+        val serviceTotal = dbHelper.getServiceMonthlyTotal(activeMotor?.id)
+        val oilTotal = dbHelper.getOilMonthlyTotal(activeMotor?.id)
+        val taxTotal = dbHelper.getTaxMonthlyTotal(activeMotor?.id)
         bindMetricCard(
             activeMotor = activeMotor,
             fuelTotal = fuelTotal,
@@ -232,7 +217,7 @@ class DashboardActivity : AppCompatActivity() {
                 formatRupiah(fuelTotal + serviceTotal + oilTotal + taxTotal)
             findViewById<TextView>(R.id.textTransactionCount).text = getString(
                 R.string.transactions_count_value,
-                dbHelper.getRecordCount()
+                dbHelper.getRecordCount(activeMotor?.id)
             )
             findViewById<TextView>(R.id.textServiceTotal).text = formatRupiah(serviceTotal)
             findViewById<TextView>(R.id.textOilTotal).text = formatRupiah(oilTotal)
@@ -289,7 +274,7 @@ class DashboardActivity : AppCompatActivity() {
         }
 
         val targetKm = serviceTargetKm(latest.kilometer, latest.intervalKm)
-        val remainingKm = (targetKm - latest.kilometer).coerceAtLeast(0)
+        val remainingKm = (targetKm - currentKilometer).coerceAtLeast(0)
         findViewById<TextView>(R.id.textNextServiceMeta).text = getString(
             R.string.service_remaining_meta,
             remainingKm
@@ -363,7 +348,7 @@ class DashboardActivity : AppCompatActivity() {
 
     private fun serviceRemainingKm(motorId: Long, currentKilometer: Int): Int? {
         val latest = dbHelper.getLatestServis(motorId) ?: return null
-        return (serviceTargetKm(latest.kilometer, latest.intervalKm) - latest.kilometer).coerceAtLeast(0)
+        return (serviceTargetKm(latest.kilometer, latest.intervalKm) - currentKilometer).coerceAtLeast(0)
     }
 
     private fun oilRemainingKm(motorId: Long, currentKilometer: Int): Int? {

@@ -57,7 +57,7 @@ class ServisFormActivity : AppCompatActivity() {
             FormDialogHelper.showOptionPicker(
                 this,
                 getString(R.string.service_type),
-                listOf("Tune up", "Cek rem", "Ganti kampas", "Servis rutin")
+                listOf("Tune up", "Cek rem", "Ganti kampas", "Servis rutin", "Lainnya")
             ) { typeInput.setText(it) }
         }
         findViewById<Button>(R.id.buttonSaveServis).setOnClickListener { saveServis() }

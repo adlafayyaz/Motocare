@@ -2,6 +2,7 @@ package com.example.motocare.oli
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -19,6 +20,8 @@ class OliDetailActivity : AppCompatActivity() {
 
         dbHelper = MotoCareDbHelper(this)
         oliId = intent.getLongExtra(EXTRA_OLI_ID, 0)
+        findViewById<View>(R.id.buttonBack).setOnClickListener { finish() }
+        findViewById<View>(R.id.textDetailOliType).setOnClickListener { finish() }
 
         findViewById<Button>(R.id.buttonEditOli).setOnClickListener {
             startActivity(Intent(this, OliFormActivity::class.java).putExtra(OliFormActivity.EXTRA_OLI_ID, oliId))

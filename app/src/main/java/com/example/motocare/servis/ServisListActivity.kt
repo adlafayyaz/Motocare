@@ -22,6 +22,7 @@ class ServisListActivity : AppCompatActivity() {
     private lateinit var summaryTitle: TextView
     private lateinit var summaryValue: TextView
     private lateinit var summaryMeta: TextView
+    private lateinit var summaryTargetValue: TextView
     private lateinit var motorName: TextView
     private lateinit var motorPlate: TextView
     private lateinit var motorCard: View
@@ -38,6 +39,7 @@ class ServisListActivity : AppCompatActivity() {
         summaryTitle = findViewById(R.id.textServisSummaryTitle)
         summaryValue = findViewById(R.id.textServisSummaryValue)
         summaryMeta = findViewById(R.id.textServisSummaryMeta)
+        summaryTargetValue = findViewById(R.id.textServisSummaryTargetValue)
         motorName = findViewById(R.id.textHistoryMotorName)
         motorPlate = findViewById(R.id.textHistoryMotorPlate)
         motorCard = findViewById(R.id.historyMotorCard)
@@ -81,7 +83,8 @@ class ServisListActivity : AppCompatActivity() {
             showEmptyState()
             summaryTitle.text = getString(R.string.no_active_motor)
             summaryValue.text = "-"
-            summaryMeta.text = getString(R.string.add_motor_first)
+            summaryMeta.text = getString(R.string.target_label)
+            summaryTargetValue.text = "-"
             motorName.text = getString(R.string.no_active_motor)
             motorPlate.text = ""
             return
@@ -102,13 +105,15 @@ class ServisListActivity : AppCompatActivity() {
         if (latest == null) {
             summaryTitle.text = getString(R.string.next_service_title)
             summaryValue.text = getString(R.string.no_data_short)
-            summaryMeta.text = getString(R.string.no_service_data_short)
+            summaryMeta.text = getString(R.string.target_label)
+            summaryTargetValue.text = "-"
         } else {
             val targetKm = serviceTargetKm(latest.kilometer, latest.intervalKm)
-            val remainingKm = (targetKm - latest.kilometer).coerceAtLeast(0)
+            val remainingKm = (targetKm - motor.currentKilometer).coerceAtLeast(0)
             summaryTitle.text = getString(R.string.next_service_title)
             summaryValue.text = getString(R.string.km_remaining_value, remainingKm)
-            summaryMeta.text = getString(R.string.target_km_value, targetKm)
+            summaryMeta.text = getString(R.string.target_label)
+            summaryTargetValue.text = getString(R.string.km_value_short, targetKm)
         }
     }
 

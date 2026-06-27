@@ -18,9 +18,6 @@
             android:name=".profile.AboutActivity"
             android:exported="false" />
         <activity
-            android:name=".profile.BackupActivity"
-            android:exported="false" />
-        <activity
             android:name=".profile.SettingsActivity"
             android:exported="false" />
         <activity

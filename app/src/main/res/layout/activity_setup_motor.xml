@@ -113,6 +113,184 @@
             android:textSize="17sp"
             android:textStyle="bold" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="26dp"
+            android:text="@string/setup_optional_title"
+            android:textColor="#F4F5FA"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/setup_optional_body"
+            android:textColor="#9AA0B5"
+            android:textSize="14sp" />
+
+        <CheckBox
+            android:id="@+id/checkSetupService"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:buttonTint="#FFCB25"
+            android:text="@string/setup_last_service"
+            android:textColor="#F4F5FA"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/groupSetupService"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_marginEnd="6dp"
+                android:layout_weight="1">
+
+                <EditText
+                    android:id="@+id/editSetupServiceKm"
+                    style="@style/FormInputWithUnit"
+                    android:layout_height="62dp"
+                    android:layout_marginTop="10dp"
+                    android:inputType="number" />
+
+                <TextView
+                    style="@style/FormUnitText"
+                    android:layout_height="62dp"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/unit_km" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="6dp"
+                android:layout_weight="1">
+
+                <EditText
+                    android:id="@+id/editSetupServiceTarget"
+                    style="@style/FormInputWithUnit"
+                    android:layout_height="62dp"
+                    android:layout_marginTop="10dp"
+                    android:inputType="number" />
+
+                <TextView
+                    style="@style/FormUnitText"
+                    android:layout_height="62dp"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/unit_km" />
+            </FrameLayout>
+        </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/checkSetupOil"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:buttonTint="#FFCB25"
+            android:text="@string/setup_last_oil"
+            android:textColor="#F4F5FA"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/groupSetupOil"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_marginEnd="6dp"
+                android:layout_weight="1">
+
+                <EditText
+                    android:id="@+id/editSetupOilKm"
+                    style="@style/FormInputWithUnit"
+                    android:layout_height="62dp"
+                    android:layout_marginTop="10dp"
+                    android:inputType="number" />
+
+                <TextView
+                    style="@style/FormUnitText"
+                    android:layout_height="62dp"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/unit_km" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="6dp"
+                android:layout_weight="1">
+
+                <EditText
+                    android:id="@+id/editSetupOilTarget"
+                    style="@style/FormInputWithUnit"
+                    android:layout_height="62dp"
+                    android:layout_marginTop="10dp"
+                    android:inputType="number" />
+
+                <TextView
+                    style="@style/FormUnitText"
+                    android:layout_height="62dp"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/unit_km" />
+            </FrameLayout>
+        </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/checkSetupTax"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:buttonTint="#FFCB25"
+            android:text="@string/setup_tax_due"
+            android:textColor="#F4F5FA"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/groupSetupTax"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <EditText
+                android:id="@+id/editSetupTaxDueDate"
+                style="@style/FormInput"
+                android:layout_width="0dp"
+                android:layout_marginEnd="6dp"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="false"
+                android:hint="@string/date_hint"
+                android:inputType="date" />
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="64dp"
+                android:layout_marginStart="6dp"
+                android:layout_weight="1">
+
+                <EditText
+                    android:id="@+id/editSetupTaxCost"
+                    style="@style/FormInputWithUnit"
+                    android:inputType="number" />
+
+                <TextView
+                    style="@style/FormUnitText"
+                    android:text="@string/unit_rp" />
+            </FrameLayout>
+        </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="112dp"

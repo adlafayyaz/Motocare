@@ -78,7 +78,7 @@ class MotorDetailActivity : AppCompatActivity() {
     private fun bindSummary(current: Motor) {
         val serviceValue = dbHelper.getLatestServis(current.id)?.let { servis ->
             val targetKm = serviceTargetKm(servis.kilometer, servis.intervalKm)
-            getString(R.string.service_remaining_meta, (targetKm - servis.kilometer).coerceAtLeast(0))
+            getString(R.string.service_remaining_meta, (targetKm - current.currentKilometer).coerceAtLeast(0))
         } ?: getString(R.string.no_data_short)
 
         val oilValue = dbHelper.getLatestOli(current.id)?.let { oli ->

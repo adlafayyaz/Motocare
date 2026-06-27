@@ -49,7 +49,7 @@ class PajakFormActivity : AppCompatActivity() {
             FormDialogHelper.showOptionPicker(
                 this,
                 getString(R.string.tax_type),
-                listOf("STNK tahunan", "Pajak 5 tahunan", "Balik nama", "Denda pajak")
+                listOf("STNK tahunan", "Pajak 5 tahunan", "Denda pajak")
             ) { typeInput.setText(it) }
         }
         statusInput.setOnClickListener {

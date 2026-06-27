@@ -22,6 +22,7 @@ class ServisDetailActivity : AppCompatActivity() {
         servisId = intent.getLongExtra(EXTRA_SERVIS_ID, 0)
 
         findViewById<View>(R.id.buttonBack).setOnClickListener { finish() }
+        findViewById<View>(R.id.textDetailServisType).setOnClickListener { finish() }
         findViewById<Button>(R.id.buttonEditServis).setOnClickListener {
             startActivity(Intent(this, ServisFormActivity::class.java).putExtra(ServisFormActivity.EXTRA_SERVIS_ID, servisId))
         }

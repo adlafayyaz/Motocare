@@ -13,15 +13,27 @@ data class FuelPriceResult(
 
 object FuelPriceApi {
     private const val LIVE_SOURCE_URL = "https://isibens.in/"
+    private val SCRAPED_BRAND_ORDER = listOf("Pertamina", "Vivo", "BP", "Shell")
+
+    fun availableBensinOptions(): LinkedHashMap<String, List<String>> {
+        return STATIC_BENSIN.entries.associateTo(linkedMapOf()) { (brand, options) ->
+            brand to options.keys.toList()
+        }
+    }
 
     fun fetchFuelPrice(fuelType: String, brand: String, octane: String): FuelPriceResult {
         if (!fuelType.equals("bensin", true)) throw IllegalArgumentException("Jenis BBM belum tersedia.")
+        if (supportedBrand(brand) == null) throw IllegalArgumentException("Merek BBM belum tersedia.")
         return fetchFromIsibensin(brand, octane) ?: throw IllegalStateException("Harga tidak ditemukan.")
     }
 
     fun localFallback(fuelType: String, brand: String, octane: String): FuelPriceResult? {
         if (!fuelType.equals("bensin", true)) return null
         return staticFallback(brand, octane)
+    }
+
+    private fun supportedBrand(brand: String): String? {
+        return STATIC_BENSIN.keys.firstOrNull { it.equals(brand, true) }
     }
 
     private fun fetchFromIsibensin(brand: String, octane: String): FuelPriceResult? {
@@ -43,7 +55,7 @@ object FuelPriceApi {
             ?.groupValues
             ?.get(1)
             ?: return null
-        val brandIndex = listOf("Pertamina", "Vivo", "BP", "Shell").indexOfFirst {
+        val brandIndex = SCRAPED_BRAND_ORDER.indexOfFirst {
             it.equals(brand, true)
         }
         if (brandIndex < 0) return null
@@ -54,22 +66,24 @@ object FuelPriceApi {
         val cell = cells.getOrNull(brandIndex) ?: return null
         if (cell.contains("-")) return null
         val priceText = Regex("(\\d{1,3}(?:\\.\\d{3})*)").find(cell)?.value ?: return null
+        val price = priceText.filter(Char::isDigit).toInt()
+        if (price <= 0) return null
         val product = Regex("<small>\\s*([^<]+)\\s*</small>").find(cell)
             ?.groupValues
             ?.get(1)
             ?.trim()
             ?: "-"
         return FuelPriceResult(
-            brand = listOf("Pertamina", "Vivo", "BP", "Shell")[brandIndex],
+            brand = SCRAPED_BRAND_ORDER[brandIndex],
             product = product,
             octane = octane,
-            price = priceText.filter(Char::isDigit).toInt(),
+            price = price,
             update = update
         )
     }
 
     private fun staticFallback(brand: String, octane: String): FuelPriceResult? {
-        val normalizedBrand = brand.replaceFirstChar { it.uppercase() }
+        val normalizedBrand = supportedBrand(brand) ?: return null
         val data = STATIC_BENSIN[normalizedBrand]?.get(octane) ?: return null
         return FuelPriceResult(
             brand = normalizedBrand,
@@ -83,24 +97,16 @@ object FuelPriceApi {
     private val STATIC_BENSIN = mapOf(
         "Pertamina" to mapOf(
             "90" to ("Pertalite" to 10000),
-            "92" to ("Pertamax" to 12400),
-            "95" to ("Pertamax Green" to 13500),
-            "98" to ("Pertamax Turbo" to 14400)
+            "92" to ("Pertamax" to 16250),
+            "95" to ("Pertamax Green" to 17000),
+            "98" to ("Pertamax Turbo" to 20750)
         ),
         "Vivo" to mapOf(
-            "90" to ("Revvo90" to 11300),
-            "92" to ("Revvo92" to 13087),
-            "95" to ("Revvo95" to 13995)
+            "95" to ("Revvo95" to 17240)
         ),
         "BP" to mapOf(
-            "90" to ("BP 90" to 12740),
-            "92" to ("BP 92" to 12990),
-            "95" to ("BP Ultimate" to 14190)
-        ),
-        "Shell" to mapOf(
-            "92" to ("Super" to 13280),
-            "95" to ("V-Power" to 14190),
-            "98" to ("V-Power Nitro+" to 14540)
+            "92" to ("BP 92" to 16670),
+            "95" to ("BP Ultimate" to 17240)
         )
     )
 }
