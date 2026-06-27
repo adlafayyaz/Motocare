@@ -6,10 +6,19 @@ MotoCare adalah aplikasi mobile berbasis Android yang digunakan untuk mencatat s
 
 Banyak pengguna motor sering lupa kapan terakhir servis, ganti oli, atau membayar pajak kendaraan. MotoCare membantu pengguna mencatat semua informasi tersebut secara lebih rapi dalam satu aplikasi.
 
+<<<<<<< Updated upstream
 Aplikasi ini bersifat personal. Login menggunakan Google, sedangkan data utama kendaraan tetap disimpan secara lokal di perangkat pengguna. Data setiap akun dipisahkan berdasarkan akun Google yang sedang login.
+=======
+<img src="https://img.shields.io/badge/Platform-Android-3DDC84?style=for-the-badge&logo=android&logoColor=white" />
+<img src="https://img.shields.io/badge/Language-Kotlin-7F52FF?style=for-the-badge&logo=kotlin&logoColor=white" />
+<img src="https://img.shields.io/badge/IDE-Android%20Studio-3DDC84?style=for-the-badge&logo=androidstudio&logoColor=white" />
+<img src="https://img.shields.io/badge/Database-SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white" />
+<img src="https://img.shields.io/badge/Auth-Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black" />
+>>>>>>> Stashed changes
 
 ## Fitur Utama
 
+<<<<<<< Updated upstream
 * Onboarding pengenalan fitur aplikasi
 * Login menggunakan Google melalui Firebase Authentication
 * Setup awal data motor
@@ -27,6 +36,13 @@ Aplikasi ini bersifat personal. Login menggunakan Google, sedangkan data utama k
 * Mengubah dan menghapus data catatan
 * Backup dan import data lokal dalam format JSON
 * Mengelola profil, pengaturan, dan tentang aplikasi
+=======
+<img src="https://img.shields.io/badge/Status-Academic%20Project-blue?style=flat-square" />
+<img src="https://img.shields.io/badge/Offline-Supported-success?style=flat-square" />
+<img src="https://img.shields.io/badge/Data-isibens.in-orange?style=flat-square" />
+<img src="https://img.shields.io/badge/Made%20with-Kotlin-purple?style=flat-square" />
+<img src="https://img.shields.io/badge/Build-Gradle-02303A?style=flat-square&logo=gradle&logoColor=white" />
+>>>>>>> Stashed changes
 
 ## Teknologi yang Digunakan
 
@@ -54,7 +70,70 @@ Aplikasi ini menggunakan database lokal untuk menyimpan data motor dan riwayat p
 | `fuel_records`    | Menyimpan catatan pengeluaran bensin |
 | `tax_records`     | Menyimpan informasi pajak/STNK       |
 
+<<<<<<< Updated upstream
 ## Struktur Data Utama
+=======
+Many motorcycle users often forget when they last serviced their vehicle, changed the oil, or paid vehicle tax. MotoCare helps users store all of this information in a more organized, structured, and accessible way.
+
+MotoCare is designed as a personal-use application. Users can log in using Google, while the main vehicle data is stored locally on the user's device, allowing the app to remain usable even without an internet connection.
+
+<br />
+
+## ✨ Key Features
+
+* 👋 **Onboarding screen** to introduce the main features of MotoCare
+* 🔐 **Google Login** using Firebase Authentication
+* 🏍️ **Initial motorcycle setup**
+* 🛠️ **Optional service, oil, and tax setup**
+* 📋 **Manage multiple motorcycles**
+* ⭐ **Select an active motorcycle for the dashboard**
+* 🧾 **Record motorcycle service history**
+* 🛢️ **Record oil change schedules and history**
+* ⛽ **Track fuel expenses**
+* 🌐 **Fetch the latest fuel prices from scraped fuel price data**
+* 📄 **Record tax/STNK information**
+* 📊 **View monthly expense summaries**
+* 📍 **Calculate estimated next service and oil change based on mileage and time interval**
+* 🗂️ **View service, oil, tax, and fuel history using tabs**
+* ✏️ **Edit and delete recorded data**
+* ⚙️ **Manage profile, settings, backup/export, and app information**
+
+<br />
+
+## 🧰 Tech Stack
+
+| Category             | Technology                               |
+| -------------------- | ---------------------------------------- |
+| Programming Language | Kotlin                                   |
+| IDE                  | Android Studio                           |
+| Build Tool           | Gradle                                   |
+| User Interface       | XML Layout                               |
+| Local Database       | SQLite Database                          |
+| List & Data Display  | RecyclerView                             |
+| Navigation           | Intent & Activity                        |
+| Authentication       | Firebase Authentication for Google Login |
+| Icons                | Material Vector Drawable                 |
+| Fuel Price Source    | Scraped data from isibens.in             |
+
+<br />
+
+## 🗄️ Database Overview
+
+MotoCare uses a local database to store motorcycle data and all vehicle-related expense records.
+
+| Table             | Description                        |
+| ----------------- | ---------------------------------- |
+| `users`           | Stores logged-in user profile data |
+| `motors`          | Stores motorcycle data             |
+| `service_records` | Stores motorcycle service history  |
+| `oil_records`     | Stores oil change records          |
+| `fuel_records`    | Stores fuel expense records        |
+| `tax_records`     | Stores tax/STNK information        |
+
+<br />
+
+## 🧱 Main Data Structure
+>>>>>>> Stashed changes
 
 ### `motors`
 
@@ -111,6 +190,7 @@ Aplikasi ini menggunakan database lokal untuk menyimpan data motor dan riwayat p
 
 ### `tax_records`
 
+<<<<<<< Updated upstream
 | Field     | Keterangan                |
 | --------- | ------------------------- |
 | `id`      | ID catatan pajak          |
@@ -119,6 +199,16 @@ Aplikasi ini menggunakan database lokal untuk menyimpan data motor dan riwayat p
 | `dueDate` | Tanggal jatuh tempo pajak |
 | `cost`    | Biaya pajak               |
 | `status`  | Status pembayaran         |
+=======
+| Field      | Description           |
+| ---------- | --------------------- |
+| `id`       | Tax record ID         |
+| `motorId`  | Related motorcycle ID |
+| `taxType`  | Tax type              |
+| `dueDate`  | Tax due date          |
+| `cost`     | Tax cost              |
+| `status`   | Payment status        |
+>>>>>>> Stashed changes
 
 ## Alur Aplikasi
 
@@ -136,7 +226,23 @@ Aplikasi ini menggunakan database lokal untuk menyimpan data motor dan riwayat p
 12. Data tersimpan di database lokal dan tetap bisa dipakai offline.
 13. Pengguna dapat membuka profil, pengaturan, backup/import, dan tentang aplikasi.
 
+<<<<<<< Updated upstream
 ## Aturan Estimasi Servis dan Oli
+=======
+1. The user opens the application.
+2. The splash screen checks the user's login status.
+3. If the user is not logged in, they are redirected to the onboarding screen.
+4. The user logs in using a Google account.
+5. The user enters their first motorcycle data.
+6. The user can complete or skip the optional service, oil, and tax setup.
+7. The dashboard displays the active motorcycle, monthly expenses, and upcoming maintenance schedules.
+8. The user can change the active motorcycle from the motorcycle list page.
+9. The `+` button is used to add service, oil, fuel, tax, or motorcycle records.
+10. Vehicle history is displayed through service, oil, tax, and fuel tabs.
+11. The application can fetch the latest fuel prices from scraped fuel price data to help users input fuel expenses.
+12. Data is stored in a local database and can still be accessed offline.
+13. The user can access profile, settings, backup/export, and about pages.
+>>>>>>> Stashed changes
 
 Servis dan oli memakai dua patokan:
 
@@ -152,16 +258,30 @@ Default rekomendasi:
 | Servis | 4.000 km  | Bisa diatur pengguna |
 | Oli    | 3.000 km  | Bisa diatur pengguna |
 
+<<<<<<< Updated upstream
 Jika kilometer motor sudah mencapai target servis, oli, atau pajak sudah jatuh tempo, aplikasi menampilkan status peringatan.
+=======
+| Maintenance Type |  Mileage | Time     |
+| ---------------- | -------: | -------- |
+| Service          | 4,000 km | Customizable |
+| Oil Change       | 3,000 km | Customizable |
+>>>>>>> Stashed changes
 
 ## Data Harga BBM
 
+<<<<<<< Updated upstream
 Aplikasi mengambil data harga BBM dari website sumber harga bensin:
+=======
+## 🌐 Fuel Price Data
+
+MotoCare scrapes fuel price data from the following source:
+>>>>>>> Stashed changes
 
 ```text
 https://isibens.in/
 ```
 
+<<<<<<< Updated upstream
 Data ini digunakan untuk membantu pengisian harga per liter pada catatan bensin. Merek dan RON yang tidak memiliki harga valid, bernilai `0`, atau bernilai `-` tidak ditampilkan sebagai pilihan.
 
 Jika pengambilan data gagal, pengguna tetap bisa memasukkan harga secara manual.
@@ -179,6 +299,11 @@ https://www.figma.com/design/SmNYZgqyZJYoF57be2rz5w/Motocare-Design--Copy-?node-
 ```
 
 ## Cara Menjalankan Project
+=======
+Fuel brands and RON options with invalid prices, `0`, or `-` are not shown as selectable options.
+
+The scraped data is only used to help retrieve fuel prices. If the request fails, users can still enter the fuel price manually.
+>>>>>>> Stashed changes
 
 1. Clone repository ini.
 
