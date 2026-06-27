@@ -1,190 +1,263 @@
-# MotoCare
+<div align="center">
 
-MotoCare adalah aplikasi Android sederhana untuk mencatat perawatan dan pengeluaran motor, seperti servis, ganti oli, bensin, dan pajak/STNK. Aplikasi ini dibuat sebagai proyek akhir mata kuliah Pemrograman Mobile / Pemrograman Perangkat Bergerak.
+# 🏍️ MotoCare
 
-## Deskripsi
+### An Android app for tracking motorcycle maintenance, expenses, and important service schedules.
 
-Banyak pengguna motor sering lupa kapan terakhir servis, ganti oli, atau membayar pajak kendaraan. MotoCare membantu pengguna mencatat semua informasi tersebut secara lebih rapi dalam satu aplikasi.
+<br />
 
-Aplikasi ini bersifat personal. Login menggunakan Google, sedangkan data utama kendaraan tetap disimpan secara lokal di perangkat pengguna.
+<img src="https://img.shields.io/badge/Platform-Android-3DDC84?style=for-the-badge&logo=android&logoColor=white" />
+<img src="https://img.shields.io/badge/Language-Kotlin-7F52FF?style=for-the-badge&logo=kotlin&logoColor=white" />
+<img src="https://img.shields.io/badge/IDE-Android%20Studio-3DDC84?style=for-the-badge&logo=androidstudio&logoColor=white" />
+<img src="https://img.shields.io/badge/Database-SQLite%20%2F%20Room-003B57?style=for-the-badge&logo=sqlite&logoColor=white" />
+<img src="https://img.shields.io/badge/Auth-Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black" />
 
-## Fitur Utama
+<br />
+<br />
 
-* Onboarding pengenalan fitur aplikasi
-* Login menggunakan Google
-* Setup awal data motor
-* Setup opsional servis, oli, dan pajak
-* Mengelola beberapa motor
-* Memilih motor aktif untuk dashboard
-* Mencatat riwayat servis
-* Mencatat jadwal dan riwayat ganti oli
-* Mencatat pengeluaran bensin
-* Mengambil harga bensin terbaru dari API hargaBensin
-* Mencatat informasi pajak/STNK
-* Melihat ringkasan pengeluaran bulanan
-* Menghitung estimasi servis dan oli berikutnya dari kilometer serta interval bulan
-* Melihat riwayat servis, oli, pajak, dan bensin dengan tab
-* Mengubah dan menghapus data catatan
-* Mengelola profil, pengaturan, backup/export, dan tentang aplikasi
+<img src="https://img.shields.io/badge/Status-Academic%20Project-blue?style=flat-square" />
+<img src="https://img.shields.io/badge/Offline-Supported-success?style=flat-square" />
+<img src="https://img.shields.io/badge/API-hargaBensin-orange?style=flat-square" />
+<img src="https://img.shields.io/badge/Made%20with-Kotlin-purple?style=flat-square" />
+<img src="https://img.shields.io/badge/Build-Gradle-02303A?style=flat-square&logo=gradle&logoColor=white" />
 
-## Teknologi yang Digunakan
+</div>
 
-* Kotlin
-* Android Studio
-* Gradle
-* XML Layout
-* SQLite / Room Database
-* RecyclerView
-* Intent & Activity
-* Firebase Authentication untuk Google login
-* Material Vector Drawable untuk icon
-* API hargaBensin untuk harga BBM
+<br />
 
-## Database Overview
+## 📌 About MotoCare
 
-Aplikasi ini menggunakan database lokal untuk menyimpan data motor dan riwayat pengeluaran kendaraan.
+**MotoCare** is a simple Android application designed to help motorcycle users record and manage vehicle maintenance and expenses, such as service history, oil changes, fuel spending, and tax/STNK information.
 
-| Tabel             | Fungsi                               |
-| ----------------- | ------------------------------------ |
-| `users`           | Menyimpan profil pengguna login       |
-| `motors`          | Menyimpan data motor pengguna         |
-| `service_records` | Menyimpan riwayat servis motor        |
-| `oil_records`     | Menyimpan catatan ganti oli           |
-| `fuel_records`    | Menyimpan catatan pengeluaran bensin  |
-| `tax_records`     | Menyimpan informasi pajak/STNK        |
+This application was developed as a final project for the **Mobile Programming / Mobile Application Development** course.
 
-### Struktur Data Utama
+Many motorcycle users often forget when they last serviced their vehicle, changed the oil, or paid vehicle tax. MotoCare helps users store all of this information in a more organized, structured, and accessible way.
 
-#### `motors`
+MotoCare is designed as a personal-use application. Users can log in using Google, while the main vehicle data is stored locally on the user's device, allowing the app to remain usable even without an internet connection.
 
-| Field              | Keterangan               |
-| ------------------ | ------------------------ |
-| `id`               | ID motor                 |
-| `name`             | Nama atau tipe motor     |
-| `plateNumber`      | Nomor plat motor         |
-| `currentKilometer` | Kilometer motor saat ini |
-| `isActive`         | Status motor aktif       |
+<br />
 
-#### `service_records`
+## ✨ Key Features
 
-| Field         | Keterangan            |
-| ------------- | --------------------- |
-| `id`          | ID riwayat servis     |
-| `motorId`     | ID motor terkait      |
-| `serviceDate` | Tanggal servis        |
-| `serviceType` | Jenis servis          |
-| `kilometer`   | Kilometer saat servis |
-| `intervalKm`  | Interval servis KM    |
-| `intervalMonth` | Interval servis bulan |
-| `cost`        | Biaya servis          |
-| `note`        | Catatan tambahan      |
+* 👋 **Onboarding screen** to introduce the main features of MotoCare
+* 🔐 **Google Login** using Firebase Authentication
+* 🏍️ **Initial motorcycle setup**
+* 🛠️ **Optional service, oil, and tax setup**
+* 📋 **Manage multiple motorcycles**
+* ⭐ **Select an active motorcycle for the dashboard**
+* 🧾 **Record motorcycle service history**
+* 🛢️ **Record oil change schedules and history**
+* ⛽ **Track fuel expenses**
+* 🌐 **Fetch the latest fuel prices from the hargaBensin API**
+* 📄 **Record tax/STNK information**
+* 📊 **View monthly expense summaries**
+* 📍 **Calculate estimated next service and oil change based on mileage and time interval**
+* 🗂️ **View service, oil, tax, and fuel history using tabs**
+* ✏️ **Edit and delete recorded data**
+* ⚙️ **Manage profile, settings, backup/export, and app information**
 
-#### `oil_records`
+<br />
 
-| Field           | Keterangan                              |
-| --------------- | --------------------------------------- |
-| `id`            | ID catatan oli                          |
-| `motorId`       | ID motor terkait                        |
-| `oilChangeDate` | Tanggal ganti oli                       |
-| `kilometer`     | Kilometer saat ganti oli                |
-| `nextKilometer` | Estimasi kilometer ganti oli berikutnya |
-| `intervalKm`    | Interval oli KM                         |
-| `intervalMonth` | Interval oli bulan                      |
-| `oilType`       | Jenis oli                               |
-| `cost`          | Biaya ganti oli                         |
+## 🧰 Tech Stack
 
-#### `fuel_records`
+| Category             | Technology                               |
+| -------------------- | ---------------------------------------- |
+| Programming Language | Kotlin                                   |
+| IDE                  | Android Studio                           |
+| Build Tool           | Gradle                                   |
+| User Interface       | XML Layout                               |
+| Local Database       | SQLite / Room Database                   |
+| List & Data Display  | RecyclerView                             |
+| Navigation           | Intent & Activity                        |
+| Authentication       | Firebase Authentication for Google Login |
+| Icons                | Material Vector Drawable                 |
+| External API         | hargaBensin API                          |
 
-| Field       | Keterangan                |
-| ----------- | ------------------------- |
-| `id`        | ID catatan bensin         |
-| `motorId`   | ID motor terkait          |
-| `fuelDate`  | Tanggal isi bensin        |
-| `fuelType`  | Jenis BBM                 |
-| `fuelBrand` | Merek BBM                 |
-| `octane`    | Oktan BBM                 |
-| `pricePerLiter` | Harga per liter       |
-| `liter`     | Jumlah liter bensin       |
-| `cost`      | Biaya bensin              |
-| `kilometer` | Kilometer saat isi bensin |
+<br />
 
-#### `tax_records`
+## 🗄️ Database Overview
 
-| Field      | Keterangan                |
-| ---------- | ------------------------- |
-| `id`       | ID catatan pajak          |
-| `motorId`  | ID motor terkait          |
-| `dueDate`  | Tanggal jatuh tempo pajak |
-| `taxCost`  | Biaya pajak               |
-| `status`   | Status pembayaran         |
-| `paidDate` | Tanggal pembayaran pajak  |
+MotoCare uses a local database to store motorcycle data and all vehicle-related expense records.
 
-## Alur Aplikasi
+| Table             | Description                        |
+| ----------------- | ---------------------------------- |
+| `users`           | Stores logged-in user profile data |
+| `motors`          | Stores motorcycle data             |
+| `service_records` | Stores motorcycle service history  |
+| `oil_records`     | Stores oil change records          |
+| `fuel_records`    | Stores fuel expense records        |
+| `tax_records`     | Stores tax/STNK information        |
 
-1. Pengguna membuka aplikasi.
-2. Splash mengecek status login.
-3. Jika belum login, pengguna melihat onboarding.
-4. Pengguna masuk menggunakan Google.
-5. Pengguna mengisi setup motor pertama.
-6. Pengguna dapat mengisi setup servis, oli, dan pajak atau melewatinya.
-7. Dashboard menampilkan motor aktif, pengeluaran bulanan, dan jadwal berikutnya.
-8. Pengguna dapat mengganti motor aktif dari halaman motor.
-9. Tombol `+` digunakan untuk mencatat servis, oli, bensin, pajak, atau motor.
-10. Riwayat ditampilkan dengan tab servis, oli, pajak, dan bensin.
-11. Aplikasi dapat mengambil harga BBM terbaru untuk membantu input bensin.
-12. Data tersimpan di database lokal dan tetap bisa dipakai offline.
-13. Pengguna dapat membuka profil, pengaturan, backup/export, dan tentang aplikasi.
+<br />
 
-## Aturan Estimasi Servis dan Oli
+## 🧱 Main Data Structure
 
-Servis dan oli memakai dua patokan:
+### `motors`
 
-* Kilometer
-* Bulan
+| Field              | Description                |
+| ------------------ | -------------------------- |
+| `id`               | Motorcycle ID              |
+| `name`             | Motorcycle name or type    |
+| `plateNumber`      | Motorcycle plate number    |
+| `currentKilometer` | Current motorcycle mileage |
+| `isActive`         | Active motorcycle status   |
 
-Aplikasi menampilkan estimasi yang lebih dulu tercapai di dashboard dan riwayat.
+<br />
 
-Default awal:
+### `service_records`
 
-| Jenis  | Kilometer | Waktu   |
-| ------ | --------- | ------- |
-| Servis | 3.000 km  | 3 bulan |
-| Oli    | 2.000 km  | 2 bulan |
+| Field           | Description                       |
+| --------------- | --------------------------------- |
+| `id`            | Service record ID                 |
+| `motorId`       | Related motorcycle ID             |
+| `serviceDate`   | Service date                      |
+| `serviceType`   | Type of service                   |
+| `kilometer`     | Mileage at the time of service    |
+| `intervalKm`    | Service interval based on mileage |
+| `intervalMonth` | Service interval based on months  |
+| `cost`          | Service cost                      |
+| `note`          | Additional notes                  |
 
-## API Eksternal
+<br />
 
-Aplikasi menggunakan repo `https://github.com/alifmaulidanar/hargaBensin` untuk mengambil harga BBM realtime.
+### `oil_records`
 
-Endpoint utama:
+| Field           | Description                               |
+| --------------- | ----------------------------------------- |
+| `id`            | Oil change record ID                      |
+| `motorId`       | Related motorcycle ID                     |
+| `oilChangeDate` | Oil change date                           |
+| `kilometer`     | Mileage at the time of oil change         |
+| `nextKilometer` | Estimated mileage for the next oil change |
+| `intervalKm`    | Oil change interval based on mileage      |
+| `intervalMonth` | Oil change interval based on months       |
+| `oilType`       | Type of oil                               |
+| `cost`          | Oil change cost                           |
+
+<br />
+
+### `fuel_records`
+
+| Field           | Description                        |
+| --------------- | ---------------------------------- |
+| `id`            | Fuel record ID                     |
+| `motorId`       | Related motorcycle ID              |
+| `fuelDate`      | Fuel refill date                   |
+| `fuelType`      | Fuel type                          |
+| `fuelBrand`     | Fuel brand                         |
+| `octane`        | Fuel octane rating                 |
+| `pricePerLiter` | Fuel price per liter               |
+| `liter`         | Total fuel volume in liters        |
+| `cost`          | Total fuel cost                    |
+| `kilometer`     | Mileage at the time of fuel refill |
+
+<br />
+
+### `tax_records`
+
+| Field      | Description           |
+| ---------- | --------------------- |
+| `id`       | Tax record ID         |
+| `motorId`  | Related motorcycle ID |
+| `dueDate`  | Tax due date          |
+| `taxCost`  | Tax cost              |
+| `status`   | Payment status        |
+| `paidDate` | Tax payment date      |
+
+<br />
+
+## 🔄 Application Flow
+
+1. The user opens the application.
+2. The splash screen checks the user's login status.
+3. If the user is not logged in, they are redirected to the onboarding screen.
+4. The user logs in using a Google account.
+5. The user enters their first motorcycle data.
+6. The user can complete or skip the optional service, oil, and tax setup.
+7. The dashboard displays the active motorcycle, monthly expenses, and upcoming maintenance schedules.
+8. The user can change the active motorcycle from the motorcycle list page.
+9. The `+` button is used to add service, oil, fuel, tax, or motorcycle records.
+10. Vehicle history is displayed through service, oil, tax, and fuel tabs.
+11. The application can fetch the latest fuel prices from an API to help users input fuel expenses.
+12. Data is stored in a local database and can still be accessed offline.
+13. The user can access profile, settings, backup/export, and about pages.
+
+<br />
+
+## 📍 Service and Oil Estimation Rules
+
+MotoCare calculates the next service and oil change estimation using two main indicators:
+
+* Motorcycle mileage
+* Time interval in months
+
+The application displays the estimate based on whichever condition is reached first.
+
+| Maintenance Type |  Mileage | Time     |
+| ---------------- | -------: | -------- |
+| Service          | 3,000 km | 3 months |
+| Oil Change       | 2,000 km | 2 months |
+
+<br />
+
+## 🌐 External API
+
+MotoCare uses the following repository to fetch real-time fuel price data:
+
+```text
+https://github.com/alifmaulidanar/hargaBensin
+```
+
+Main endpoints used:
 
 ```text
 https://api.alifmaulidanar.my.id/api-bbm/full
 https://api.alifmaulidanar.my.id/api-bbm/{jenis}/{merek}/{oktan}
 ```
 
-API hanya digunakan untuk harga bensin. Jika API gagal, pengguna tetap bisa memasukkan harga secara manual.
+The API is only used to help retrieve fuel prices. If the API request fails, users can still enter the fuel price manually.
 
-## Cara Menjalankan Project
+<br />
 
-1. Clone repository ini.
+## 🚀 How to Run the Project
+
+1. Clone this repository.
 
 ```bash
 git clone https://github.com/adlafayyaz/Motocare.git
 ```
 
-2. Buka project menggunakan Android Studio.
+2. Open the project using **Android Studio**.
 
-3. Tunggu proses Gradle Sync selesai.
+3. Wait until the **Gradle Sync** process is complete.
 
-4. Jalankan aplikasi menggunakan emulator atau perangkat Android.
+4. Make sure the Firebase configuration is available for the Google Login feature.
 
-## Anggota Kelompok
+5. Run the application using an Android emulator or a real Android device.
 
-| Nama                              | NIM             | Role                                     |
-| --------------------------------- | --------------- | ---------------------------------------- |
-| Khaliz Kanigara Fathi Gunawan     | 2410512151      | Product Manager & Lead Backend Developer |
-| Fathi Muhammad Luthfi Cardiana    | 2410512142      | UI/UX Designer & Frontend Developer      |
-| M. Adla Fayyaz Fauzy              | 2410512154      | Frontend Developer - List & Navigation   |
-| Rafid Abdan Syakur                | 2410512141      | Backend Developer                        |
-| M. Syauqi Rabbani                 | 2410512166      | System Analyst                           |
-| Ananta Jordan Surya Putra Ginting | 2410512164      | Quality Assurance & Technical Writer     |
+<br />
+
+## 👥 Team Members
+
+| Name                              | Student ID | Role                                     |
+| --------------------------------- | ---------- | ---------------------------------------- |
+| Khaliz Kanigara Fathi Gunawan     | 2410512151 | Product Manager & Lead Backend Developer |
+| Fathi Muhammad Luthfi Cardiana    | 2410512142 | UI/UX Designer & Frontend Developer      |
+| M. Adla Fayyaz Fauzy              | 2410512154 | Frontend Developer - List & Navigation   |
+| Rafid Abdan Syakur                | 2410512141 | Backend Developer                        |
+| M. Syauqi Rabbani                 | 2410512166 | System Analyst                           |
+| Ananta Jordan Surya Putra Ginting | 2410512164 | Quality Assurance & Technical Writer     |
+
+<br />
+
+## 📄 License
+
+This project was developed for learning purposes as a final project for the **Mobile Programming / Mobile Application Development** course.
+
+<br />
+
+<div align="center">
+
+**MotoCare — Keep your motorcycle maintenance organized, simple, and on track.**
+
+</div>
