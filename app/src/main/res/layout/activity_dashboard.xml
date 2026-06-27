@@ -427,6 +427,43 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/dashboardEstimateDots"
+            android:layout_width="match_parent"
+            android:layout_height="14dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <View
+                android:id="@+id/dotEstimateService"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/bg_dot_yellow" />
+
+            <View
+                android:id="@+id/dotEstimateOil"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/bg_dot_muted" />
+
+            <View
+                android:id="@+id/dotEstimateTax"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/bg_dot_muted" />
+
+            <View
+                android:id="@+id/dotEstimateFuel"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/bg_dot_muted" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"

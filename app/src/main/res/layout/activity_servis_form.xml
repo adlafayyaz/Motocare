@@ -88,15 +88,65 @@
             android:textSize="11sp"
             android:visibility="gone" />
 
-        <TextView
-            style="@style/FormLabel"
-            android:text="@string/service_kilometer" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/editServisKilometer"
-            style="@style/FormInput"
-            android:hint="@string/current_kilometer_hint"
-            android:inputType="number" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/FormLabel"
+                    android:text="@string/service_kilometer" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp">
+
+                    <EditText
+                        android:id="@+id/editServisKilometer"
+                        style="@style/FormInputWithUnit"
+                        android:hint="@string/current_kilometer_hint"
+                        android:inputType="number" />
+
+                    <TextView
+                        style="@style/FormUnitText"
+                        android:text="@string/unit_km" />
+                </FrameLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/FormLabel"
+                    android:text="@string/service_interval_km" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp">
+
+                    <EditText
+                        android:id="@+id/editServisIntervalKm"
+                        style="@style/FormInputWithUnit"
+                        android:hint="@string/service_interval_hint"
+                        android:inputType="number" />
+
+                    <TextView
+                        style="@style/FormUnitText"
+                        android:text="@string/unit_km" />
+                </FrameLayout>
+            </LinearLayout>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/errorServisKilometer"
@@ -107,35 +157,65 @@
             android:textSize="11sp"
             android:visibility="gone" />
 
-        <TextView
-            style="@style/FormLabel"
-            android:text="@string/service_interval_km" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/editServisIntervalKm"
-            style="@style/FormInput"
-            android:hint="@string/service_interval_hint"
-            android:inputType="number" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-        <TextView
-            style="@style/FormLabel"
-            android:text="@string/service_interval_month" />
+                <TextView
+                    style="@style/FormLabel"
+                    android:text="@string/service_interval_month" />
 
-        <EditText
-            android:id="@+id/editServisIntervalMonth"
-            style="@style/FormInput"
-            android:hint="@string/service_interval_month_hint"
-            android:inputType="number" />
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp">
 
-        <TextView
-            style="@style/FormLabel"
-            android:text="@string/service_cost" />
+                    <EditText
+                        android:id="@+id/editServisIntervalMonth"
+                        style="@style/FormInputWithUnit"
+                        android:hint="@string/service_interval_month_hint"
+                        android:inputType="number" />
 
-        <EditText
-            android:id="@+id/editServisCost"
-            style="@style/FormInput"
-            android:hint="@string/cost_hint"
-            android:inputType="text" />
+                    <TextView
+                        style="@style/FormUnitText"
+                        android:text="@string/unit_month" />
+                </FrameLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/FormLabel"
+                    android:text="@string/service_cost" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp">
+
+                    <EditText
+                        android:id="@+id/editServisCost"
+                        style="@style/FormInputWithUnit"
+                        android:hint="@string/cost_hint"
+                        android:inputType="text" />
+
+                    <TextView
+                        style="@style/FormUnitText"
+                        android:text="@string/unit_rp" />
+                </FrameLayout>
+            </LinearLayout>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/errorServisCost"

@@ -79,45 +79,125 @@
             android:hint="@string/default_oil_type"
             android:inputType="textCapWords" />
 
-        <TextView
-            style="@style/FormLabel"
-            android:text="@string/oil_kilometer" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/editOliKilometer"
-            style="@style/FormInput"
-            android:hint="@string/current_kilometer_hint"
-            android:inputType="number" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-        <TextView
-            style="@style/FormLabel"
-            android:text="@string/oil_interval_km" />
+                <TextView
+                    style="@style/FormLabel"
+                    android:text="@string/oil_kilometer" />
 
-        <EditText
-            android:id="@+id/editOliIntervalKm"
-            style="@style/FormInput"
-            android:hint="@string/oil_interval_hint"
-            android:inputType="number" />
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp">
 
-        <TextView
-            style="@style/FormLabel"
-            android:text="@string/oil_interval_month" />
+                    <EditText
+                        android:id="@+id/editOliKilometer"
+                        style="@style/FormInputWithUnit"
+                        android:hint="@string/current_kilometer_hint"
+                        android:inputType="number" />
 
-        <EditText
-            android:id="@+id/editOliIntervalMonth"
-            style="@style/FormInput"
-            android:hint="@string/oil_interval_month_hint"
-            android:inputType="number" />
+                    <TextView
+                        style="@style/FormUnitText"
+                        android:text="@string/unit_km" />
+                </FrameLayout>
+            </LinearLayout>
 
-        <TextView
-            style="@style/FormLabel"
-            android:text="@string/oil_cost" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/editOliCost"
-            style="@style/FormInput"
-            android:hint="@string/cost_hint"
-            android:inputType="number" />
+                <TextView
+                    style="@style/FormLabel"
+                    android:text="@string/oil_interval_km" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp">
+
+                    <EditText
+                        android:id="@+id/editOliIntervalKm"
+                        style="@style/FormInputWithUnit"
+                        android:hint="@string/oil_interval_hint"
+                        android:inputType="number" />
+
+                    <TextView
+                        style="@style/FormUnitText"
+                        android:text="@string/unit_km" />
+                </FrameLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/FormLabel"
+                    android:text="@string/oil_interval_month" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp">
+
+                    <EditText
+                        android:id="@+id/editOliIntervalMonth"
+                        style="@style/FormInputWithUnit"
+                        android:hint="@string/oil_interval_month_hint"
+                        android:inputType="number" />
+
+                    <TextView
+                        style="@style/FormUnitText"
+                        android:text="@string/unit_month" />
+                </FrameLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/FormLabel"
+                    android:text="@string/oil_cost" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp">
+
+                    <EditText
+                        android:id="@+id/editOliCost"
+                        style="@style/FormInputWithUnit"
+                        android:hint="@string/cost_hint"
+                        android:inputType="number" />
+
+                    <TextView
+                        style="@style/FormUnitText"
+                        android:text="@string/unit_rp" />
+                </FrameLayout>
+            </LinearLayout>
+        </LinearLayout>
 
         <Button
             android:id="@+id/buttonSaveOli"

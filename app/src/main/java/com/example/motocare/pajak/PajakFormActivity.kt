@@ -88,8 +88,6 @@ class PajakFormActivity : AppCompatActivity() {
             }
         } else {
             dueDateInput.setText(SimpleDateFormat("yyyy-MM-dd", Locale.US).format(Date()))
-            typeInput.setText(getString(R.string.default_tax_type))
-            statusInput.setText(getString(R.string.default_tax_status))
         }
     }
 

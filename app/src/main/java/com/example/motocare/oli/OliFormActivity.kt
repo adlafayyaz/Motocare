@@ -91,9 +91,6 @@ class OliFormActivity : AppCompatActivity() {
             }
         } else {
             dateInput.setText(today())
-            typeInput.setText(getString(R.string.default_oil_type))
-            intervalKmInput.setText(DEFAULT_OIL_INTERVAL_KM.toString())
-            intervalMonthInput.setText(DEFAULT_OIL_INTERVAL_MONTH.toString())
         }
     }
 
@@ -153,7 +150,5 @@ class OliFormActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_OLI_ID = "extra_oli_id"
-        private const val DEFAULT_OIL_INTERVAL_KM = 2000
-        private const val DEFAULT_OIL_INTERVAL_MONTH = 3
     }
 }

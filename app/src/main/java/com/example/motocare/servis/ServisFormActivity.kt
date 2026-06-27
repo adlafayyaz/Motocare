@@ -100,9 +100,6 @@ class ServisFormActivity : AppCompatActivity() {
             }
         } else {
             dateInput.setText(today())
-            typeInput.setText(getString(R.string.default_service_type))
-            intervalKmInput.setText(DEFAULT_SERVICE_INTERVAL_KM.toString())
-            intervalMonthInput.setText(DEFAULT_SERVICE_INTERVAL_MONTH.toString())
         }
     }
 
@@ -197,7 +194,5 @@ class ServisFormActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_SERVIS_ID = "extra_servis_id"
-        private const val DEFAULT_SERVICE_INTERVAL_KM = 3000
-        private const val DEFAULT_SERVICE_INTERVAL_MONTH = 6
     }
 }

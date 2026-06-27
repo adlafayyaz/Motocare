@@ -96,8 +96,6 @@ class BensinFormActivity : AppCompatActivity() {
         } else {
             dateInput.setText(today())
             typeInput.setText(getString(R.string.default_fuel_type))
-            brandInput.setText(getString(R.string.default_fuel_brand))
-            octaneInput.setText(getString(R.string.default_fuel_octane))
         }
     }
 

@@ -74,11 +74,20 @@
             android:inputType="date" />
 
         <TextView style="@style/FormLabel" android:text="@string/tax_cost" />
-        <EditText
-            android:id="@+id/editPajakCost"
-            style="@style/FormInput"
-            android:hint="@string/tax_cost_hint"
-            android:inputType="number" />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="64dp">
+
+            <EditText
+                android:id="@+id/editPajakCost"
+                style="@style/FormInputWithUnit"
+                android:hint="@string/tax_cost_hint"
+                android:inputType="number" />
+
+            <TextView
+                style="@style/FormUnitText"
+                android:text="@string/unit_rp" />
+        </FrameLayout>
 
         <TextView style="@style/FormLabel" android:text="@string/tax_status" />
         <EditText

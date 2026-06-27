@@ -2,6 +2,8 @@ package com.example.motocare
 
 import android.content.Intent
 import android.os.Bundle
+import android.transition.AutoTransition
+import android.transition.TransitionManager
 import android.view.MotionEvent
 import android.view.View
 import android.widget.Button
@@ -156,15 +158,14 @@ class DashboardActivity : AppCompatActivity() {
         costMode = showCost
         val cost = findViewById<TextView>(R.id.buttonCostTab)
         val distance = findViewById<TextView>(R.id.buttonDistanceTab)
+        TransitionManager.beginDelayedTransition(findViewById(R.id.dashboardSegment), AutoTransition().apply {
+            duration = 180
+        })
         cost.setBackgroundResource(if (showCost) R.drawable.bg_segment_active else 0)
         distance.setBackgroundResource(if (showCost) 0 else R.drawable.bg_segment_active)
         cost.setTextColor(getColor(if (showCost) R.color.motocare_text else R.color.motocare_muted))
         distance.setTextColor(getColor(if (showCost) R.color.motocare_muted else R.color.motocare_text))
         bindDashboard()
-        val active = if (showCost) cost else distance
-        active.animate().scaleX(1.03f).scaleY(1.03f).setDuration(90).withEndAction {
-            active.animate().scaleX(1f).scaleY(1f).setDuration(90).start()
-        }.start()
     }
 
     private fun openNoAnim(target: Class<out AppCompatActivity>) {
@@ -191,6 +192,7 @@ class DashboardActivity : AppCompatActivity() {
     }
 
     private fun bindEstimate(activeMotor: Motor?) {
+        bindEstimateDots()
         if (activeMotor == null) {
             bindEmptyEstimate()
             return
@@ -200,6 +202,20 @@ class DashboardActivity : AppCompatActivity() {
             1 -> bindOilEstimate(activeMotor.id, activeMotor.currentKilometer)
             2 -> bindTaxEstimate(activeMotor.id)
             else -> bindFuelEstimate(activeMotor.id)
+        }
+    }
+
+    private fun bindEstimateDots() {
+        val dots = listOf(
+            R.id.dotEstimateService,
+            R.id.dotEstimateOil,
+            R.id.dotEstimateTax,
+            R.id.dotEstimateFuel
+        )
+        dots.forEachIndexed { index, id ->
+            findViewById<View>(id).setBackgroundResource(
+                if (index == estimateIndex) R.drawable.bg_dot_yellow else R.drawable.bg_dot_muted
+            )
         }
     }
 
