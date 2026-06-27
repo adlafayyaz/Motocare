@@ -114,10 +114,10 @@ Aplikasi ini menggunakan database lokal untuk menyimpan data motor dan riwayat p
 | ---------- | ------------------------- |
 | `id`       | ID catatan pajak          |
 | `motorId`  | ID motor terkait          |
+| `taxType`  | Jenis pajak               |
 | `dueDate`  | Tanggal jatuh tempo pajak |
-| `taxCost`  | Biaya pajak               |
+| `cost`     | Biaya pajak               |
 | `status`   | Status pembayaran         |
-| `paidDate` | Tanggal pembayaran pajak  |
 
 ## Alur Aplikasi
 

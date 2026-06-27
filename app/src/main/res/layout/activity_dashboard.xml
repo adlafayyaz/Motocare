@@ -256,6 +256,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:singleLine="true"
                 android:textColor="#F4F5FA"
                 android:textSize="34sp"
                 android:textStyle="bold" />

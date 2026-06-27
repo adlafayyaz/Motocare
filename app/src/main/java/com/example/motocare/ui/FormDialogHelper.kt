@@ -3,9 +3,12 @@ package com.example.motocare.ui
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.content.Context
+import android.text.InputType
 import android.view.Gravity
 import android.view.Window
 import android.view.WindowManager
+import android.widget.Button
+import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.motocare.R
@@ -60,9 +63,74 @@ object FormDialogHelper {
                 gravity = Gravity.CENTER_VERTICAL
                 setPadding(0, dp(context, 18), 0, dp(context, 18))
                 setOnClickListener {
-                    onPicked(option)
                     dialog.dismiss()
+                    if (option.equals("Lainnya", true)) {
+                        showTextInput(context, title, onPicked)
+                    } else {
+                        onPicked(option)
+                    }
                 }
+            })
+        }
+        dialog.setContentView(view)
+        dialog.show()
+        dialog.window?.apply {
+            setBackgroundDrawableResource(android.R.color.transparent)
+            setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
+            setGravity(Gravity.BOTTOM)
+        }
+    }
+
+    private fun showTextInput(
+        context: Context,
+        title: String,
+        onPicked: (String) -> Unit
+    ) {
+        val dialog = Dialog(context)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        val input = EditText(context).apply {
+            setBackgroundResource(R.drawable.bg_input_dark)
+            setTextColor(context.getColor(R.color.motocare_text))
+            setHintTextColor(context.getColor(R.color.motocare_muted))
+            hint = title
+            inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
+            setPadding(dp(context, 18), 0, dp(context, 18), 0)
+            minHeight = dp(context, 56)
+        }
+        val view = LinearLayout(context).apply {
+            orientation = LinearLayout.VERTICAL
+            setBackgroundResource(R.drawable.bg_bottom_sheet_dark)
+            setPadding(dp(context, 24), dp(context, 26), dp(context, 24), dp(context, 24))
+            addView(TextView(context).apply {
+                text = title
+                setTextColor(context.getColor(R.color.motocare_text))
+                textSize = 20f
+                setTypeface(typeface, android.graphics.Typeface.BOLD)
+            })
+            addView(input, LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                dp(context, 56)
+            ).apply {
+                topMargin = dp(context, 18)
+            })
+            addView(Button(context).apply {
+                text = context.getString(R.string.save)
+                setTextColor(context.getColor(R.color.motocare_background))
+                setBackgroundColor(context.getColor(R.color.motocare_yellow))
+                setOnClickListener {
+                    val value = input.text.toString().trim()
+                    if (value.isNotEmpty()) {
+                        onPicked(value)
+                        dialog.dismiss()
+                    } else {
+                        input.error = context.getString(R.string.error_field_required)
+                    }
+                }
+            }, LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                dp(context, 52)
+            ).apply {
+                topMargin = dp(context, 18)
             })
         }
         dialog.setContentView(view)

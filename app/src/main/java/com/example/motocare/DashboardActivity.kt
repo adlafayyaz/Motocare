@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.transition.AutoTransition
 import android.transition.TransitionManager
+import android.util.TypedValue
 import android.view.MotionEvent
 import android.view.View
 import android.widget.Button
@@ -228,8 +229,11 @@ class DashboardActivity : AppCompatActivity() {
     ) {
         if (costMode) {
             findViewById<TextView>(R.id.textDashboardMetricTitle).text = getString(R.string.monthly_expense)
-            findViewById<TextView>(R.id.textMonthlyTotal).text =
-                formatRupiah(fuelTotal + serviceTotal + oilTotal + taxTotal)
+            val totalExpense = fuelTotal + serviceTotal + oilTotal + taxTotal
+            findViewById<TextView>(R.id.textMonthlyTotal).apply {
+                text = formatRupiah(totalExpense)
+                fitMetricAmount(totalExpense)
+            }
             findViewById<TextView>(R.id.textTransactionCount).text = getString(
                 R.string.transactions_count_value,
                 dbHelper.getRecordCount(activeMotor?.id)
@@ -253,9 +257,12 @@ class DashboardActivity : AppCompatActivity() {
         val fuelLiters = activeMotor?.let { fuelLiters(it.id) }
 
         findViewById<TextView>(R.id.textDashboardMetricTitle).text = getString(R.string.distance_overview)
-        findViewById<TextView>(R.id.textMonthlyTotal).text = activeMotor?.let {
-            getString(R.string.km_value_short, it.currentKilometer)
-        } ?: "-"
+        findViewById<TextView>(R.id.textMonthlyTotal).apply {
+            text = activeMotor?.let {
+                getString(R.string.km_value_short, it.currentKilometer)
+            } ?: "-"
+            fitMetricAmount(activeMotor?.currentKilometer ?: 0)
+        }
         findViewById<TextView>(R.id.textTransactionCount).text = getString(R.string.active_motor_distance)
         findViewById<TextView>(R.id.textServiceTotal).text = serviceKm?.let {
             getString(R.string.km_remaining_value, it)
@@ -407,6 +414,15 @@ class DashboardActivity : AppCompatActivity() {
 
     private fun formatRupiah(value: Int): String {
         return "Rp ${NumberFormat.getNumberInstance(Locale("id", "ID")).format(value)}"
+    }
+
+    private fun TextView.fitMetricAmount(value: Int) {
+        val size = when {
+            value >= 100_000_000 -> 24f
+            value >= 1_000_000 -> 27f
+            else -> 34f
+        }
+        setTextSize(TypedValue.COMPLEX_UNIT_SP, size)
     }
 
     private companion object {
