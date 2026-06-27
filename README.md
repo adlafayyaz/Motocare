@@ -6,12 +6,12 @@ MotoCare adalah aplikasi mobile berbasis Android yang digunakan untuk mencatat s
 
 Banyak pengguna motor sering lupa kapan terakhir servis, ganti oli, atau membayar pajak kendaraan. MotoCare membantu pengguna mencatat semua informasi tersebut secara lebih rapi dalam satu aplikasi.
 
-Aplikasi ini bersifat personal. Login menggunakan Google, sedangkan data utama kendaraan tetap disimpan secara lokal di perangkat pengguna.
+Aplikasi ini bersifat personal. Login menggunakan Google, sedangkan data utama kendaraan tetap disimpan secara lokal di perangkat pengguna. Data setiap akun dipisahkan berdasarkan akun Google yang sedang login.
 
 ## Fitur Utama
 
 * Onboarding pengenalan fitur aplikasi
-* Login menggunakan Google
+* Login menggunakan Google melalui Firebase Authentication
 * Setup awal data motor
 * Setup opsional servis, oli, dan pajak
 * Mengelola beberapa motor
@@ -25,7 +25,8 @@ Aplikasi ini bersifat personal. Login menggunakan Google, sedangkan data utama k
 * Menghitung estimasi servis dan oli berikutnya dari kilometer serta interval bulan
 * Melihat riwayat servis, oli, pajak, dan bensin dengan tab
 * Mengubah dan menghapus data catatan
-* Mengelola profil, pengaturan, backup/export, dan tentang aplikasi
+* Backup dan import data lokal dalam format JSON
+* Mengelola profil, pengaturan, dan tentang aplikasi
 
 ## Teknologi yang Digunakan
 
@@ -46,16 +47,16 @@ Aplikasi ini menggunakan database lokal untuk menyimpan data motor dan riwayat p
 
 | Tabel             | Fungsi                               |
 | ----------------- | ------------------------------------ |
-| `users`           | Menyimpan profil pengguna login       |
-| `motors`          | Menyimpan data motor pengguna         |
-| `service_records` | Menyimpan riwayat servis motor        |
-| `oil_records`     | Menyimpan catatan ganti oli           |
-| `fuel_records`    | Menyimpan catatan pengeluaran bensin  |
-| `tax_records`     | Menyimpan informasi pajak/STNK        |
+| `users`           | Menyimpan profil pengguna login      |
+| `motors`          | Menyimpan data motor pengguna        |
+| `service_records` | Menyimpan riwayat servis motor       |
+| `oil_records`     | Menyimpan catatan ganti oli          |
+| `fuel_records`    | Menyimpan catatan pengeluaran bensin |
+| `tax_records`     | Menyimpan informasi pajak/STNK       |
 
-### Struktur Data Utama
+## Struktur Data Utama
 
-#### `motors`
+### `motors`
 
 | Field              | Keterangan               |
 | ------------------ | ------------------------ |
@@ -65,59 +66,59 @@ Aplikasi ini menggunakan database lokal untuk menyimpan data motor dan riwayat p
 | `currentKilometer` | Kilometer motor saat ini |
 | `isActive`         | Status motor aktif       |
 
-#### `service_records`
+### `service_records`
 
-| Field         | Keterangan            |
-| ------------- | --------------------- |
-| `id`          | ID riwayat servis     |
-| `motorId`     | ID motor terkait      |
-| `serviceDate` | Tanggal servis        |
-| `serviceType` | Jenis servis          |
-| `kilometer`   | Kilometer saat servis |
-| `intervalKm`  | Interval servis KM    |
+| Field           | Keterangan            |
+| --------------- | --------------------- |
+| `id`            | ID riwayat servis     |
+| `motorId`       | ID motor terkait      |
+| `serviceDate`   | Tanggal servis        |
+| `serviceType`   | Jenis servis          |
+| `kilometer`     | Kilometer saat servis |
+| `intervalKm`    | Target KM servis      |
 | `intervalMonth` | Interval servis bulan |
-| `cost`        | Biaya servis          |
-| `note`        | Catatan tambahan      |
+| `cost`          | Biaya servis          |
+| `note`          | Catatan tambahan      |
 
-#### `oil_records`
+### `oil_records`
 
-| Field           | Keterangan                              |
-| --------------- | --------------------------------------- |
-| `id`            | ID catatan oli                          |
-| `motorId`       | ID motor terkait                        |
-| `oilChangeDate` | Tanggal ganti oli                       |
-| `kilometer`     | Kilometer saat ganti oli                |
-| `nextKilometer` | Estimasi kilometer ganti oli berikutnya |
-| `intervalKm`    | Interval oli KM                         |
-| `intervalMonth` | Interval oli bulan                      |
-| `oilType`       | Jenis oli                               |
-| `cost`          | Biaya ganti oli                         |
+| Field           | Keterangan                            |
+| --------------- | ------------------------------------- |
+| `id`            | ID catatan oli                        |
+| `motorId`       | ID motor terkait                      |
+| `oilChangeDate` | Tanggal ganti oli                     |
+| `kilometer`     | Kilometer saat ganti oli              |
+| `nextKilometer` | Target kilometer ganti oli berikutnya |
+| `intervalKm`    | Target KM oli                         |
+| `intervalMonth` | Interval oli bulan                    |
+| `oilType`       | Jenis oli                             |
+| `cost`          | Biaya ganti oli                       |
 
-#### `fuel_records`
+### `fuel_records`
 
-| Field       | Keterangan                |
-| ----------- | ------------------------- |
-| `id`        | ID catatan bensin         |
-| `motorId`   | ID motor terkait          |
-| `fuelDate`  | Tanggal isi bensin        |
-| `fuelType`  | Jenis BBM                 |
-| `fuelBrand` | Merek BBM                 |
-| `octane`    | Oktan BBM                 |
-| `pricePerLiter` | Harga per liter       |
-| `liter`     | Jumlah liter bensin       |
-| `cost`      | Biaya bensin              |
-| `kilometer` | Kilometer saat isi bensin |
+| Field           | Keterangan                |
+| --------------- | ------------------------- |
+| `id`            | ID catatan bensin         |
+| `motorId`       | ID motor terkait          |
+| `fuelDate`      | Tanggal isi bensin        |
+| `fuelType`      | Jenis BBM                 |
+| `fuelBrand`     | Merek BBM                 |
+| `octane`        | Oktan BBM                 |
+| `pricePerLiter` | Harga per liter           |
+| `liter`         | Jumlah liter bensin       |
+| `cost`          | Total biaya bensin        |
+| `kilometer`     | Kilometer saat isi bensin |
 
-#### `tax_records`
+### `tax_records`
 
-| Field      | Keterangan                |
-| ---------- | ------------------------- |
-| `id`       | ID catatan pajak          |
-| `motorId`  | ID motor terkait          |
-| `taxType`  | Jenis pajak               |
-| `dueDate`  | Tanggal jatuh tempo pajak |
-| `cost`     | Biaya pajak               |
-| `status`   | Status pembayaran         |
+| Field     | Keterangan                |
+| --------- | ------------------------- |
+| `id`      | ID catatan pajak          |
+| `motorId` | ID motor terkait          |
+| `taxType` | Jenis pajak               |
+| `dueDate` | Tanggal jatuh tempo pajak |
+| `cost`    | Biaya pajak               |
+| `status`  | Status pembayaran         |
 
 ## Alur Aplikasi
 
@@ -133,7 +134,7 @@ Aplikasi ini menggunakan database lokal untuk menyimpan data motor dan riwayat p
 10. Riwayat ditampilkan dengan tab servis, oli, pajak, dan bensin.
 11. Aplikasi dapat mengambil harga BBM terbaru untuk membantu input bensin.
 12. Data tersimpan di database lokal dan tetap bisa dipakai offline.
-13. Pengguna dapat membuka profil, pengaturan, backup/export, dan tentang aplikasi.
+13. Pengguna dapat membuka profil, pengaturan, backup/import, dan tentang aplikasi.
 
 ## Aturan Estimasi Servis dan Oli
 
@@ -144,20 +145,30 @@ Servis dan oli memakai dua patokan:
 
 Aplikasi menampilkan estimasi yang lebih dulu tercapai di dashboard dan riwayat.
 
-Default awal:
+Default rekomendasi:
 
-| Jenis  | Kilometer | Waktu   |
-| ------ | --------- | ------- |
+| Jenis  | Kilometer | Waktu                |
+| ------ | --------- | -------------------- |
 | Servis | 4.000 km  | Bisa diatur pengguna |
 | Oli    | 3.000 km  | Bisa diatur pengguna |
 
+Jika kilometer motor sudah mencapai target servis, oli, atau pajak sudah jatuh tempo, aplikasi menampilkan status peringatan.
+
 ## Data Harga BBM
 
-Aplikasi mengambil data harga BBM dari website sumber harga bensin. Data ini digunakan untuk membantu pengisian harga per liter pada catatan bensin.
+Aplikasi mengambil data harga BBM dari website sumber harga bensin:
 
-Merek dan RON yang tidak memiliki harga valid, bernilai `0`, atau bernilai `-` tidak ditampilkan sebagai pilihan.
+```text
+https://isibens.in/
+```
 
-Data harga hanya digunakan untuk membantu input bensin. Jika pengambilan data gagal, pengguna tetap bisa memasukkan harga secara manual.
+Data ini digunakan untuk membantu pengisian harga per liter pada catatan bensin. Merek dan RON yang tidak memiliki harga valid, bernilai `0`, atau bernilai `-` tidak ditampilkan sebagai pilihan.
+
+Jika pengambilan data gagal, pengguna tetap bisa memasukkan harga secara manual.
+
+## Backup dan Import
+
+Data lokal dapat diekspor dan diimpor dalam format JSON. Format JSON mengikuti struktur tabel lokal aplikasi dan digunakan untuk salinan data pribadi pengguna.
 
 ## Desain
 
@@ -166,17 +177,6 @@ Desain final berada di Figma:
 ```text
 https://www.figma.com/design/SmNYZgqyZJYoF57be2rz5w/Motocare-Design--Copy-?node-id=2012-53&p=f&t=YSW39PW2qMv2LDrx-0
 ```
-
-Ringkasan desain:
-
-* Onboarding 3 slide
-* Google login
-* Setup awal motor, servis, oli, pajak
-* Dashboard motor aktif
-* Pilih beberapa motor
-* Catat servis, oli, bensin, pajak
-* Riwayat dengan tab
-* Profile, pengaturan, backup/export, tentang aplikasi
 
 ## Cara Menjalankan Project
 
@@ -187,18 +187,21 @@ git clone https://github.com/adlafayyaz/Motocare.git
 ```
 
 2. Buka project menggunakan Android Studio.
-
 3. Tunggu proses Gradle Sync selesai.
-
-4. Jalankan aplikasi menggunakan emulator atau perangkat Android.
+4. Pastikan konfigurasi Firebase tersedia untuk fitur Google Login.
+5. Jalankan aplikasi menggunakan emulator atau perangkat Android.
 
 ## Anggota Kelompok
 
-| Nama                              | NIM             | Role                                     |
-| --------------------------------- | --------------- | ---------------------------------------- |
-| Khaliz Kanigara Fathi Gunawan     | 2410512151      | Project Manager & Lead Backend Developer |
-| Fathi Muhammad Luthfi Cardiana    | 2410512142      | UI/UX Designer & Frontend Developer      |
-| M. Adla Fayyaz Fauzy              | 2410512154      | Frontend Developer - List & Navigation   |
-| Rafid Abdan Syakur                | 2410512141      | Backend Developer                        |
-| M. Syauqi Rabbani                 | 2410512166      | System Analyst                           |
-| Ananta Jordan Surya Putra Ginting | 2410512164      | Quality Assurance & Technical Writer     |
+| Nama                              | NIM        | Role                                     |
+| --------------------------------- | ---------- | ---------------------------------------- |
+| Khaliz Kanigara Fathi Gunawan     | 2410512151 | Project Manager & Lead Backend Developer |
+| Fathi Muhammad Luthfi Cardiana    | 2410512142 | UI/UX Designer & Frontend Developer      |
+| M. Adla Fayyaz Fauzy              | 2410512154 | Frontend Developer - List & Navigation   |
+| Rafid Abdan Syakur                | 2410512141 | Backend Developer                        |
+| M. Syauqi Rabbani                 | 2410512166 | System Analyst                           |
+| Ananta Jordan Surya Putra Ginting | 2410512164 | Quality Assurance & Technical Writer     |
+
+## License
+
+Project ini dibuat untuk kebutuhan pembelajaran sebagai proyek akhir mata kuliah Pemrograman Mobile / Pemrograman Perangkat Bergerak.
