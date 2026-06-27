@@ -81,7 +81,6 @@
             <EditText
                 android:id="@+id/editPajakCost"
                 style="@style/FormInputWithUnit"
-                android:hint="@string/tax_cost_hint"
                 android:inputType="number" />
 
             <TextView

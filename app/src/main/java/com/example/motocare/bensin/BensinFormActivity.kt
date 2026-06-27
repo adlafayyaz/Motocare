@@ -1,6 +1,8 @@
 package com.example.motocare.bensin
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -32,6 +34,7 @@ class BensinFormActivity : AppCompatActivity() {
     private lateinit var kilometerInput: EditText
     private var bensinId: Long = 0
     private var motorId: Long = 0
+    private var updatingCost = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +47,7 @@ class BensinFormActivity : AppCompatActivity() {
         bindViews()
         bindMotor()
         bindExisting()
+        setupAutoCost()
 
         dateInput.setOnClickListener { showDatePicker() }
         brandInput.setOnClickListener { showBrandPicker() }
@@ -117,8 +121,8 @@ class BensinFormActivity : AppCompatActivity() {
     }
 
     private fun showOctanePicker() {
-        val brand = brandInput.text.toString().ifBlank { getString(R.string.default_fuel_brand) }
-        val octanes = FUEL_OPTIONS[brand] ?: FUEL_OPTIONS.getValue(getString(R.string.default_fuel_brand))
+        val brand = brandInput.text.toString().ifBlank { "Pertamina" }
+        val octanes = FUEL_OPTIONS[brand] ?: FUEL_OPTIONS.getValue("Pertamina")
         FormDialogHelper.showOptionPicker(this, getString(R.string.fuel_octane), octanes) {
             octaneInput.setText(it)
         }
@@ -134,6 +138,7 @@ class BensinFormActivity : AppCompatActivity() {
             runOnUiThread {
                 result.onSuccess { price ->
                     priceInput.setText(price.price.toString())
+                    updateCostFromFuelInputs()
                     apiStatus.text = price.product
                 }.onFailure { error ->
                     apiStatus.text = getString(R.string.fuel_api_failed_detail, error.message ?: "-")
@@ -150,7 +155,7 @@ class BensinFormActivity : AppCompatActivity() {
         val price = requiredInt(priceInput, R.string.error_fuel_price_required) ?: return
         val liter = requiredDouble(literInput, R.string.error_fuel_liter_required) ?: return
         val kilometer = requiredInt(kilometerInput, R.string.error_kilometer_required) ?: return
-        val cost = costInput.text.toString().trim().toIntOrNull() ?: (price * liter).roundToInt()
+        val cost = (price * liter).roundToInt()
 
         val bensin = Bensin(
             id = bensinId,
@@ -180,6 +185,31 @@ class BensinFormActivity : AppCompatActivity() {
                 finish()
             }
             .show()
+    }
+
+    private fun setupAutoCost() {
+        val watcher = object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                updateCostFromFuelInputs()
+            }
+            override fun afterTextChanged(s: Editable?) = Unit
+        }
+        priceInput.addTextChangedListener(watcher)
+        literInput.addTextChangedListener(watcher)
+        updateCostFromFuelInputs()
+    }
+
+    private fun updateCostFromFuelInputs() {
+        if (updatingCost) return
+        val price = priceInput.text.toString().trim().toIntOrNull()
+        val liter = literInput.text.toString().trim().toDoubleOrNull()
+        if (price == null || liter == null) return
+
+        updatingCost = true
+        costInput.setText((price * liter).roundToInt().toString())
+        costInput.setSelection(costInput.text.length)
+        updatingCost = false
     }
 
     private fun required(input: EditText, errorRes: Int): String? {

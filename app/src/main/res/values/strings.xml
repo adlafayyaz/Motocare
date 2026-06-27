@@ -226,8 +226,8 @@
     <string name="tax_cost">Estimasi biaya pajak</string>
     <string name="tax_status">Status</string>
     <string name="tax_cost_hint">385000</string>
-    <string name="default_tax_status">Belum bayar</string>
-    <string name="default_tax_type">STNK tahunan</string>
+    <string name="default_tax_status">Pilih status</string>
+    <string name="default_tax_type">Pilih jenis pajak</string>
     <string name="pajak_saved">Pajak tersimpan.</string>
     <string name="error_tax_type_required">Jenis pajak wajib diisi.</string>
     <string name="error_tax_status_required">Status wajib diisi.</string>

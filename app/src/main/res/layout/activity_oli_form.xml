@@ -102,7 +102,6 @@
                     <EditText
                         android:id="@+id/editOliKilometer"
                         style="@style/FormInputWithUnit"
-                        android:hint="@string/current_kilometer_hint"
                         android:inputType="number" />
 
                     <TextView
@@ -129,7 +128,6 @@
                     <EditText
                         android:id="@+id/editOliIntervalKm"
                         style="@style/FormInputWithUnit"
-                        android:hint="@string/oil_interval_hint"
                         android:inputType="number" />
 
                     <TextView
@@ -162,7 +160,6 @@
                     <EditText
                         android:id="@+id/editOliIntervalMonth"
                         style="@style/FormInputWithUnit"
-                        android:hint="@string/oil_interval_month_hint"
                         android:inputType="number" />
 
                     <TextView
@@ -189,7 +186,6 @@
                     <EditText
                         android:id="@+id/editOliCost"
                         style="@style/FormInputWithUnit"
-                        android:hint="@string/cost_hint"
                         android:inputType="number" />
 
                     <TextView

@@ -45,7 +45,6 @@
             android:layout_height="62dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/bg_input_dark"
-            android:hint="@string/motor_name_hint"
             android:inputType="textCapWords"
             android:paddingStart="18dp"
             android:paddingEnd="18dp"
@@ -68,7 +67,6 @@
             android:layout_height="62dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/bg_input_dark"
-            android:hint="@string/plate_number_hint"
             android:inputType="textCapCharacters"
             android:paddingStart="18dp"
             android:paddingEnd="18dp"
@@ -85,19 +83,24 @@
             android:textSize="15sp"
             android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/editCurrentKilometer"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="62dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/bg_input_dark"
-            android:hint="@string/current_kilometer_hint"
-            android:inputType="number"
-            android:paddingStart="18dp"
-            android:paddingEnd="18dp"
-            android:textColor="#F4F5FA"
-            android:textColorHint="#8B91A5"
-            android:textSize="16sp" />
+            android:layout_height="70dp">
+
+            <EditText
+                android:id="@+id/editCurrentKilometer"
+                style="@style/FormInputWithUnit"
+                android:layout_height="62dp"
+                android:layout_marginTop="10dp"
+                android:textSize="16sp"
+                android:inputType="number" />
+
+            <TextView
+                style="@style/FormUnitText"
+                android:layout_height="62dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/unit_km" />
+        </FrameLayout>
 
         <Button
             android:id="@+id/buttonSaveMotor"

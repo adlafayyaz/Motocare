@@ -49,14 +49,14 @@ class PajakFormActivity : AppCompatActivity() {
             FormDialogHelper.showOptionPicker(
                 this,
                 getString(R.string.tax_type),
-                listOf(getString(R.string.default_tax_type), "Pajak 5 tahunan", "Balik nama", "Denda pajak")
+                listOf("STNK tahunan", "Pajak 5 tahunan", "Balik nama", "Denda pajak")
             ) { typeInput.setText(it) }
         }
         statusInput.setOnClickListener {
             FormDialogHelper.showOptionPicker(
                 this,
                 getString(R.string.tax_status),
-                listOf(getString(R.string.default_tax_status), "Lunas", "Aktif")
+                listOf("Belum bayar", "Lunas", "Aktif")
             ) { statusInput.setText(it) }
         }
         findViewById<Button>(R.id.buttonSavePajak).setOnClickListener { savePajak() }

@@ -131,7 +131,6 @@
                     <EditText
                         android:id="@+id/editFuelPrice"
                         style="@style/FormInputWithUnit"
-                        android:hint="@string/fuel_price_hint"
                         android:inputType="number" />
                     <TextView
                         style="@style/FormUnitText"
@@ -153,7 +152,6 @@
                     <EditText
                         android:id="@+id/editFuelLiter"
                         style="@style/FormInputWithUnit"
-                        android:hint="@string/fuel_liter_hint"
                         android:inputType="numberDecimal" />
                     <TextView
                         style="@style/FormUnitText"
@@ -181,7 +179,6 @@
                     <EditText
                         android:id="@+id/editFuelCost"
                         style="@style/FormInputWithUnit"
-                        android:hint="@string/fuel_cost_hint"
                         android:inputType="number" />
                     <TextView
                         style="@style/FormUnitText"
@@ -203,7 +200,6 @@
                     <EditText
                         android:id="@+id/editFuelKilometer"
                         style="@style/FormInputWithUnit"
-                        android:hint="@string/current_kilometer_hint"
                         android:inputType="number" />
                     <TextView
                         style="@style/FormUnitText"

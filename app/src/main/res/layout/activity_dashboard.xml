@@ -404,25 +404,26 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/textNextServiceValue"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="end"
-                    android:singleLine="true"
-                    android:textColor="#F4F5FA"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <TextView
                     android:id="@+id/textNextServiceLabel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
                     android:gravity="end"
                     android:singleLine="true"
                     android:text="@string/target_label"
-                    android:textColor="#8B91A5"
-                    android:textSize="12sp" />
+                    android:textColor="#FFCB25"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textNextServiceValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="end"
+                    android:singleLine="true"
+                    android:textColor="#F4F5FA"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
 

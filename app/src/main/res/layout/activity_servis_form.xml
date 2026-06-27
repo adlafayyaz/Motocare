@@ -111,7 +111,6 @@
                     <EditText
                         android:id="@+id/editServisKilometer"
                         style="@style/FormInputWithUnit"
-                        android:hint="@string/current_kilometer_hint"
                         android:inputType="number" />
 
                     <TextView
@@ -138,7 +137,6 @@
                     <EditText
                         android:id="@+id/editServisIntervalKm"
                         style="@style/FormInputWithUnit"
-                        android:hint="@string/service_interval_hint"
                         android:inputType="number" />
 
                     <TextView
@@ -189,7 +187,6 @@
                     <EditText
                         android:id="@+id/editServisIntervalMonth"
                         style="@style/FormInputWithUnit"
-                        android:hint="@string/service_interval_month_hint"
                         android:inputType="number" />
 
                     <TextView
@@ -216,7 +213,6 @@
                     <EditText
                         android:id="@+id/editServisCost"
                         style="@style/FormInputWithUnit"
-                        android:hint="@string/cost_hint"
                         android:inputType="text" />
 
                     <TextView
