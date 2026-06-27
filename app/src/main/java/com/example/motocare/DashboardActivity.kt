@@ -19,6 +19,7 @@ import com.example.motocare.profile.ProfileStore
 import com.example.motocare.servis.ServisListActivity
 import com.example.motocare.ui.DashboardDonutView
 import com.google.firebase.auth.FirebaseAuth
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Locale
 import kotlin.math.ceil
@@ -138,18 +139,16 @@ class DashboardActivity : AppCompatActivity() {
     ) {
         if (costMode) {
             findViewById<TextView>(R.id.textDashboardMetricTitle).text = getString(R.string.monthly_expense)
-            findViewById<TextView>(R.id.textMonthlyTotal).text = getString(
-                R.string.rupiah_value,
-                fuelTotal + serviceTotal + oilTotal + taxTotal
-            )
+            findViewById<TextView>(R.id.textMonthlyTotal).text =
+                formatRupiah(fuelTotal + serviceTotal + oilTotal + taxTotal)
             findViewById<TextView>(R.id.textTransactionCount).text = getString(
                 R.string.transactions_count_value,
                 dbHelper.getRecordCount()
             )
-            findViewById<TextView>(R.id.textServiceTotal).text = getString(R.string.rupiah_value, serviceTotal)
-            findViewById<TextView>(R.id.textOilTotal).text = getString(R.string.rupiah_value, oilTotal)
-            findViewById<TextView>(R.id.textTaxTotal).text = getString(R.string.rupiah_value, taxTotal)
-            findViewById<TextView>(R.id.textFuelTotal).text = getString(R.string.rupiah_value, fuelTotal)
+            findViewById<TextView>(R.id.textServiceTotal).text = formatRupiah(serviceTotal)
+            findViewById<TextView>(R.id.textOilTotal).text = formatRupiah(oilTotal)
+            findViewById<TextView>(R.id.textTaxTotal).text = formatRupiah(taxTotal)
+            findViewById<TextView>(R.id.textFuelTotal).text = formatRupiah(fuelTotal)
             findViewById<DashboardDonutView>(R.id.dashboardDonut).setData(
                 fuel = fuelTotal,
                 service = serviceTotal,
@@ -227,7 +226,7 @@ class DashboardActivity : AppCompatActivity() {
             ?: dbHelper.getPajakByMotor(motorId).firstOrNull()
         findViewById<TextView>(R.id.textTaxTotal).text = nearest?.let { pajak ->
             val days = daysUntil(pajak)
-            if (days == null) getString(R.string.rupiah_value, pajak.cost) else getString(R.string.days_value, days)
+            if (days == null) formatRupiah(pajak.cost) else getString(R.string.days_value, days)
         } ?: "-"
     }
 
@@ -263,6 +262,10 @@ class DashboardActivity : AppCompatActivity() {
 
     private fun serviceTargetKm(kilometer: Int, targetOrInterval: Int): Int {
         return if (targetOrInterval > kilometer) targetOrInterval else kilometer + targetOrInterval
+    }
+
+    private fun formatRupiah(value: Int): String {
+        return "Rp ${NumberFormat.getNumberInstance(Locale("id", "ID")).format(value)}"
     }
 
     private companion object {
