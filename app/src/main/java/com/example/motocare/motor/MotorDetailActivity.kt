@@ -16,7 +16,9 @@ import com.example.motocare.data.MotoCareDbHelper
 import com.example.motocare.data.Motor
 import com.example.motocare.navigation.BottomNavBinder
 import java.text.NumberFormat
+import java.text.SimpleDateFormat
 import java.util.Locale
+import kotlin.math.ceil
 
 class MotorDetailActivity : AppCompatActivity() {
     private lateinit var dbHelper: MotoCareDbHelper
@@ -76,26 +78,63 @@ class MotorDetailActivity : AppCompatActivity() {
     }
 
     private fun bindSummary(current: Motor) {
+        val serviceDue = dbHelper.getLatestServis(current.id)?.let { servis ->
+            val targetKm = serviceTargetKm(servis.kilometer, servis.intervalKm)
+            current.currentKilometer >= targetKm
+        } == true
         val serviceValue = dbHelper.getLatestServis(current.id)?.let { servis ->
             val targetKm = serviceTargetKm(servis.kilometer, servis.intervalKm)
-            getString(R.string.service_remaining_meta, (targetKm - current.currentKilometer).coerceAtLeast(0))
+            if (serviceDue) {
+                getString(R.string.service_due_now)
+            } else {
+                getString(R.string.service_remaining_meta, (targetKm - current.currentKilometer).coerceAtLeast(0))
+            }
         } ?: getString(R.string.no_data_short)
 
+        val oilDue = dbHelper.getLatestOli(current.id)?.let { oli ->
+            current.currentKilometer >= oli.nextKilometer
+        } == true
         val oilValue = dbHelper.getLatestOli(current.id)?.let { oli ->
-            getString(R.string.km_remaining_value, (oli.nextKilometer - current.currentKilometer).coerceAtLeast(0))
+            if (oilDue) {
+                getString(R.string.oil_due_now)
+            } else {
+                getString(R.string.km_remaining_value, (oli.nextKilometer - current.currentKilometer).coerceAtLeast(0))
+            }
         } ?: getString(R.string.no_data_short)
 
-        val taxValue = dbHelper.getPajakByMotor(current.id).firstOrNull()?.dueDate
+        val pajak = dbHelper.getPajakByMotor(current.id).firstOrNull()
+        val taxDue = pajak?.let {
+            it.status.equals("Belum bayar", true) && (daysUntil(it.dueDate) ?: 1) <= 0
+        } == true
+        val taxValue = pajak?.let {
+            if (taxDue) getString(R.string.tax_due_now) else it.dueDate
+        }
             ?: getString(R.string.no_data_short)
 
         val fuelValue = dbHelper.getBensinByMotor(current.id).firstOrNull()?.let { bensin ->
             getString(R.string.fuel_liter_value, bensin.liter)
         } ?: getString(R.string.no_data_short)
 
-        findViewById<TextView>(R.id.textSummaryServiceValue).text = serviceValue
-        findViewById<TextView>(R.id.textSummaryOilValue).text = oilValue
-        findViewById<TextView>(R.id.textSummaryTaxValue).text = taxValue
+        bindSummaryText(R.id.textSummaryServiceValue, serviceValue, serviceDue)
+        bindSummaryText(R.id.textSummaryOilValue, oilValue, oilDue)
+        bindSummaryText(R.id.textSummaryTaxValue, taxValue, taxDue)
         findViewById<TextView>(R.id.textSummaryFuelValue).text = fuelValue
+    }
+
+    private fun bindSummaryText(id: Int, value: String, overdue: Boolean) {
+        findViewById<TextView>(id).apply {
+            text = value
+            setTextColor(getColor(if (overdue) R.color.motocare_error else R.color.motocare_muted))
+        }
+    }
+
+    private fun daysUntil(date: String): Int? {
+        return runCatching {
+            val format = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+            val due = format.parse(date) ?: return null
+            val today = format.parse(format.format(System.currentTimeMillis())) ?: return null
+            ceil((due.time - today.time) / DAY_MILLIS.toDouble()).toInt()
+        }.getOrNull()
     }
 
     private fun serviceTargetKm(kilometer: Int, targetOrInterval: Int): Int {
@@ -124,5 +163,6 @@ class MotorDetailActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_MOTOR_ID = "extra_motor_id"
+        private const val DAY_MILLIS = 86_400_000L
     }
 }

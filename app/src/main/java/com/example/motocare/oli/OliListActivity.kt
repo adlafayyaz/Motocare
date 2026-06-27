@@ -79,6 +79,7 @@ class OliListActivity : AppCompatActivity() {
             showEmptyState()
             summaryValue.text = "-"
             summaryMeta.text = getString(R.string.add_motor_first)
+            setSummaryStatusColor(false)
             motorName.text = getString(R.string.no_active_motor)
             motorPlate.text = ""
             return
@@ -94,11 +95,22 @@ class OliListActivity : AppCompatActivity() {
         if (latest == null) {
             summaryValue.text = getString(R.string.no_data_short)
             summaryMeta.text = getString(R.string.no_oli_data_short)
+            setSummaryStatusColor(false)
         } else {
+            val overdue = motor.currentKilometer >= latest.nextKilometer
             val remainingKm = (latest.nextKilometer - motor.currentKilometer).coerceAtLeast(0)
-            summaryValue.text = getString(R.string.km_remaining_value, remainingKm)
+            summaryValue.text =
+                if (overdue) getString(R.string.oil_due_now) else getString(R.string.km_remaining_value, remainingKm)
             summaryMeta.text = getString(R.string.oli_next_km_value, latest.nextKilometer)
+            setSummaryStatusColor(overdue)
         }
+    }
+
+    private fun setSummaryStatusColor(overdue: Boolean) {
+        val color = getColor(if (overdue) R.color.motocare_error else R.color.motocare_text)
+        val metaColor = getColor(if (overdue) R.color.motocare_error else R.color.motocare_yellow)
+        summaryValue.setTextColor(color)
+        summaryMeta.setTextColor(metaColor)
     }
 
     private fun bindEmptyVisibility(isEmpty: Boolean) {

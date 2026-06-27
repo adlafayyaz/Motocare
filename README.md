@@ -1,6 +1,6 @@
 # MotoCare
 
-MotoCare adalah aplikasi Android sederhana untuk mencatat perawatan dan pengeluaran motor, seperti servis, ganti oli, bensin, dan pajak/STNK. Aplikasi ini dibuat sebagai proyek akhir mata kuliah Pemrograman Mobile / Pemrograman Perangkat Bergerak.
+MotoCare adalah aplikasi mobile berbasis Android yang digunakan untuk mencatat servis motor, jadwal ganti oli, pajak/STNK, pengeluaran bensin, dan estimasi biaya perawatan motor setiap bulan. Aplikasi ini dibuat sebagai proyek akhir mata kuliah Pemrograman Mobile / Pemrograman Perangkat Bergerak.
 
 ## Deskripsi
 
@@ -19,7 +19,7 @@ Aplikasi ini bersifat personal. Login menggunakan Google, sedangkan data utama k
 * Mencatat riwayat servis
 * Mencatat jadwal dan riwayat ganti oli
 * Mencatat pengeluaran bensin
-* Mengambil harga bensin terbaru dari API hargaBensin
+* Mengambil harga bensin terbaru dari data harga BBM
 * Mencatat informasi pajak/STNK
 * Melihat ringkasan pengeluaran bulanan
 * Menghitung estimasi servis dan oli berikutnya dari kilometer serta interval bulan
@@ -33,12 +33,12 @@ Aplikasi ini bersifat personal. Login menggunakan Google, sedangkan data utama k
 * Android Studio
 * Gradle
 * XML Layout
-* SQLite / Room Database
+* SQLite Database
 * RecyclerView
 * Intent & Activity
 * Firebase Authentication untuk Google login
 * Material Vector Drawable untuk icon
-* API hargaBensin untuk harga BBM
+* Scraping data harga BBM dari sumber harga bensin
 
 ## Database Overview
 
@@ -148,21 +148,16 @@ Default awal:
 
 | Jenis  | Kilometer | Waktu   |
 | ------ | --------- | ------- |
-| Servis | 3.000 km  | 3 bulan |
-| Oli    | 2.000 km  | 2 bulan |
+| Servis | 4.000 km  | Bisa diatur pengguna |
+| Oli    | 3.000 km  | Bisa diatur pengguna |
 
-## API Eksternal
+## Data Harga BBM
 
-Aplikasi menggunakan repo `https://github.com/alifmaulidanar/hargaBensin` untuk mengambil harga BBM realtime.
+Aplikasi mengambil data harga BBM dari website sumber harga bensin. Data ini digunakan untuk membantu pengisian harga per liter pada catatan bensin.
 
-Endpoint utama:
+Merek dan RON yang tidak memiliki harga valid, bernilai `0`, atau bernilai `-` tidak ditampilkan sebagai pilihan.
 
-```text
-https://api.alifmaulidanar.my.id/api-bbm/full
-https://api.alifmaulidanar.my.id/api-bbm/{jenis}/{merek}/{oktan}
-```
-
-API hanya digunakan untuk harga bensin. Jika API gagal, pengguna tetap bisa memasukkan harga secara manual.
+Data harga hanya digunakan untuk membantu input bensin. Jika pengambilan data gagal, pengguna tetap bisa memasukkan harga secara manual.
 
 ## Desain
 

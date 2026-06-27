@@ -10,6 +10,8 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import com.example.motocare.bensin.BensinListActivity
 import com.example.motocare.data.MotoCareDbHelper
 import com.example.motocare.data.Motor
@@ -37,6 +39,7 @@ class DashboardActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
         dbHelper = MotoCareDbHelper(this)
+        applyDashboardInsets()
 
         findViewById<Button>(R.id.buttonDashboardAddMotor).setOnClickListener {
             openNoAnim(com.example.motocare.motor.MotorFormActivity::class.java)
@@ -52,6 +55,17 @@ class DashboardActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.buttonDistanceTab).setOnClickListener { selectCostMode(false) }
         bindEstimateSwipe()
         BottomNavBinder.bind(this, BottomNavBinder.MENU_HOME)
+    }
+
+    private fun applyDashboardInsets() {
+        val content = findViewById<View>(R.id.dashboardContent)
+        val baseTop = content.paddingTop
+        ViewCompat.setOnApplyWindowInsetsListener(content) { view, insets ->
+            val top = insets.getInsets(WindowInsetsCompat.Type.systemBars()).top
+            view.setPadding(view.paddingLeft, baseTop + top, view.paddingRight, view.paddingBottom)
+            insets
+        }
+        ViewCompat.requestApplyInsets(content)
     }
 
     override fun onResume() {
@@ -164,6 +178,7 @@ class DashboardActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.textNextServiceMeta).text = getString(R.string.no_motor_estimate)
         findViewById<TextView>(R.id.textNextServiceValue).text = "-"
         findViewById<TextView>(R.id.textNextServiceLabel).text = getString(R.string.target_label)
+        setEstimateStatusColor(false)
     }
 
     private fun showEstimate(direction: Int) {
@@ -270,20 +285,21 @@ class DashboardActivity : AppCompatActivity() {
             findViewById<TextView>(R.id.textNextServiceMeta).text = getString(R.string.no_service_data_short)
             findViewById<TextView>(R.id.textNextServiceValue).text = "-"
             findViewById<TextView>(R.id.textNextServiceLabel).text = getString(R.string.target_label)
+            setEstimateStatusColor(false)
             return
         }
 
         val targetKm = serviceTargetKm(latest.kilometer, latest.intervalKm)
+        val overdue = currentKilometer >= targetKm
         val remainingKm = (targetKm - currentKilometer).coerceAtLeast(0)
-        findViewById<TextView>(R.id.textNextServiceMeta).text = getString(
-            R.string.service_remaining_meta,
-            remainingKm
-        )
+        findViewById<TextView>(R.id.textNextServiceMeta).text =
+            if (overdue) getString(R.string.service_due_now) else getString(R.string.service_remaining_meta, remainingKm)
         findViewById<TextView>(R.id.textNextServiceValue).text = getString(
             R.string.km_value_short,
             targetKm
         )
         findViewById<TextView>(R.id.textNextServiceLabel).text = getString(R.string.target_label)
+        setEstimateStatusColor(overdue)
     }
 
     private fun bindOilEstimate(motorId: Long, currentKilometer: Int) {
@@ -294,11 +310,15 @@ class DashboardActivity : AppCompatActivity() {
             findViewById<TextView>(R.id.textNextServiceMeta).text = getString(R.string.no_oli_data_short)
             findViewById<TextView>(R.id.textNextServiceValue).text = "-"
             findViewById<TextView>(R.id.textNextServiceLabel).text = getString(R.string.target_label)
+            setEstimateStatusColor(false)
         } else {
+            val overdue = currentKilometer >= latest.nextKilometer
             val remainingKm = (latest.nextKilometer - currentKilometer).coerceAtLeast(0)
-            findViewById<TextView>(R.id.textNextServiceMeta).text = getString(R.string.km_remaining_value, remainingKm)
+            findViewById<TextView>(R.id.textNextServiceMeta).text =
+                if (overdue) getString(R.string.oil_due_now) else getString(R.string.km_remaining_value, remainingKm)
             findViewById<TextView>(R.id.textNextServiceValue).text = getString(R.string.km_value_short, latest.nextKilometer)
             findViewById<TextView>(R.id.textNextServiceLabel).text = getString(R.string.target_label)
+            setEstimateStatusColor(overdue)
         }
     }
 
@@ -311,12 +331,16 @@ class DashboardActivity : AppCompatActivity() {
             findViewById<TextView>(R.id.textNextServiceMeta).text = getString(R.string.empty_pajak)
             findViewById<TextView>(R.id.textNextServiceValue).text = "-"
             findViewById<TextView>(R.id.textNextServiceLabel).text = getString(R.string.target_label)
+            setEstimateStatusColor(false)
         } else {
-            findViewById<TextView>(R.id.textNextServiceMeta).text = nearest.taxType
             val days = daysUntil(nearest)
+            val overdue = days != null && days <= 0 && nearest.status.equals("Belum bayar", true)
+            findViewById<TextView>(R.id.textNextServiceMeta).text =
+                if (overdue) getString(R.string.tax_due_now) else nearest.taxType
             findViewById<TextView>(R.id.textNextServiceValue).text =
-                if (days == null) nearest.dueDate else getString(R.string.days_value, days)
+                if (days == null) nearest.dueDate else getString(R.string.days_value, days.coerceAtLeast(0))
             findViewById<TextView>(R.id.textNextServiceLabel).text = nearest.status
+            setEstimateStatusColor(overdue)
         }
     }
 
@@ -328,12 +352,23 @@ class DashboardActivity : AppCompatActivity() {
             findViewById<TextView>(R.id.textNextServiceMeta).text = getString(R.string.empty_bensin)
             findViewById<TextView>(R.id.textNextServiceValue).text = "-"
             findViewById<TextView>(R.id.textNextServiceLabel).text = getString(R.string.bensin_label)
+            setEstimateStatusColor(false)
         } else {
             findViewById<TextView>(R.id.textNextServiceMeta).text =
                 getString(R.string.fuel_title_value, latest.fuelBrand, latest.octane)
             findViewById<TextView>(R.id.textNextServiceValue).text = formatRupiah(latest.cost)
             findViewById<TextView>(R.id.textNextServiceLabel).text = latest.fuelDate
+            setEstimateStatusColor(false)
         }
+    }
+
+    private fun setEstimateStatusColor(overdue: Boolean) {
+        val color = getColor(if (overdue) R.color.motocare_error else R.color.motocare_yellow)
+        findViewById<TextView>(R.id.textNextServiceMeta).setTextColor(
+            getColor(if (overdue) R.color.motocare_error else R.color.motocare_muted)
+        )
+        findViewById<TextView>(R.id.textNextServiceLabel).setTextColor(color)
+        findViewById<TextView>(R.id.textNextServiceValue).setTextColor(color)
     }
 
     private fun daysUntil(pajak: Pajak): Int? {

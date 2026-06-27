@@ -131,6 +131,9 @@
     <string name="km_value_short">%1$s km</string>
     <string name="days_value">%1$d hari</string>
     <string name="service_remaining_meta">%1$d km lagi</string>
+    <string name="service_due_now">Sudah waktunya servis</string>
+    <string name="oil_due_now">Sudah waktunya ganti oli</string>
+    <string name="tax_due_now">Pajak jatuh tempo</string>
     <string name="target_km_value">Target %1$d km</string>
     <string name="oli_next_km_value">Next %1$d km</string>
     <string name="servis_item_meta">%1$d km terakhir</string>

@@ -6,6 +6,8 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.view.View
 import android.widget.TextView
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import com.example.motocare.CatatActivity
 import com.example.motocare.DashboardActivity
 import com.example.motocare.R
@@ -15,6 +17,7 @@ import com.example.motocare.servis.ServisListActivity
 
 object BottomNavBinder {
     fun bind(activity: Activity, activeMenu: String) {
+        activity.findViewById<View?>(R.id.bottomNavRoot)?.applyBottomInset()
         activity.findViewById<TextView?>(R.id.navHome)?.apply {
             setActiveStyle(activeMenu == MENU_HOME)
             setOnClickListener { open(activity, DashboardActivity::class.java) }
@@ -49,6 +52,18 @@ object BottomNavBinder {
         val color = if (active) ACTIVE_COLOR else INACTIVE_COLOR
         setTextColor(color)
         compoundDrawableTintList = ColorStateList.valueOf(color)
+    }
+
+    private fun View.applyBottomInset() {
+        val baseHeight = layoutParams.height
+        ViewCompat.setOnApplyWindowInsetsListener(this) { view, insets ->
+            val bottom = insets.getInsets(WindowInsetsCompat.Type.systemBars()).bottom
+            view.layoutParams = view.layoutParams.apply {
+                height = baseHeight + bottom
+            }
+            insets
+        }
+        ViewCompat.requestApplyInsets(this)
     }
 
     const val MENU_HOME = "home"

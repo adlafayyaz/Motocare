@@ -14,6 +14,9 @@ import com.example.motocare.navigation.BottomNavBinder
 import com.example.motocare.navigation.CatatSheet
 import com.example.motocare.oli.OliListActivity
 import com.example.motocare.servis.ServisListActivity
+import java.text.SimpleDateFormat
+import java.util.Locale
+import kotlin.math.ceil
 
 class PajakListActivity : AppCompatActivity() {
     private lateinit var dbHelper: MotoCareDbHelper
@@ -71,6 +74,7 @@ class PajakListActivity : AppCompatActivity() {
             showEmptyState()
             summaryValue.text = "-"
             summaryMeta.text = getString(R.string.add_motor_first)
+            setSummaryStatusColor(false)
             motorName.text = getString(R.string.no_active_motor)
             motorPlate.text = ""
             return
@@ -82,8 +86,32 @@ class PajakListActivity : AppCompatActivity() {
         adapter.submitList(items)
         bindEmptyVisibility(items.isEmpty())
         val nearest = items.firstOrNull()
-        summaryValue.text = nearest?.dueDate ?: getString(R.string.no_data_short)
+        val overdue = nearest?.let {
+            it.status.equals("Belum bayar", true) && (daysUntil(it.dueDate) ?: 1) <= 0
+        } == true
+        summaryValue.text = when {
+            nearest == null -> getString(R.string.no_data_short)
+            overdue -> getString(R.string.tax_due_now)
+            else -> nearest.dueDate
+        }
         summaryMeta.text = nearest?.let { getString(R.string.rupiah_value_compact, it.cost) } ?: getString(R.string.empty_pajak)
+        setSummaryStatusColor(overdue)
+    }
+
+    private fun setSummaryStatusColor(overdue: Boolean) {
+        val color = getColor(if (overdue) R.color.motocare_error else R.color.motocare_text)
+        val metaColor = getColor(if (overdue) R.color.motocare_error else R.color.motocare_yellow)
+        summaryValue.setTextColor(color)
+        summaryMeta.setTextColor(metaColor)
+    }
+
+    private fun daysUntil(date: String): Int? {
+        return runCatching {
+            val format = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+            val due = format.parse(date) ?: return null
+            val today = format.parse(format.format(System.currentTimeMillis())) ?: return null
+            ceil((due.time - today.time) / DAY_MILLIS.toDouble()).toInt()
+        }.getOrNull()
     }
 
     private fun bindEmptyVisibility(isEmpty: Boolean) {
@@ -96,5 +124,9 @@ class PajakListActivity : AppCompatActivity() {
 
     private fun showEmptyState() {
         bindEmptyVisibility(true)
+    }
+
+    private companion object {
+        const val DAY_MILLIS = 86_400_000L
     }
 }

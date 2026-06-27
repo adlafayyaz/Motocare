@@ -85,6 +85,7 @@ class ServisListActivity : AppCompatActivity() {
             summaryValue.text = "-"
             summaryMeta.text = getString(R.string.target_label)
             summaryTargetValue.text = "-"
+            setSummaryStatusColor(false)
             motorName.text = getString(R.string.no_active_motor)
             motorPlate.text = ""
             return
@@ -107,14 +108,26 @@ class ServisListActivity : AppCompatActivity() {
             summaryValue.text = getString(R.string.no_data_short)
             summaryMeta.text = getString(R.string.target_label)
             summaryTargetValue.text = "-"
+            setSummaryStatusColor(false)
         } else {
             val targetKm = serviceTargetKm(latest.kilometer, latest.intervalKm)
+            val overdue = motor.currentKilometer >= targetKm
             val remainingKm = (targetKm - motor.currentKilometer).coerceAtLeast(0)
             summaryTitle.text = getString(R.string.next_service_title)
-            summaryValue.text = getString(R.string.km_remaining_value, remainingKm)
+            summaryValue.text =
+                if (overdue) getString(R.string.service_due_now) else getString(R.string.km_remaining_value, remainingKm)
             summaryMeta.text = getString(R.string.target_label)
             summaryTargetValue.text = getString(R.string.km_value_short, targetKm)
+            setSummaryStatusColor(overdue)
         }
+    }
+
+    private fun setSummaryStatusColor(overdue: Boolean) {
+        val mainColor = getColor(if (overdue) R.color.motocare_error else R.color.motocare_text)
+        val targetColor = getColor(if (overdue) R.color.motocare_error else R.color.motocare_yellow)
+        summaryValue.setTextColor(mainColor)
+        summaryMeta.setTextColor(targetColor)
+        summaryTargetValue.setTextColor(targetColor)
     }
 
     private fun showEmptyState() {
