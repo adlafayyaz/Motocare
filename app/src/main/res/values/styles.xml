@@ -5,6 +5,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginTop">16dp</item>
         <item name="android:textColor">#F4F5FA</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>
     </style>
 
@@ -21,7 +22,7 @@
     </style>
 
     <style name="FormInputWithUnit" parent="FormInput">
-        <item name="android:paddingEnd">58dp</item>
+        <item name="android:paddingEnd">44dp</item>
     </style>
 
     <style name="FormUnitText">
@@ -30,9 +31,9 @@
         <item name="android:layout_gravity">end|bottom</item>
         <item name="android:layout_marginTop">8dp</item>
         <item name="android:gravity">center_vertical</item>
-        <item name="android:paddingEnd">16dp</item>
+        <item name="android:paddingEnd">12dp</item>
         <item name="android:textColor">#8B91A5</item>
-        <item name="android:textSize">13sp</item>
+        <item name="android:textSize">12sp</item>
         <item name="android:textStyle">bold</item>
     </style>
 

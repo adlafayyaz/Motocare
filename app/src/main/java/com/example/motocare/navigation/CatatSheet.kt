@@ -71,7 +71,8 @@ object CatatSheet {
             val row = activity.layoutInflater.inflate(R.layout.item_motor_picker, container, false)
             row.findViewById<TextView>(R.id.textPickerMotorName).text = motor.name
             row.findViewById<TextView>(R.id.textPickerMotorPlate).text = motor.plateNumber
-            row.findViewById<TextView>(R.id.textPickerMotorKm).text = motor.currentKilometer.toString()
+            row.findViewById<TextView>(R.id.textPickerMotorKm).text =
+                activity.getString(R.string.km_value_short, motor.currentKilometer.toString())
             row.findViewById<TextView>(R.id.textPickerMotorActive).visibility =
                 if (motor.isActive) View.VISIBLE else View.GONE
             row.setOnClickListener {
