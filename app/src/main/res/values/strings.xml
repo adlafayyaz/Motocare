@@ -155,6 +155,7 @@
     <string name="oil_interval_month">Batas waktu</string>
     <string name="service_interval_month_hint">6</string>
     <string name="oil_interval_month_hint">3</string>
+    <string name="service_recommendation_info">ⓘ Rekomendasi target servis: %1$d km (KM servis + 4000 km).</string>
     <string name="service_cost">Biaya servis</string>
     <string name="oil_cost">Biaya oli</string>
     <string name="cost_hint">250000</string>

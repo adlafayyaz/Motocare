@@ -27,7 +27,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="72dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -76,8 +76,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="88dp"
-            android:layout_marginTop="10dp"
+            android:layout_height="104dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/bg_card_dark"
             android:gravity="center"
             android:orientation="horizontal"
@@ -93,13 +93,13 @@
                 android:orientation="vertical">
 
                 <FrameLayout
-                    android:layout_width="46dp"
-                    android:layout_height="46dp"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
                     android:background="@drawable/bg_feature_circle_dark">
 
                     <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
                         android:layout_gravity="center"
                         android:contentDescription="@string/servis_label"
                         android:src="@drawable/ic_service"
@@ -125,8 +125,8 @@
                 android:orientation="vertical">
 
                 <FrameLayout
-                    android:layout_width="46dp"
-                    android:layout_height="46dp"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
                     android:background="@drawable/bg_feature_circle_dark">
 
                     <ImageView
@@ -157,8 +157,8 @@
                 android:orientation="vertical">
 
                 <FrameLayout
-                    android:layout_width="46dp"
-                    android:layout_height="46dp"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
                     android:background="@drawable/bg_feature_circle_dark">
 
                     <ImageView
@@ -189,8 +189,8 @@
                 android:orientation="vertical">
 
                 <FrameLayout
-                    android:layout_width="46dp"
-                    android:layout_height="46dp"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
                     android:background="@drawable/bg_feature_circle_dark">
 
                     <ImageView
@@ -221,14 +221,14 @@
             android:backgroundTint="#FFCB25"
             android:text="@string/add_motor"
             android:textColor="#070A12"
-            android:textSize="14sp"
+            android:textSize="15sp"
             android:textStyle="bold"
             android:visibility="gone" />
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="202dp"
-            android:layout_marginTop="12dp"
+            android:layout_height="238dp"
+            android:layout_marginTop="18dp"
             android:background="@drawable/bg_card_dark"
             android:padding="20dp">
 
@@ -243,7 +243,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/monthly_expense"
                     android:textColor="#9AA0B5"
-                    android:textSize="14sp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/textMonthlyTotal"
@@ -251,7 +251,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:textColor="#F4F5FA"
-                    android:textSize="30sp"
+                    android:textSize="34sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -268,8 +268,8 @@
 
             <com.example.motocare.ui.DashboardDonutView
                 android:id="@+id/dashboardDonut"
-                android:layout_width="92dp"
-                android:layout_height="88dp"
+                android:layout_width="104dp"
+                android:layout_height="104dp"
                 android:layout_gravity="top|end"
                 android:layout_marginTop="12dp"
                 android:layout_marginEnd="4dp"
@@ -278,7 +278,7 @@
             <LinearLayout
                 android:id="@+id/dashboardSegment"
                 android:layout_width="match_parent"
-                android:layout_height="44dp"
+                android:layout_height="50dp"
                 android:layout_gravity="bottom"
                 android:background="@drawable/bg_segment_dark"
                 android:orientation="horizontal"
@@ -311,8 +311,8 @@
         <FrameLayout
             android:id="@+id/dashboardSkeleton"
             android:layout_width="match_parent"
-            android:layout_height="74dp"
-            android:layout_marginTop="12dp"
+            android:layout_height="84dp"
+            android:layout_marginTop="18dp"
             android:background="@drawable/bg_card_dark"
             android:alpha="0.55"
             android:paddingStart="16dp"
@@ -320,8 +320,8 @@
             android:visibility="gone">
 
             <View
-                android:layout_width="44dp"
-                android:layout_height="44dp"
+                android:layout_width="50dp"
+                android:layout_height="52dp"
                 android:layout_gravity="center_vertical|start"
                 android:background="@drawable/bg_feature_circle_dark" />
 
@@ -348,8 +348,8 @@
         <LinearLayout
             android:id="@+id/dashboardEstimateCard"
             android:layout_width="match_parent"
-            android:layout_height="74dp"
-            android:layout_marginTop="12dp"
+            android:layout_height="84dp"
+            android:layout_marginTop="18dp"
             android:background="@drawable/bg_card_dark"
             android:gravity="center_vertical"
             android:orientation="horizontal"
@@ -357,8 +357,8 @@
             android:paddingEnd="18dp">
 
             <FrameLayout
-                android:layout_width="44dp"
-                android:layout_height="44dp"
+                android:layout_width="50dp"
+                android:layout_height="52dp"
                 android:background="@drawable/bg_circle_yellow">
 
                 <ImageView
@@ -384,7 +384,7 @@
                     android:layout_height="wrap_content"
                     android:singleLine="true"
                     android:textColor="#F4F5FA"
-                    android:textSize="16sp"
+                    android:textSize="17sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -429,7 +429,7 @@
         <LinearLayout
             android:id="@+id/dashboardEstimateDots"
             android:layout_width="match_parent"
-            android:layout_height="10dp"
+            android:layout_height="14dp"
             android:layout_marginTop="8dp"
             android:gravity="center"
             android:orientation="horizontal">
@@ -471,7 +471,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="28dp"
+                android:layout_height="34dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -488,7 +488,7 @@
                     android:gravity="center_vertical"
                     android:text="@string/servis_label"
                     android:textColor="#F4F5FA"
-                    android:textSize="14sp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/textServiceTotal"
@@ -496,12 +496,12 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical|end"
                     android:textColor="#9AA0B5"
-                    android:textSize="14sp" />
+                    android:textSize="15sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="28dp"
+                android:layout_height="34dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -518,7 +518,7 @@
                     android:gravity="center_vertical"
                     android:text="@string/oli_label"
                     android:textColor="#F4F5FA"
-                    android:textSize="14sp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/textOilTotal"
@@ -526,12 +526,12 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical|end"
                     android:textColor="#9AA0B5"
-                    android:textSize="14sp" />
+                    android:textSize="15sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="28dp"
+                android:layout_height="34dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -548,7 +548,7 @@
                     android:gravity="center_vertical"
                     android:text="@string/pajak_label"
                     android:textColor="#F4F5FA"
-                    android:textSize="14sp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/textTaxTotal"
@@ -556,12 +556,12 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical|end"
                     android:textColor="#9AA0B5"
-                    android:textSize="14sp" />
+                    android:textSize="15sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="28dp"
+                android:layout_height="34dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -578,7 +578,7 @@
                     android:gravity="center_vertical"
                     android:text="@string/bensin_label"
                     android:textColor="#F4F5FA"
-                    android:textSize="14sp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/textFuelTotal"
@@ -586,7 +586,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical|end"
                     android:textColor="#9AA0B5"
-                    android:textSize="14sp" />
+                    android:textSize="15sp" />
             </LinearLayout>
 
             <TextView
@@ -614,9 +614,8 @@
         android:id="@+id/dashboardBottomNav"
         layout="@layout/include_bottom_nav"
         android:layout_width="match_parent"
-        android:layout_height="88dp"
+        android:layout_height="104dp"
         android:layout_marginStart="0dp"
         android:layout_marginEnd="0dp" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
-

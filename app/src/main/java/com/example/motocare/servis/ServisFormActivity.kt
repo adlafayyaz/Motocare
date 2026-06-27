@@ -1,6 +1,8 @@
 package com.example.motocare.servis
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -29,8 +31,11 @@ class ServisFormActivity : AppCompatActivity() {
     private lateinit var typeError: TextView
     private lateinit var kilometerError: TextView
     private lateinit var costError: TextView
+    private lateinit var recommendationText: TextView
     private var servisId: Long = 0
     private var motorId: Long = 0
+    private var targetEditedByUser = false
+    private var autoUpdatingTarget = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +48,7 @@ class ServisFormActivity : AppCompatActivity() {
         bindViews()
         bindMotor()
         bindExisting()
+        setupServiceRecommendation()
 
         dateInput.setOnClickListener {
             FormDialogHelper.showDatePicker(this, dateInput.text.toString()) { dateInput.setText(it) }
@@ -70,6 +76,7 @@ class ServisFormActivity : AppCompatActivity() {
         typeError = findViewById(R.id.errorServisType)
         kilometerError = findViewById(R.id.errorServisKilometer)
         costError = findViewById(R.id.errorServisCost)
+        recommendationText = findViewById(R.id.textServiceRecommendation)
     }
 
     private fun bindMotor() {
@@ -100,6 +107,46 @@ class ServisFormActivity : AppCompatActivity() {
             }
         } else {
             dateInput.setText(today())
+        }
+    }
+
+    private fun setupServiceRecommendation() {
+        targetEditedByUser = intervalKmInput.text.toString().trim().isNotEmpty()
+        intervalKmInput.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (!autoUpdatingTarget) {
+                    targetEditedByUser = s?.toString()?.trim()?.isNotEmpty() == true
+                }
+            }
+            override fun afterTextChanged(s: Editable?) = Unit
+        })
+        kilometerInput.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                updateServiceRecommendation(s?.toString().orEmpty())
+            }
+            override fun afterTextChanged(s: Editable?) = Unit
+        })
+        updateServiceRecommendation(kilometerInput.text.toString())
+    }
+
+    private fun updateServiceRecommendation(rawKilometer: String) {
+        val kilometer = rawKilometer.trim().toIntOrNull()
+        if (kilometer == null) {
+            recommendationText.visibility = View.GONE
+            return
+        }
+
+        val recommendedTarget = kilometer + RECOMMENDED_SERVICE_INTERVAL_KM
+        recommendationText.text = getString(R.string.service_recommendation_info, recommendedTarget)
+        recommendationText.visibility = View.VISIBLE
+
+        if (!targetEditedByUser || intervalKmInput.text.toString().trim().isEmpty()) {
+            autoUpdatingTarget = true
+            intervalKmInput.setText(recommendedTarget.toString())
+            intervalKmInput.setSelection(intervalKmInput.text.length)
+            autoUpdatingTarget = false
         }
     }
 
@@ -194,5 +241,6 @@ class ServisFormActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_SERVIS_ID = "extra_servis_id"
+        private const val RECOMMENDED_SERVICE_INTERVAL_KM = 4000
     }
 }
