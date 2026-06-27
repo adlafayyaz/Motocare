@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#070A12"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <LinearLayout
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:background="#070A12"
+    android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+<LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -14,13 +22,35 @@
         android:paddingTop="18dp"
         android:paddingEnd="22dp">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/motor_detail_title"
-            android:textColor="#F4F5FA"
-            android:textSize="26sp"
-            android:textStyle="bold" />
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/buttonBack"
+                android:layout_width="24dp"
+                android:layout_height="match_parent"
+                android:clickable="true"
+                android:contentDescription="@string/back"
+                android:focusable="true"
+                android:padding="5dp"
+                android:src="@drawable/ic_back"
+                android:tint="#F4F5FA" />
+
+            <TextView
+                android:id="@+id/textTitleBack"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="14dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="@string/motor_detail_title"
+                android:textColor="#F4F5FA"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -139,23 +169,128 @@
             android:textSize="21sp"
             android:textStyle="bold" />
 
-        <TextView
+        <LinearLayout
             style="@style/MotorSummaryRow"
             android:layout_marginTop="14dp"
-            android:drawableStart="@drawable/ic_service"
-            android:text="@string/service_summary_placeholder" />
+            android:orientation="horizontal">
 
-        <TextView
-            style="@style/MotorSummaryRow"
-            android:drawableStart="@drawable/ic_oil"
-            android:text="@string/oil_summary_placeholder" />
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_marginEnd="18dp"
+                android:src="@drawable/ic_service"
+                android:tint="#FFCB25" />
 
-        <TextView
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="@string/service_summary_label"
+                android:textColor="#F4F5FA"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textSummaryServiceValue"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|end"
+                android:text="@string/no_data_short"
+                android:textColor="#9AA0B5"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
             style="@style/MotorSummaryRow"
-            android:drawableStart="@drawable/ic_tax"
-            android:text="@string/tax_summary_placeholder" />
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_marginEnd="18dp"
+                android:src="@drawable/ic_oil"
+                android:tint="#FFCB25" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="@string/oil_summary_label"
+                android:textColor="#F4F5FA"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textSummaryOilValue"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|end"
+                android:text="@string/no_data_short"
+                android:textColor="#9AA0B5"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/MotorSummaryRow"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_marginEnd="18dp"
+                android:src="@drawable/ic_tax"
+                android:tint="#FFCB25" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="@string/tax_summary_label"
+                android:textColor="#F4F5FA"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textSummaryTaxValue"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|end"
+                android:text="@string/no_data_short"
+                android:textColor="#9AA0B5"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/MotorSummaryRow"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_marginEnd="18dp"
+                android:src="@drawable/ic_fuel"
+                android:tint="#FFCB25" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="@string/fuel_summary_label"
+                android:textColor="#F4F5FA"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textSummaryFuelValue"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|end"
+                android:text="@string/no_data_short"
+                android:textColor="#9AA0B5"
+                android:textStyle="bold" />
+        </LinearLayout>
     </LinearLayout>
 
     <include layout="@layout/include_bottom_nav" />
-
-</LinearLayout>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

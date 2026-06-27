@@ -1,6 +1,7 @@
 package com.example.motocare.pajak
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -10,10 +11,15 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.motocare.R
 import com.example.motocare.data.MotoCareDbHelper
 import com.example.motocare.data.Pajak
+import com.example.motocare.ui.FormDialogHelper
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class PajakFormActivity : AppCompatActivity() {
     private lateinit var dbHelper: MotoCareDbHelper
     private lateinit var motorText: TextView
+    private lateinit var typeInput: EditText
     private lateinit var dueDateInput: EditText
     private lateinit var costInput: EditText
     private lateinit var statusInput: EditText
@@ -26,13 +32,33 @@ class PajakFormActivity : AppCompatActivity() {
 
         dbHelper = MotoCareDbHelper(this)
         pajakId = intent.getLongExtra(EXTRA_PAJAK_ID, 0)
+        findViewById<View>(R.id.buttonBack).setOnClickListener { finish() }
+        findViewById<View>(R.id.textTitleBack).setOnClickListener { finish() }
         motorText = findViewById(R.id.textPajakMotor)
+        typeInput = findViewById(R.id.editPajakType)
         dueDateInput = findViewById(R.id.editPajakDueDate)
         costInput = findViewById(R.id.editPajakCost)
         statusInput = findViewById(R.id.editPajakStatus)
         bindMotor()
         bindExisting()
 
+        dueDateInput.setOnClickListener {
+            FormDialogHelper.showDatePicker(this, dueDateInput.text.toString()) { dueDateInput.setText(it) }
+        }
+        typeInput.setOnClickListener {
+            FormDialogHelper.showOptionPicker(
+                this,
+                getString(R.string.tax_type),
+                listOf("STNK tahunan", "Pajak 5 tahunan", "Denda pajak")
+            ) { typeInput.setText(it) }
+        }
+        statusInput.setOnClickListener {
+            FormDialogHelper.showOptionPicker(
+                this,
+                getString(R.string.tax_status),
+                listOf("Belum bayar", "Lunas", "Aktif")
+            ) { statusInput.setText(it) }
+        }
         findViewById<Button>(R.id.buttonSavePajak).setOnClickListener { savePajak() }
         findViewById<Button>(R.id.buttonDeletePajak).setOnClickListener { confirmDelete() }
     }
@@ -55,16 +81,18 @@ class PajakFormActivity : AppCompatActivity() {
         if (pajakId > 0) {
             dbHelper.getPajak(pajakId)?.let { pajak ->
                 motorId = pajak.motorId
+                typeInput.setText(pajak.taxType)
                 dueDateInput.setText(pajak.dueDate)
                 costInput.setText(pajak.cost.toString())
                 statusInput.setText(pajak.status)
             }
         } else {
-            statusInput.setText(getString(R.string.default_tax_status))
+            dueDateInput.setText(SimpleDateFormat("yyyy-MM-dd", Locale.US).format(Date()))
         }
     }
 
     private fun savePajak() {
+        val taxType = required(typeInput, R.string.error_tax_type_required) ?: return
         val dueDate = required(dueDateInput, R.string.error_date_required) ?: return
         val cost = requiredInt(costInput, R.string.error_cost_required) ?: return
         val status = required(statusInput, R.string.error_tax_status_required) ?: return
@@ -72,6 +100,7 @@ class PajakFormActivity : AppCompatActivity() {
         val pajak = Pajak(
             id = pajakId,
             motorId = motorId,
+            taxType = taxType,
             dueDate = dueDate,
             cost = cost,
             status = status

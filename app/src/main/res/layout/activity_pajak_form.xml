@@ -13,14 +13,35 @@
         android:paddingEnd="22dp"
         android:paddingBottom="22dp">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:text="@string/tax_form_title"
-            android:textColor="#F4F5FA"
-            android:textSize="28sp"
-            android:textStyle="bold" />
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/buttonBack"
+                android:layout_width="24dp"
+                android:layout_height="match_parent"
+                android:clickable="true"
+                android:contentDescription="@string/back"
+                android:focusable="true"
+                android:padding="5dp"
+                android:src="@drawable/ic_back"
+                android:tint="#F4F5FA" />
+
+            <TextView
+                android:id="@+id/textTitleBack"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="14dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="@string/tax_form_title"
+                android:textColor="#F4F5FA"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/textPajakMotor"
@@ -34,24 +55,45 @@
             android:textColor="#FFCB25"
             android:textStyle="bold" />
 
+        <TextView style="@style/FormLabel" android:text="@string/tax_type" />
+        <EditText
+            android:id="@+id/editPajakType"
+            style="@style/FormInput"
+            android:clickable="true"
+            android:focusable="false"
+            android:hint="@string/default_tax_type"
+            android:inputType="textCapWords" />
+
         <TextView style="@style/FormLabel" android:text="@string/tax_due_date" />
         <EditText
             android:id="@+id/editPajakDueDate"
             style="@style/FormInput"
+            android:clickable="true"
+            android:focusable="false"
             android:hint="@string/date_hint"
             android:inputType="date" />
 
         <TextView style="@style/FormLabel" android:text="@string/tax_cost" />
-        <EditText
-            android:id="@+id/editPajakCost"
-            style="@style/FormInput"
-            android:hint="@string/tax_cost_hint"
-            android:inputType="number" />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="64dp">
+
+            <EditText
+                android:id="@+id/editPajakCost"
+                style="@style/FormInputWithUnit"
+                android:inputType="number" />
+
+            <TextView
+                style="@style/FormUnitText"
+                android:text="@string/unit_rp" />
+        </FrameLayout>
 
         <TextView style="@style/FormLabel" android:text="@string/tax_status" />
         <EditText
             android:id="@+id/editPajakStatus"
             style="@style/FormInput"
+            android:clickable="true"
+            android:focusable="false"
             android:hint="@string/default_tax_status"
             android:inputType="textCapWords" />
 

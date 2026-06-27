@@ -10,14 +10,12 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:name=".MotoCareApp"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Motocare">
         <activity
             android:name=".profile.AboutActivity"
-            android:exported="false" />
-        <activity
-            android:name=".profile.BackupActivity"
             android:exported="false" />
         <activity
             android:name=".profile.SettingsActivity"

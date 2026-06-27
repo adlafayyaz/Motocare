@@ -1,6 +1,9 @@
 package com.example.motocare.servis
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -10,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.motocare.R
 import com.example.motocare.data.MotoCareDbHelper
 import com.example.motocare.data.Servis
+import com.example.motocare.ui.FormDialogHelper
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -24,8 +28,14 @@ class ServisFormActivity : AppCompatActivity() {
     private lateinit var intervalMonthInput: EditText
     private lateinit var costInput: EditText
     private lateinit var noteInput: EditText
+    private lateinit var typeError: TextView
+    private lateinit var kilometerError: TextView
+    private lateinit var costError: TextView
+    private lateinit var recommendationText: TextView
     private var servisId: Long = 0
     private var motorId: Long = 0
+    private var targetEditedByUser = false
+    private var autoUpdatingTarget = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,10 +43,23 @@ class ServisFormActivity : AppCompatActivity() {
 
         dbHelper = MotoCareDbHelper(this)
         servisId = intent.getLongExtra(EXTRA_SERVIS_ID, 0)
+        findViewById<View>(R.id.buttonBack).setOnClickListener { finish() }
+        findViewById<View>(R.id.textTitleBack).setOnClickListener { finish() }
         bindViews()
         bindMotor()
         bindExisting()
+        setupServiceRecommendation()
 
+        dateInput.setOnClickListener {
+            FormDialogHelper.showDatePicker(this, dateInput.text.toString()) { dateInput.setText(it) }
+        }
+        typeInput.setOnClickListener {
+            FormDialogHelper.showOptionPicker(
+                this,
+                getString(R.string.service_type),
+                listOf("Tune up", "Cek rem", "Ganti kampas", "Servis rutin", "Lainnya")
+            ) { typeInput.setText(it) }
+        }
         findViewById<Button>(R.id.buttonSaveServis).setOnClickListener { saveServis() }
         findViewById<Button>(R.id.buttonDeleteServis).setOnClickListener { confirmDelete() }
     }
@@ -50,6 +73,10 @@ class ServisFormActivity : AppCompatActivity() {
         intervalMonthInput = findViewById(R.id.editServisIntervalMonth)
         costInput = findViewById(R.id.editServisCost)
         noteInput = findViewById(R.id.editServisNote)
+        typeError = findViewById(R.id.errorServisType)
+        kilometerError = findViewById(R.id.errorServisKilometer)
+        costError = findViewById(R.id.errorServisCost)
+        recommendationText = findViewById(R.id.textServiceRecommendation)
     }
 
     private fun bindMotor() {
@@ -80,19 +107,57 @@ class ServisFormActivity : AppCompatActivity() {
             }
         } else {
             dateInput.setText(today())
-            typeInput.setText(getString(R.string.default_service_type))
-            intervalKmInput.setText(DEFAULT_SERVICE_INTERVAL_KM.toString())
-            intervalMonthInput.setText(DEFAULT_SERVICE_INTERVAL_MONTH.toString())
+        }
+    }
+
+    private fun setupServiceRecommendation() {
+        targetEditedByUser = intervalKmInput.text.toString().trim().isNotEmpty()
+        intervalKmInput.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (!autoUpdatingTarget) {
+                    targetEditedByUser = s?.toString()?.trim()?.isNotEmpty() == true
+                }
+            }
+            override fun afterTextChanged(s: Editable?) = Unit
+        })
+        kilometerInput.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                updateServiceRecommendation(s?.toString().orEmpty())
+            }
+            override fun afterTextChanged(s: Editable?) = Unit
+        })
+        updateServiceRecommendation(kilometerInput.text.toString())
+    }
+
+    private fun updateServiceRecommendation(rawKilometer: String) {
+        val kilometer = rawKilometer.trim().toIntOrNull()
+        if (kilometer == null) {
+            recommendationText.visibility = View.GONE
+            return
+        }
+
+        val recommendedTarget = kilometer + RECOMMENDED_SERVICE_INTERVAL_KM
+        recommendationText.text = getString(R.string.service_recommendation_info, recommendedTarget)
+        recommendationText.visibility = View.VISIBLE
+
+        if (!targetEditedByUser || intervalKmInput.text.toString().trim().isEmpty()) {
+            autoUpdatingTarget = true
+            intervalKmInput.setText(recommendedTarget.toString())
+            intervalKmInput.setSelection(intervalKmInput.text.length)
+            autoUpdatingTarget = false
         }
     }
 
     private fun saveServis() {
+        clearInputErrors()
         val date = required(dateInput, R.string.error_date_required) ?: return
-        val type = required(typeInput, R.string.error_service_type_required) ?: return
-        val kilometer = requiredInt(kilometerInput, R.string.error_kilometer_required) ?: return
+        val type = required(typeInput, R.string.error_service_type_required, typeError) ?: return
+        val kilometer = requiredInt(kilometerInput, R.string.error_kilometer_required, kilometerError) ?: return
         val intervalKm = requiredInt(intervalKmInput, R.string.error_interval_required) ?: return
         val intervalMonth = requiredInt(intervalMonthInput, R.string.error_interval_required) ?: return
-        val cost = requiredInt(costInput, R.string.error_cost_required) ?: return
+        val cost = requiredInt(costInput, R.string.error_cost_number, costError) ?: return
 
         val servis = Servis(
             id = servisId,
@@ -132,17 +197,50 @@ class ServisFormActivity : AppCompatActivity() {
         return value
     }
 
+    private fun required(input: EditText, errorRes: Int, errorView: TextView): String? {
+        val value = input.text.toString().trim()
+        if (value.isEmpty()) {
+            showInputError(input, errorView, getString(errorRes))
+            return null
+        }
+        return value
+    }
+
     private fun requiredInt(input: EditText, errorRes: Int): Int? {
         val value = input.text.toString().trim().toIntOrNull()
         if (value == null) input.error = getString(errorRes)
         return value
     }
 
+    private fun requiredInt(input: EditText, errorRes: Int, errorView: TextView): Int? {
+        val raw = input.text.toString().trim()
+        val value = raw.toIntOrNull()
+        if (raw.isEmpty() || value == null) {
+            showInputError(input, errorView, getString(errorRes))
+            return null
+        }
+        return value
+    }
+
+    private fun showInputError(input: EditText, errorView: TextView, message: String) {
+        input.setBackgroundResource(R.drawable.bg_input_error)
+        errorView.text = message
+        errorView.visibility = View.VISIBLE
+    }
+
+    private fun clearInputErrors() {
+        listOf(typeInput, kilometerInput, costInput).forEach {
+            it.setBackgroundResource(R.drawable.bg_input_dark)
+        }
+        listOf(typeError, kilometerError, costError).forEach {
+            it.visibility = View.GONE
+        }
+    }
+
     private fun today(): String = SimpleDateFormat("yyyy-MM-dd", Locale.US).format(Date())
 
     companion object {
         const val EXTRA_SERVIS_ID = "extra_servis_id"
-        private const val DEFAULT_SERVICE_INTERVAL_KM = 3000
-        private const val DEFAULT_SERVICE_INTERVAL_MONTH = 6
+        private const val RECOMMENDED_SERVICE_INTERVAL_KM = 4000
     }
 }

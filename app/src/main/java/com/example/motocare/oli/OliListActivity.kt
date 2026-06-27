@@ -3,7 +3,6 @@ package com.example.motocare.oli
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,6 +11,7 @@ import com.example.motocare.R
 import com.example.motocare.bensin.BensinListActivity
 import com.example.motocare.data.MotoCareDbHelper
 import com.example.motocare.navigation.BottomNavBinder
+import com.example.motocare.navigation.CatatSheet
 import com.example.motocare.pajak.PajakListActivity
 import com.example.motocare.servis.ServisListActivity
 
@@ -21,6 +21,12 @@ class OliListActivity : AppCompatActivity() {
     private lateinit var emptyText: TextView
     private lateinit var summaryValue: TextView
     private lateinit var summaryMeta: TextView
+    private lateinit var motorName: TextView
+    private lateinit var motorPlate: TextView
+    private lateinit var motorCard: View
+    private lateinit var summaryCard: View
+    private lateinit var emptyState: View
+    private lateinit var recycler: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,18 +36,24 @@ class OliListActivity : AppCompatActivity() {
         emptyText = findViewById(R.id.textEmptyOli)
         summaryValue = findViewById(R.id.textOliSummaryValue)
         summaryMeta = findViewById(R.id.textOliSummaryMeta)
+        motorName = findViewById(R.id.textHistoryMotorName)
+        motorPlate = findViewById(R.id.textHistoryMotorPlate)
+        motorCard = findViewById(R.id.historyMotorCard)
+        summaryCard = findViewById(R.id.historySummaryCard)
+        emptyState = findViewById(R.id.historyEmptyState)
+        recycler = findViewById(R.id.recyclerOli)
         adapter = OliAdapter { oli ->
             val intent = Intent(this, OliDetailActivity::class.java)
             intent.putExtra(OliDetailActivity.EXTRA_OLI_ID, oli.id)
             startActivity(intent)
         }
 
-        findViewById<RecyclerView>(R.id.recyclerOli).apply {
+        recycler.apply {
             layoutManager = LinearLayoutManager(this@OliListActivity)
             adapter = this@OliListActivity.adapter
         }
-        findViewById<Button>(R.id.buttonAddOli).setOnClickListener {
-            startActivity(Intent(this, OliFormActivity::class.java))
+        findViewById<TextView>(R.id.buttonChangeMotor).setOnClickListener {
+            CatatSheet.showMotorPicker(this) { bindData() }
         }
         findViewById<TextView>(R.id.tabRiwayatServis).setOnClickListener {
             startActivity(Intent(this, ServisListActivity::class.java))
@@ -64,24 +76,52 @@ class OliListActivity : AppCompatActivity() {
         val motor = dbHelper.getActiveMotor()
         if (motor == null) {
             adapter.submitList(emptyList())
-            emptyText.visibility = View.VISIBLE
+            showEmptyState()
             summaryValue.text = "-"
             summaryMeta.text = getString(R.string.add_motor_first)
+            setSummaryStatusColor(false)
+            motorName.text = getString(R.string.no_active_motor)
+            motorPlate.text = ""
             return
         }
 
+        motorName.text = motor.name
+        motorPlate.text = motor.plateNumber
         val items = dbHelper.getOliByMotor(motor.id)
         adapter.submitList(items)
-        emptyText.visibility = if (items.isEmpty()) View.VISIBLE else View.GONE
+        bindEmptyVisibility(items.isEmpty())
 
         val latest = dbHelper.getLatestOli(motor.id)
         if (latest == null) {
             summaryValue.text = getString(R.string.no_data_short)
             summaryMeta.text = getString(R.string.no_oli_data_short)
+            setSummaryStatusColor(false)
         } else {
+            val overdue = motor.currentKilometer >= latest.nextKilometer
             val remainingKm = (latest.nextKilometer - motor.currentKilometer).coerceAtLeast(0)
-            summaryValue.text = getString(R.string.km_remaining_value, remainingKm)
+            summaryValue.text =
+                if (overdue) getString(R.string.oil_due_now) else getString(R.string.km_remaining_value, remainingKm)
             summaryMeta.text = getString(R.string.oli_next_km_value, latest.nextKilometer)
+            setSummaryStatusColor(overdue)
         }
+    }
+
+    private fun setSummaryStatusColor(overdue: Boolean) {
+        val color = getColor(if (overdue) R.color.motocare_error else R.color.motocare_text)
+        val metaColor = getColor(if (overdue) R.color.motocare_error else R.color.motocare_yellow)
+        summaryValue.setTextColor(color)
+        summaryMeta.setTextColor(metaColor)
+    }
+
+    private fun bindEmptyVisibility(isEmpty: Boolean) {
+        emptyText.visibility = View.GONE
+        emptyState.visibility = if (isEmpty) View.VISIBLE else View.GONE
+        motorCard.visibility = View.VISIBLE
+        summaryCard.visibility = if (isEmpty) View.GONE else View.VISIBLE
+        recycler.visibility = if (isEmpty) View.GONE else View.VISIBLE
+    }
+
+    private fun showEmptyState() {
+        bindEmptyVisibility(true)
     }
 }

@@ -57,9 +57,12 @@ object CatatSheet {
 
         dialog.setContentView(view)
         dialog.show()
+        view.alpha = 0f
+        view.translationY = 42f
+        view.animate().alpha(1f).translationY(0f).setDuration(180).start()
     }
 
-    private fun showMotorPicker(activity: Activity) {
+    fun showMotorPicker(activity: Activity, onMotorChanged: (() -> Unit)? = null) {
         val dialog = BottomSheetDialog(activity)
         val view = activity.layoutInflater.inflate(R.layout.sheet_motor_picker, null)
         val db = MotoCareDbHelper(activity)
@@ -68,13 +71,18 @@ object CatatSheet {
             val row = activity.layoutInflater.inflate(R.layout.item_motor_picker, container, false)
             row.findViewById<TextView>(R.id.textPickerMotorName).text = motor.name
             row.findViewById<TextView>(R.id.textPickerMotorPlate).text = motor.plateNumber
-            row.findViewById<TextView>(R.id.textPickerMotorKm).text = motor.currentKilometer.toString()
+            row.findViewById<TextView>(R.id.textPickerMotorKm).text =
+                activity.getString(R.string.km_value_short, motor.currentKilometer.toString())
             row.findViewById<TextView>(R.id.textPickerMotorActive).visibility =
                 if (motor.isActive) View.VISIBLE else View.GONE
             row.setOnClickListener {
                 db.setActiveMotor(motor.id)
                 dialog.dismiss()
-                show(activity)
+                if (onMotorChanged == null) {
+                    show(activity)
+                } else {
+                    onMotorChanged()
+                }
             }
             container.addView(row)
         }
@@ -84,6 +92,9 @@ object CatatSheet {
         }
         dialog.setContentView(view)
         dialog.show()
+        view.alpha = 0f
+        view.translationY = 42f
+        view.animate().alpha(1f).translationY(0f).setDuration(180).start()
     }
 
     private fun Activity.openNoAnim(target: Class<out Activity>) {

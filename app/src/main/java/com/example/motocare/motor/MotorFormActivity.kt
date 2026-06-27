@@ -1,6 +1,7 @@
 package com.example.motocare.motor
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -36,6 +37,8 @@ class MotorFormActivity : AppCompatActivity() {
             }
         }
 
+        findViewById<View>(R.id.buttonBack).setOnClickListener { finish() }
+        findViewById<View>(R.id.textTitleBack).setOnClickListener { finish() }
         findViewById<Button>(R.id.buttonSaveMotor).setOnClickListener { saveMotor() }
     }
 

@@ -4,7 +4,10 @@ import android.app.Activity
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.view.View
 import android.widget.TextView
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import com.example.motocare.CatatActivity
 import com.example.motocare.DashboardActivity
 import com.example.motocare.R
@@ -14,6 +17,7 @@ import com.example.motocare.servis.ServisListActivity
 
 object BottomNavBinder {
     fun bind(activity: Activity, activeMenu: String) {
+        activity.findViewById<View?>(R.id.bottomNavRoot)?.applyBottomInset()
         activity.findViewById<TextView?>(R.id.navHome)?.apply {
             setActiveStyle(activeMenu == MENU_HOME)
             setOnClickListener { open(activity, DashboardActivity::class.java) }
@@ -22,9 +26,7 @@ object BottomNavBinder {
             setActiveStyle(activeMenu == MENU_MOTOR)
             setOnClickListener { open(activity, MotorListActivity::class.java) }
         }
-        activity.findViewById<TextView?>(R.id.navCatat)?.apply {
-            setTextColor(CENTER_COLOR)
-            compoundDrawableTintList = ColorStateList.valueOf(CENTER_COLOR)
+        activity.findViewById<View?>(R.id.navCatat)?.apply {
             setOnClickListener { CatatSheet.show(activity) }
         }
         activity.findViewById<TextView?>(R.id.navRiwayat)?.apply {
@@ -52,6 +54,18 @@ object BottomNavBinder {
         compoundDrawableTintList = ColorStateList.valueOf(color)
     }
 
+    private fun View.applyBottomInset() {
+        val baseHeight = layoutParams.height
+        ViewCompat.setOnApplyWindowInsetsListener(this) { view, insets ->
+            val bottom = insets.getInsets(WindowInsetsCompat.Type.systemBars()).bottom
+            view.layoutParams = view.layoutParams.apply {
+                height = baseHeight + bottom
+            }
+            insets
+        }
+        ViewCompat.requestApplyInsets(this)
+    }
+
     const val MENU_HOME = "home"
     const val MENU_MOTOR = "motor"
     const val MENU_CATAT = "catat"
@@ -60,5 +74,4 @@ object BottomNavBinder {
 
     private val ACTIVE_COLOR = Color.parseColor("#FFCB25")
     private val INACTIVE_COLOR = Color.parseColor("#8B91A5")
-    private val CENTER_COLOR = Color.parseColor("#070A12")
 }

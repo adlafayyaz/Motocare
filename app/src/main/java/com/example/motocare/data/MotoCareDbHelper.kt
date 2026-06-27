@@ -5,18 +5,33 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import com.google.firebase.auth.FirebaseAuth
+import org.json.JSONArray
+import org.json.JSONObject
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class MotoCareDbHelper(context: Context) : SQLiteOpenHelper(
     context,
-    DATABASE_NAME,
+    databaseName(),
     null,
     DATABASE_VERSION
 ) {
+    override fun onConfigure(db: SQLiteDatabase) {
+        super.onConfigure(db)
+        db.setForeignKeyConstraintsEnabled(true)
+    }
+
     override fun onCreate(db: SQLiteDatabase) {
         CREATE_TABLES.forEach(db::execSQL)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+        if (oldVersion < 2) {
+            db.execSQL("ALTER TABLE $TABLE_TAX_RECORDS ADD COLUMN tax_type TEXT NOT NULL DEFAULT 'STNK tahunan'")
+            return
+        }
         DROP_TABLES.forEach(db::execSQL)
         onCreate(db)
     }
@@ -49,7 +64,32 @@ class MotoCareDbHelper(context: Context) : SQLiteOpenHelper(
     }
 
     fun deleteMotor(id: Long): Int {
-        return writableDatabase.delete(TABLE_MOTORS, "id = ?", arrayOf(id.toString()))
+        val db = writableDatabase
+        db.beginTransaction()
+        try {
+            val deleted = db.delete(TABLE_MOTORS, "id = ?", arrayOf(id.toString()))
+            if (deleted > 0 && activeMotorId(db) == null) {
+                db.query(
+                    TABLE_MOTORS,
+                    arrayOf("id"),
+                    null,
+                    null,
+                    null,
+                    null,
+                    "id DESC",
+                    "1"
+                ).use { cursor ->
+                    if (cursor.moveToFirst()) {
+                        val active = ContentValues().apply { put("is_active", 1) }
+                        db.update(TABLE_MOTORS, active, "id = ?", arrayOf(cursor.getLong(0).toString()))
+                    }
+                }
+            }
+            db.setTransactionSuccessful()
+            return deleted
+        } finally {
+            db.endTransaction()
+        }
     }
 
     fun getMotor(id: Long): Motor? {
@@ -99,24 +139,24 @@ class MotoCareDbHelper(context: Context) : SQLiteOpenHelper(
         }
     }
 
-    fun getMonthlyExpenseTotal(): Int {
-        return getServiceMonthlyTotal() + getOilMonthlyTotal() + getFuelMonthlyTotal() + getTaxMonthlyTotal()
+    fun getMonthlyExpenseTotal(motorId: Long? = null): Int {
+        return getServiceMonthlyTotal(motorId) + getOilMonthlyTotal(motorId) + getFuelMonthlyTotal(motorId) + getTaxMonthlyTotal(motorId)
     }
 
-    fun getRecordCount(): Int {
-        return countRows(TABLE_SERVICE_RECORDS) +
-            countRows(TABLE_OIL_RECORDS) +
-            countRows(TABLE_FUEL_RECORDS) +
-            countRows(TABLE_TAX_RECORDS)
+    fun getRecordCount(motorId: Long? = null): Int {
+        return countRows(TABLE_SERVICE_RECORDS, motorId) +
+            countRows(TABLE_OIL_RECORDS, motorId) +
+            countRows(TABLE_FUEL_RECORDS, motorId) +
+            countRows(TABLE_TAX_RECORDS, motorId)
     }
 
-    fun getFuelMonthlyTotal(): Int = sumCost(TABLE_FUEL_RECORDS)
+    fun getFuelMonthlyTotal(motorId: Long? = null): Int = sumCost(TABLE_FUEL_RECORDS, "fuel_date", motorId)
 
-    fun getTaxMonthlyTotal(): Int = sumCost(TABLE_TAX_RECORDS)
+    fun getTaxMonthlyTotal(motorId: Long? = null): Int = sumCost(TABLE_TAX_RECORDS, "due_date", motorId)
 
-    fun getOilMonthlyTotal(): Int = sumCost(TABLE_OIL_RECORDS)
+    fun getOilMonthlyTotal(motorId: Long? = null): Int = sumCost(TABLE_OIL_RECORDS, "oil_change_date", motorId)
 
-    fun getServiceMonthlyTotal(): Int = sumCost(TABLE_SERVICE_RECORDS)
+    fun getServiceMonthlyTotal(motorId: Long? = null): Int = sumCost(TABLE_SERVICE_RECORDS, "service_date", motorId)
 
     fun insertServis(servis: Servis): Long {
         return writableDatabase.insert(TABLE_SERVICE_RECORDS, null, servis.toValues())
@@ -350,10 +390,99 @@ class MotoCareDbHelper(context: Context) : SQLiteOpenHelper(
         }
     }
 
+    fun resetAllData() {
+        writableDatabase.beginTransaction()
+        try {
+            DROP_TABLES.forEach(writableDatabase::execSQL)
+            CREATE_TABLES.forEach(writableDatabase::execSQL)
+            writableDatabase.setTransactionSuccessful()
+        } finally {
+            writableDatabase.endTransaction()
+        }
+    }
+
+    fun exportJson(): JSONObject {
+        return JSONObject().apply {
+            put("motors", tableToJson(TABLE_MOTORS))
+            put("service_records", tableToJson(TABLE_SERVICE_RECORDS))
+            put("oil_records", tableToJson(TABLE_OIL_RECORDS))
+            put("fuel_records", tableToJson(TABLE_FUEL_RECORDS))
+            put("tax_records", tableToJson(TABLE_TAX_RECORDS))
+        }
+    }
+
+    fun importJson(root: JSONObject) {
+        writableDatabase.beginTransaction()
+        try {
+            listOf(TABLE_TAX_RECORDS, TABLE_FUEL_RECORDS, TABLE_OIL_RECORDS, TABLE_SERVICE_RECORDS, TABLE_MOTORS)
+                .forEach { writableDatabase.delete(it, null, null) }
+            importTable(TABLE_MOTORS, root.optJSONArray("motors") ?: JSONArray())
+            importTable(TABLE_SERVICE_RECORDS, root.optJSONArray("service_records") ?: JSONArray())
+            importTable(TABLE_OIL_RECORDS, root.optJSONArray("oil_records") ?: JSONArray())
+            importTable(TABLE_FUEL_RECORDS, root.optJSONArray("fuel_records") ?: JSONArray())
+            importTable(TABLE_TAX_RECORDS, root.optJSONArray("tax_records") ?: JSONArray())
+            writableDatabase.setTransactionSuccessful()
+        } finally {
+            writableDatabase.endTransaction()
+        }
+    }
+
+    private fun tableToJson(table: String): JSONArray {
+        val rows = JSONArray()
+        readableDatabase.query(table, null, null, null, null, null, null).use { cursor ->
+            while (cursor.moveToNext()) {
+                val row = JSONObject()
+                cursor.columnNames.forEach { column ->
+                    val index = cursor.getColumnIndexOrThrow(column)
+                    when (cursor.getType(index)) {
+                        Cursor.FIELD_TYPE_INTEGER -> row.put(column, cursor.getLong(index))
+                        Cursor.FIELD_TYPE_FLOAT -> row.put(column, cursor.getDouble(index))
+                        Cursor.FIELD_TYPE_NULL -> row.put(column, JSONObject.NULL)
+                        else -> row.put(column, cursor.getString(index))
+                    }
+                }
+                rows.put(row)
+            }
+        }
+        return rows
+    }
+
+    private fun importTable(table: String, rows: JSONArray) {
+        repeat(rows.length()) { index ->
+            val row = rows.getJSONObject(index)
+            val values = ContentValues()
+            row.keys().forEach { key ->
+                when (val value = row.get(key)) {
+                    JSONObject.NULL -> values.putNull(key)
+                    is Int -> values.put(key, value)
+                    is Long -> values.put(key, value)
+                    is Double -> values.put(key, value)
+                    else -> values.put(key, value.toString())
+                }
+            }
+            writableDatabase.insert(table, null, values)
+        }
+    }
+
     private fun getMotorCount(db: SQLiteDatabase): Int {
         db.rawQuery("SELECT COUNT(*) FROM $TABLE_MOTORS", null).use { cursor ->
             cursor.moveToFirst()
             return cursor.getInt(0)
+        }
+    }
+
+    private fun activeMotorId(db: SQLiteDatabase): Long? {
+        db.query(
+            TABLE_MOTORS,
+            arrayOf("id"),
+            "is_active = 1",
+            null,
+            null,
+            null,
+            "id DESC",
+            "1"
+        ).use { cursor ->
+            return if (cursor.moveToFirst()) cursor.getLong(0) else null
         }
     }
 
@@ -410,6 +539,7 @@ class MotoCareDbHelper(context: Context) : SQLiteOpenHelper(
     private fun Pajak.toValues(): ContentValues {
         return ContentValues().apply {
             put("motor_id", motorId)
+            put("tax_type", taxType)
             put("due_date", dueDate)
             put("cost", cost)
             put("status", status)
@@ -463,29 +593,59 @@ class MotoCareDbHelper(context: Context) : SQLiteOpenHelper(
         return Pajak(
             id = getLong(getColumnIndexOrThrow("id")),
             motorId = getLong(getColumnIndexOrThrow("motor_id")),
+            taxType = getString(getColumnIndexOrThrow("tax_type")),
             dueDate = getString(getColumnIndexOrThrow("due_date")),
             cost = getInt(getColumnIndexOrThrow("cost")),
             status = getString(getColumnIndexOrThrow("status"))
         )
     }
 
-    private fun sumCost(table: String): Int {
-        readableDatabase.rawQuery("SELECT COALESCE(SUM(cost), 0) FROM $table", null).use { cursor ->
+    private fun sumCost(table: String, dateColumn: String, motorId: Long?): Int {
+        val (start, end) = currentMonthRange()
+        val where = StringBuilder("$dateColumn >= ? AND $dateColumn < ?")
+        val args = mutableListOf(start, end)
+        if (motorId != null) {
+            where.append(" AND motor_id = ?")
+            args.add(motorId.toString())
+        }
+        readableDatabase.rawQuery(
+            "SELECT COALESCE(SUM(cost), 0) FROM $table WHERE $where",
+            args.toTypedArray()
+        ).use { cursor ->
             cursor.moveToFirst()
             return cursor.getInt(0)
         }
     }
 
-    private fun countRows(table: String): Int {
-        readableDatabase.rawQuery("SELECT COUNT(*) FROM $table", null).use { cursor ->
+    private fun countRows(table: String, motorId: Long?): Int {
+        val where = if (motorId == null) "" else " WHERE motor_id = ?"
+        val args = motorId?.let { arrayOf(it.toString()) }
+        readableDatabase.rawQuery("SELECT COUNT(*) FROM $table$where", args).use { cursor ->
             cursor.moveToFirst()
             return cursor.getInt(0)
         }
+    }
+
+    private fun currentMonthRange(): Pair<String, String> {
+        val format = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.DAY_OF_MONTH, 1)
+        val start = format.format(calendar.time)
+        calendar.add(Calendar.MONTH, 1)
+        val end = format.format(calendar.time)
+        return start to end
     }
 
     companion object {
         const val DATABASE_NAME = "motocare.db"
-        const val DATABASE_VERSION = 1
+        const val DATABASE_VERSION = 2
+
+        private fun databaseName(): String {
+            val user = FirebaseAuth.getInstance().currentUser
+            val accountKey = user?.uid ?: user?.email ?: "local"
+            val safeKey = accountKey.replace(Regex("[^A-Za-z0-9_]"), "_")
+            return "motocare_$safeKey.db"
+        }
 
         const val TABLE_USERS = "users"
         const val TABLE_MOTORS = "motors"
@@ -558,6 +718,7 @@ class MotoCareDbHelper(context: Context) : SQLiteOpenHelper(
             CREATE TABLE $TABLE_TAX_RECORDS (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 motor_id INTEGER NOT NULL,
+                tax_type TEXT NOT NULL,
                 due_date TEXT NOT NULL,
                 cost INTEGER NOT NULL,
                 status TEXT NOT NULL,

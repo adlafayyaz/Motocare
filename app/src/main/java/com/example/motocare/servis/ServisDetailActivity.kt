@@ -2,6 +2,7 @@ package com.example.motocare.servis
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -20,6 +21,8 @@ class ServisDetailActivity : AppCompatActivity() {
         dbHelper = MotoCareDbHelper(this)
         servisId = intent.getLongExtra(EXTRA_SERVIS_ID, 0)
 
+        findViewById<View>(R.id.buttonBack).setOnClickListener { finish() }
+        findViewById<View>(R.id.textDetailServisType).setOnClickListener { finish() }
         findViewById<Button>(R.id.buttonEditServis).setOnClickListener {
             startActivity(Intent(this, ServisFormActivity::class.java).putExtra(ServisFormActivity.EXTRA_SERVIS_ID, servisId))
         }
@@ -40,7 +43,10 @@ class ServisDetailActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.textDetailServisDate).text = servis.serviceDate
         findViewById<TextView>(R.id.textDetailServisKm).text = getString(R.string.servis_item_meta, servis.kilometer)
         findViewById<TextView>(R.id.textDetailServisCost).text = getString(R.string.rupiah_value_compact, servis.cost)
-        findViewById<TextView>(R.id.textDetailServisInterval).text = getString(R.string.target_km_value, servis.kilometer + servis.intervalKm)
+        findViewById<TextView>(R.id.textDetailServisInterval).text = getString(
+            R.string.target_km_value,
+            serviceTargetKm(servis.kilometer, servis.intervalKm)
+        )
         findViewById<TextView>(R.id.textDetailServisNote).text = servis.note.ifEmpty { getString(R.string.service_note_empty) }
     }
 
@@ -58,5 +64,9 @@ class ServisDetailActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_SERVIS_ID = "extra_servis_id"
+    }
+
+    private fun serviceTargetKm(kilometer: Int, targetOrInterval: Int): Int {
+        return if (targetOrInterval > kilometer) targetOrInterval else kilometer + targetOrInterval
     }
 }

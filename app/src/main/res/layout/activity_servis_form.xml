@@ -13,14 +13,35 @@
         android:paddingEnd="22dp"
         android:paddingBottom="22dp">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:text="@string/service_form_title"
-            android:textColor="#F4F5FA"
-            android:textSize="28sp"
-            android:textStyle="bold" />
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/buttonBack"
+                android:layout_width="24dp"
+                android:layout_height="match_parent"
+                android:clickable="true"
+                android:contentDescription="@string/back"
+                android:focusable="true"
+                android:padding="5dp"
+                android:src="@drawable/ic_back"
+                android:tint="#F4F5FA" />
+
+            <TextView
+                android:id="@+id/textTitleBack"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="14dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="@string/service_form_title"
+                android:textColor="#F4F5FA"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/textServisMotor"
@@ -41,6 +62,8 @@
         <EditText
             android:id="@+id/editServisDate"
             style="@style/FormInput"
+            android:clickable="true"
+            android:focusable="false"
             android:hint="@string/date_hint"
             android:inputType="date" />
 
@@ -51,48 +74,162 @@
         <EditText
             android:id="@+id/editServisType"
             style="@style/FormInput"
+            android:clickable="true"
+            android:focusable="false"
             android:hint="@string/default_service_type"
             android:inputType="textCapWords" />
 
         <TextView
-            style="@style/FormLabel"
-            android:text="@string/service_kilometer" />
+            android:id="@+id/errorServisType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textColor="#F23D47"
+            android:textSize="11sp"
+            android:visibility="gone" />
 
-        <EditText
-            android:id="@+id/editServisKilometer"
-            style="@style/FormInput"
-            android:hint="@string/current_kilometer_hint"
-            android:inputType="number" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/FormLabel"
+                    android:text="@string/service_kilometer" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp">
+
+                    <EditText
+                        android:id="@+id/editServisKilometer"
+                        style="@style/FormInputWithUnit"
+                        android:inputType="number" />
+
+                    <TextView
+                        style="@style/FormUnitText"
+                        android:text="@string/unit_km" />
+                </FrameLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/FormLabel"
+                    android:text="@string/service_interval_km" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp">
+
+                    <EditText
+                        android:id="@+id/editServisIntervalKm"
+                        style="@style/FormInputWithUnit"
+                        android:inputType="number" />
+
+                    <TextView
+                        style="@style/FormUnitText"
+                        android:text="@string/unit_km" />
+                </FrameLayout>
+            </LinearLayout>
+        </LinearLayout>
 
         <TextView
-            style="@style/FormLabel"
-            android:text="@string/service_interval_km" />
-
-        <EditText
-            android:id="@+id/editServisIntervalKm"
-            style="@style/FormInput"
-            android:hint="@string/service_interval_hint"
-            android:inputType="number" />
-
-        <TextView
-            style="@style/FormLabel"
-            android:text="@string/service_interval_month" />
-
-        <EditText
-            android:id="@+id/editServisIntervalMonth"
-            style="@style/FormInput"
-            android:hint="@string/service_interval_month_hint"
-            android:inputType="number" />
+            android:id="@+id/errorServisKilometer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textColor="#F23D47"
+            android:textSize="11sp"
+            android:visibility="gone" />
 
         <TextView
-            style="@style/FormLabel"
-            android:text="@string/service_cost" />
+            android:id="@+id/textServiceRecommendation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:textColor="#9AA0B5"
+            android:textSize="12sp"
+            android:visibility="gone" />
 
-        <EditText
-            android:id="@+id/editServisCost"
-            style="@style/FormInput"
-            android:hint="@string/cost_hint"
-            android:inputType="number" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/FormLabel"
+                    android:text="@string/service_interval_month" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp">
+
+                    <EditText
+                        android:id="@+id/editServisIntervalMonth"
+                        style="@style/FormInputWithUnit"
+                        android:inputType="number" />
+
+                    <TextView
+                        style="@style/FormUnitText"
+                        android:text="@string/unit_month" />
+                </FrameLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/FormLabel"
+                    android:text="@string/service_cost" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp">
+
+                    <EditText
+                        android:id="@+id/editServisCost"
+                        style="@style/FormInputWithUnit"
+                        android:inputType="text" />
+
+                    <TextView
+                        style="@style/FormUnitText"
+                        android:text="@string/unit_rp" />
+                </FrameLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/errorServisCost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textColor="#F23D47"
+            android:textSize="11sp"
+            android:visibility="gone" />
 
         <TextView
             style="@style/FormLabel"

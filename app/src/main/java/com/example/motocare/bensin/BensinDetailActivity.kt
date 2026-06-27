@@ -2,6 +2,7 @@ package com.example.motocare.bensin
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -19,6 +20,8 @@ class BensinDetailActivity : AppCompatActivity() {
 
         dbHelper = MotoCareDbHelper(this)
         bensinId = intent.getLongExtra(EXTRA_BENSIN_ID, 0)
+        findViewById<View>(R.id.buttonBack).setOnClickListener { finish() }
+        findViewById<View>(R.id.textDetailBensinTitle).setOnClickListener { finish() }
         findViewById<Button>(R.id.buttonEditBensin).setOnClickListener {
             startActivity(Intent(this, BensinFormActivity::class.java).putExtra(BensinFormActivity.EXTRA_BENSIN_ID, bensinId))
         }

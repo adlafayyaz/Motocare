@@ -41,8 +41,9 @@ class MotorAdapter(
         fun bind(motor: Motor, onClick: (Motor) -> Unit) {
             nameText.text = motor.name
             plateText.text = motor.plateNumber
-            kilometerText.text = NumberFormat.getNumberInstance(Locale("id", "ID"))
+            val kilometer = NumberFormat.getNumberInstance(Locale("id", "ID"))
                 .format(motor.currentKilometer)
+            kilometerText.text = itemView.context.getString(R.string.km_value_short, kilometer)
             activeText.visibility = if (motor.isActive) View.VISIBLE else View.GONE
             itemView.setOnClickListener { onClick(motor) }
         }

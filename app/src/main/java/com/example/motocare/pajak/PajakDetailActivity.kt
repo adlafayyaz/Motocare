@@ -2,6 +2,7 @@ package com.example.motocare.pajak
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -19,6 +20,8 @@ class PajakDetailActivity : AppCompatActivity() {
 
         dbHelper = MotoCareDbHelper(this)
         pajakId = intent.getLongExtra(EXTRA_PAJAK_ID, 0)
+        findViewById<View>(R.id.buttonBack).setOnClickListener { finish() }
+        findViewById<View>(R.id.textDetailPajakTitle).setOnClickListener { finish() }
         findViewById<Button>(R.id.buttonEditPajak).setOnClickListener {
             startActivity(Intent(this, PajakFormActivity::class.java).putExtra(PajakFormActivity.EXTRA_PAJAK_ID, pajakId))
         }
@@ -35,9 +38,10 @@ class PajakDetailActivity : AppCompatActivity() {
             finish()
             return
         }
-        findViewById<TextView>(R.id.textDetailPajakTitle).text = getString(R.string.tax_due_value, pajak.dueDate)
+        findViewById<TextView>(R.id.textDetailPajakTitle).text = pajak.taxType
         findViewById<TextView>(R.id.textDetailPajakCost).text = getString(R.string.rupiah_value_compact, pajak.cost)
-        findViewById<TextView>(R.id.textDetailPajakStatus).text = pajak.status
+        findViewById<TextView>(R.id.textDetailPajakStatus).text = getString(R.string.tax_due_value, pajak.dueDate)
+        findViewById<TextView>(R.id.textDetailPajakPaymentStatus).text = pajak.status
     }
 
     private fun confirmDelete() {
