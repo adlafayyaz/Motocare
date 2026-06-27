@@ -2,11 +2,14 @@ package com.example.motocare
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.MotionEvent
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import com.example.motocare.bensin.BensinListActivity
 import com.example.motocare.data.MotoCareDbHelper
 import com.example.motocare.data.Motor
@@ -27,6 +30,8 @@ import kotlin.math.ceil
 class DashboardActivity : AppCompatActivity() {
     private lateinit var dbHelper: MotoCareDbHelper
     private var costMode = true
+    private var estimateIndex = 0
+    private var downX = 0f
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,12 +50,62 @@ class DashboardActivity : AppCompatActivity() {
         findViewById<View>(R.id.actionDashboardBensin).setOnClickListener { openNoAnim(BensinListActivity::class.java) }
         findViewById<TextView>(R.id.buttonCostTab).setOnClickListener { selectCostMode(true) }
         findViewById<TextView>(R.id.buttonDistanceTab).setOnClickListener { selectCostMode(false) }
+        bindInsets()
+        bindEstimateSwipe()
         BottomNavBinder.bind(this, BottomNavBinder.MENU_HOME)
     }
 
     override fun onResume() {
         super.onResume()
-        bindDashboard()
+        showDashboardLoading()
+    }
+
+    private fun bindInsets() {
+        val content = findViewById<View>(R.id.dashboardContent)
+        val nav = findViewById<View>(R.id.dashboardBottomNav)
+        val contentTop = content.paddingTop
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.dashboardRoot)) { _, insets ->
+            val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            content.setPadding(content.paddingLeft, contentTop + bars.top, content.paddingRight, content.paddingBottom)
+            nav.setPadding(nav.paddingLeft, nav.paddingTop, nav.paddingRight, bars.bottom)
+            insets
+        }
+    }
+
+    private fun bindEstimateSwipe() {
+        findViewById<View>(R.id.dashboardEstimateCard).setOnTouchListener { view, event ->
+            when (event.actionMasked) {
+                MotionEvent.ACTION_DOWN -> {
+                    downX = event.x
+                    true
+                }
+                MotionEvent.ACTION_UP -> {
+                    val delta = event.x - downX
+                    if (delta > 60f) showEstimate(-1) else if (delta < -60f) showEstimate(1) else view.performClick()
+                    true
+                }
+                else -> true
+            }
+        }
+    }
+
+    private fun showDashboardLoading() {
+        val skeleton = findViewById<View>(R.id.dashboardSkeleton)
+        val estimate = findViewById<View>(R.id.dashboardEstimateCard)
+        skeleton.visibility = View.VISIBLE
+        estimate.visibility = View.INVISIBLE
+        skeleton.animate().alpha(0.85f).setDuration(160).withEndAction {
+            skeleton.animate().alpha(0.45f).setDuration(160).start()
+        }.start()
+        skeleton.postDelayed({
+            bindDashboard()
+            skeleton.animate().cancel()
+            skeleton.visibility = View.GONE
+            estimate.alpha = 0f
+            estimate.translationY = 12f
+            estimate.visibility = View.VISIBLE
+            estimate.animate().alpha(1f).translationY(0f).setDuration(180).start()
+        }, 220)
     }
 
     private fun bindDashboard() {
@@ -82,13 +137,7 @@ class DashboardActivity : AppCompatActivity() {
             taxTotal = taxTotal
         )
 
-        if (activeMotor == null) {
-            bindEmptyEstimate()
-        } else {
-            bindServiceEstimate(activeMotor.id, activeMotor.currentKilometer)
-            bindOilEstimate(activeMotor.id, activeMotor.currentKilometer)
-            bindTaxEstimate(activeMotor.id)
-        }
+        bindEstimate(activeMotor)
         findViewById<Button>(R.id.buttonDashboardAddMotor).visibility =
             if (hasMotor) View.GONE else View.VISIBLE
     }
@@ -124,10 +173,34 @@ class DashboardActivity : AppCompatActivity() {
     }
 
     private fun bindEmptyEstimate() {
+        findViewById<ImageView>(R.id.imageDashboardEstimate).setImageResource(R.drawable.ic_service)
         findViewById<TextView>(R.id.textNextService).text = getString(R.string.next_service_title)
         findViewById<TextView>(R.id.textNextServiceMeta).text = getString(R.string.no_motor_estimate)
         findViewById<TextView>(R.id.textNextServiceValue).text = "-"
         findViewById<TextView>(R.id.textNextServiceLabel).text = getString(R.string.target_label)
+    }
+
+    private fun showEstimate(direction: Int) {
+        estimateIndex = (estimateIndex + direction + ESTIMATE_COUNT) % ESTIMATE_COUNT
+        val card = findViewById<View>(R.id.dashboardEstimateCard)
+        card.animate().alpha(0f).translationX((-direction * 24).toFloat()).setDuration(90).withEndAction {
+            bindEstimate(dbHelper.getActiveMotor())
+            card.translationX = (direction * 24).toFloat()
+            card.animate().alpha(1f).translationX(0f).setDuration(140).start()
+        }.start()
+    }
+
+    private fun bindEstimate(activeMotor: Motor?) {
+        if (activeMotor == null) {
+            bindEmptyEstimate()
+            return
+        }
+        when (estimateIndex) {
+            0 -> bindServiceEstimate(activeMotor.id, activeMotor.currentKilometer)
+            1 -> bindOilEstimate(activeMotor.id, activeMotor.currentKilometer)
+            2 -> bindTaxEstimate(activeMotor.id)
+            else -> bindFuelEstimate(activeMotor.id)
+        }
     }
 
     private fun bindMetricCard(
@@ -190,6 +263,7 @@ class DashboardActivity : AppCompatActivity() {
 
     private fun bindServiceEstimate(motorId: Long, currentKilometer: Int) {
         val latest = dbHelper.getLatestServis(motorId)
+        findViewById<ImageView>(R.id.imageDashboardEstimate).setImageResource(R.drawable.ic_service)
         findViewById<TextView>(R.id.textNextService).text = getString(R.string.next_service_title)
         if (latest == null) {
             findViewById<TextView>(R.id.textNextServiceMeta).text = getString(R.string.no_service_data_short)
@@ -213,21 +287,52 @@ class DashboardActivity : AppCompatActivity() {
 
     private fun bindOilEstimate(motorId: Long, currentKilometer: Int) {
         val latest = dbHelper.getLatestOli(motorId)
-        findViewById<TextView>(R.id.textOilTotal).text = if (latest == null) {
-            "-"
+        findViewById<ImageView>(R.id.imageDashboardEstimate).setImageResource(R.drawable.ic_oil)
+        findViewById<TextView>(R.id.textNextService).text = getString(R.string.oil_remaining_title)
+        if (latest == null) {
+            findViewById<TextView>(R.id.textNextServiceMeta).text = getString(R.string.no_oli_data_short)
+            findViewById<TextView>(R.id.textNextServiceValue).text = "-"
+            findViewById<TextView>(R.id.textNextServiceLabel).text = getString(R.string.target_label)
         } else {
             val remainingKm = (latest.nextKilometer - currentKilometer).coerceAtLeast(0)
-            getString(R.string.km_remaining_value, remainingKm)
+            findViewById<TextView>(R.id.textNextServiceMeta).text = getString(R.string.km_remaining_value, remainingKm)
+            findViewById<TextView>(R.id.textNextServiceValue).text = getString(R.string.km_value_short, latest.nextKilometer)
+            findViewById<TextView>(R.id.textNextServiceLabel).text = getString(R.string.target_label)
         }
     }
 
     private fun bindTaxEstimate(motorId: Long) {
         val nearest = dbHelper.getPajakByMotor(motorId).firstOrNull { it.status.equals("Belum bayar", true) }
             ?: dbHelper.getPajakByMotor(motorId).firstOrNull()
-        findViewById<TextView>(R.id.textTaxTotal).text = nearest?.let { pajak ->
-            val days = daysUntil(pajak)
-            if (days == null) formatRupiah(pajak.cost) else getString(R.string.days_value, days)
-        } ?: "-"
+        findViewById<ImageView>(R.id.imageDashboardEstimate).setImageResource(R.drawable.ic_tax)
+        findViewById<TextView>(R.id.textNextService).text = getString(R.string.tax_next_title)
+        if (nearest == null) {
+            findViewById<TextView>(R.id.textNextServiceMeta).text = getString(R.string.empty_pajak)
+            findViewById<TextView>(R.id.textNextServiceValue).text = "-"
+            findViewById<TextView>(R.id.textNextServiceLabel).text = getString(R.string.target_label)
+        } else {
+            findViewById<TextView>(R.id.textNextServiceMeta).text = nearest.taxType
+            val days = daysUntil(nearest)
+            findViewById<TextView>(R.id.textNextServiceValue).text =
+                if (days == null) nearest.dueDate else getString(R.string.days_value, days)
+            findViewById<TextView>(R.id.textNextServiceLabel).text = nearest.status
+        }
+    }
+
+    private fun bindFuelEstimate(motorId: Long) {
+        val latest = dbHelper.getBensinByMotor(motorId).firstOrNull()
+        findViewById<ImageView>(R.id.imageDashboardEstimate).setImageResource(R.drawable.ic_fuel)
+        findViewById<TextView>(R.id.textNextService).text = getString(R.string.fuel_month_title)
+        if (latest == null) {
+            findViewById<TextView>(R.id.textNextServiceMeta).text = getString(R.string.empty_bensin)
+            findViewById<TextView>(R.id.textNextServiceValue).text = "-"
+            findViewById<TextView>(R.id.textNextServiceLabel).text = getString(R.string.bensin_label)
+        } else {
+            findViewById<TextView>(R.id.textNextServiceMeta).text =
+                getString(R.string.fuel_title_value, latest.fuelBrand, latest.octane)
+            findViewById<TextView>(R.id.textNextServiceValue).text = formatRupiah(latest.cost)
+            findViewById<TextView>(R.id.textNextServiceLabel).text = latest.fuelDate
+        }
     }
 
     private fun daysUntil(pajak: Pajak): Int? {
@@ -270,5 +375,6 @@ class DashboardActivity : AppCompatActivity() {
 
     private companion object {
         const val DAY_MILLIS = 86_400_000L
+        const val ESTIMATE_COUNT = 4
     }
 }

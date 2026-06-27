@@ -25,6 +25,11 @@ object BackupSheet {
             importLauncher.launch(arrayOf("application/json", "text/*"))
         }
         dialog.show()
+        val content = dialog.findViewById<View>(R.id.rowExportData)?.rootView
+        content?.alpha = 0f
+        content?.scaleX = 0.96f
+        content?.scaleY = 0.96f
+        content?.animate()?.alpha(1f)?.scaleX(1f)?.scaleY(1f)?.setDuration(180)?.start()
         dialog.window?.apply {
             setBackgroundDrawableResource(android.R.color.transparent)
             val sideMargin = activity.resources.getDimensionPixelSize(R.dimen.screen_padding)

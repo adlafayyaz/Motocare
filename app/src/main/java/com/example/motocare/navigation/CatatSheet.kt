@@ -57,6 +57,9 @@ object CatatSheet {
 
         dialog.setContentView(view)
         dialog.show()
+        view.alpha = 0f
+        view.translationY = 42f
+        view.animate().alpha(1f).translationY(0f).setDuration(180).start()
     }
 
     fun showMotorPicker(activity: Activity, onMotorChanged: (() -> Unit)? = null) {
@@ -88,6 +91,9 @@ object CatatSheet {
         }
         dialog.setContentView(view)
         dialog.show()
+        view.alpha = 0f
+        view.translationY = 42f
+        view.animate().alpha(1f).translationY(0f).setDuration(180).start()
     }
 
     private fun Activity.openNoAnim(target: Class<out Activity>) {
