@@ -2,6 +2,7 @@ package com.example.motocare
 
 import android.app.Activity
 import android.app.Application
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -36,21 +37,31 @@ class MotoCareApp : Application() {
             ?: return
         if (root.getTag(R.id.system_insets_applied_tag) == true) return
         root.setTag(R.id.system_insets_applied_tag, true)
-        val baseLeft = root.paddingLeft
-        val baseTop = root.paddingTop
-        val baseRight = root.paddingRight
-        val baseBottom = root.paddingBottom
+        root.setBackgroundColor(Color.parseColor("#070A12"))
+        val bottomNav = activity.findViewById<View?>(R.id.bottomNavRoot)
+        val content = bottomNav?.let { nav ->
+            (nav.parent as? ViewGroup)?.children()?.firstOrNull { it != nav }
+        } ?: root
+        val baseLeft = content.paddingLeft
+        val baseTop = content.paddingTop
+        val baseRight = content.paddingRight
+        val baseBottom = content.paddingBottom
         ViewCompat.setOnApplyWindowInsetsListener(root) { view, insets ->
             val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            val hasBottomNav = activity.findViewById<View?>(R.id.bottomNavRoot) != null
-            view.setPadding(
+            content.setPadding(
                 baseLeft,
                 baseTop + bars.top,
                 baseRight,
-                baseBottom + if (hasBottomNav) 0 else bars.bottom
+                baseBottom + if (bottomNav != null) 0 else bars.bottom
             )
             insets
         }
         ViewCompat.requestApplyInsets(root)
+    }
+
+    private fun ViewGroup.children(): Sequence<View> = sequence {
+        for (index in 0 until childCount) {
+            yield(getChildAt(index))
+        }
     }
 }
