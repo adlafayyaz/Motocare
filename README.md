@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🏍️ MotoCare
+<img src="\app\src\main\res\drawable\splash_img.png" width="240">
 
 ### An Android app for tracking motorcycle maintenance, expenses, and important service schedules.
 
