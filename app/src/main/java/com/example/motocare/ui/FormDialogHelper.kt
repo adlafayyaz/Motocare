@@ -116,7 +116,8 @@ object FormDialogHelper {
             addView(Button(context).apply {
                 text = context.getString(R.string.save)
                 setTextColor(context.getColor(R.color.motocare_background))
-                setBackgroundColor(context.getColor(R.color.motocare_yellow))
+                setBackgroundResource(R.drawable.bg_segment_yellow)
+                isAllCaps = false
                 setOnClickListener {
                     val value = input.text.toString().trim()
                     if (value.isNotEmpty()) {

@@ -14,7 +14,7 @@ class MotoCareApp : Application() {
         super.onCreate()
         registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
             override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-                WindowCompat.setDecorFitsSystemWindows(activity.window, true)
+                WindowCompat.setDecorFitsSystemWindows(activity.window, false)
                 if (activity !is DashboardActivity) {
                     applySystemBarInsets(activity)
                 }

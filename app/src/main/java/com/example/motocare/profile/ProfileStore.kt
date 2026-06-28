@@ -15,12 +15,18 @@ class ProfileStore(context: Context) {
     fun save(name: String) {
         prefs.edit()
             .putString(KEY_NAME, name)
+            .putBoolean(KEY_CUSTOM_NAME, true)
             .apply()
     }
 
     fun saveGoogleProfile(name: String?, email: String?, avatarUri: String?) {
+        val hasCustomName = prefs.getBoolean(KEY_CUSTOM_NAME, false)
         prefs.edit()
-            .putString(KEY_NAME, name?.takeIf { it.isNotBlank() } ?: getName())
+            .apply {
+                if (!hasCustomName) {
+                    putString(KEY_NAME, name?.takeIf { it.isNotBlank() } ?: getName())
+                }
+            }
             .putString(KEY_EMAIL, email?.takeIf { it.isNotBlank() } ?: getEmail())
             .putString(KEY_AVATAR_URI, avatarUri)
             .apply()
@@ -30,6 +36,7 @@ class ProfileStore(context: Context) {
         private const val KEY_NAME = "name"
         private const val KEY_EMAIL = "email"
         private const val KEY_AVATAR_URI = "avatar_uri"
+        private const val KEY_CUSTOM_NAME = "custom_name"
 
         private fun accountKey(): String {
             val user = FirebaseAuth.getInstance().currentUser
