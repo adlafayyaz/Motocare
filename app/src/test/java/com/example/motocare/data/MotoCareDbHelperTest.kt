@@ -8,7 +8,7 @@ class MotoCareDbHelperTest {
     @Test
     fun databaseNameAndVersionAreStable() {
         assertEquals("motocare.db", MotoCareDbHelper.DATABASE_NAME)
-        assertEquals(1, MotoCareDbHelper.DATABASE_VERSION)
+        assertEquals(2, MotoCareDbHelper.DATABASE_VERSION)
     }
 
     @Test
