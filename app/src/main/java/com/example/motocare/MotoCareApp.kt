@@ -15,13 +15,13 @@ class MotoCareApp : Application() {
         registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
             override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
                 WindowCompat.setDecorFitsSystemWindows(activity.window, false)
-                if (activity !is DashboardActivity) {
-                    applySystemBarInsets(activity)
-                }
+                applySystemBarInsets(activity)
             }
 
             override fun onActivityStarted(activity: Activity) = Unit
-            override fun onActivityResumed(activity: Activity) = Unit
+            override fun onActivityResumed(activity: Activity) {
+                applySystemBarInsets(activity)
+            }
             override fun onActivityPaused(activity: Activity) = Unit
             override fun onActivityStopped(activity: Activity) = Unit
             override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) = Unit
@@ -30,9 +30,12 @@ class MotoCareApp : Application() {
     }
 
     private fun applySystemBarInsets(activity: Activity) {
+        if (activity is DashboardActivity) return
         val root = activity.findViewById<ViewGroup>(android.R.id.content)
             ?.getChildAt(0)
             ?: return
+        if (root.getTag(R.id.system_insets_applied_tag) == true) return
+        root.setTag(R.id.system_insets_applied_tag, true)
         val baseLeft = root.paddingLeft
         val baseTop = root.paddingTop
         val baseRight = root.paddingRight
