@@ -9,7 +9,7 @@
 <img src="https://img.shields.io/badge/Platform-Android-3DDC84?style=for-the-badge&logo=android&logoColor=white" />
 <img src="https://img.shields.io/badge/Language-Kotlin-7F52FF?style=for-the-badge&logo=kotlin&logoColor=white" />
 <img src="https://img.shields.io/badge/IDE-Android%20Studio-3DDC84?style=for-the-badge&logo=androidstudio&logoColor=white" />
-<img src="https://img.shields.io/badge/Database-SQLite%20%2F%20Room-003B57?style=for-the-badge&logo=sqlite&logoColor=white" />
+<img src="https://img.shields.io/badge/Database-SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white" />
 <img src="https://img.shields.io/badge/Auth-Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black" />
 
 <br />
@@ -17,7 +17,7 @@
 
 <img src="https://img.shields.io/badge/Status-Academic%20Project-blue?style=flat-square" />
 <img src="https://img.shields.io/badge/Offline-Supported-success?style=flat-square" />
-<img src="https://img.shields.io/badge/API-hargaBensin-orange?style=flat-square" />
+<img src="https://img.shields.io/badge/Data-isibens.in-orange?style=flat-square" />
 <img src="https://img.shields.io/badge/Made%20with-Kotlin-purple?style=flat-square" />
 <img src="https://img.shields.io/badge/Build-Gradle-02303A?style=flat-square&logo=gradle&logoColor=white" />
 
@@ -48,7 +48,7 @@ MotoCare is designed as a personal-use application. Users can log in using Googl
 * 🧾 **Record motorcycle service history**
 * 🛢️ **Record oil change schedules and history**
 * ⛽ **Track fuel expenses**
-* 🌐 **Fetch the latest fuel prices from the hargaBensin API**
+* 🌐 **Fetch the latest fuel prices from scraped fuel price data**
 * 📄 **Record tax/STNK information**
 * 📊 **View monthly expense summaries**
 * 📍 **Calculate estimated next service and oil change based on mileage and time interval**
@@ -66,12 +66,12 @@ MotoCare is designed as a personal-use application. Users can log in using Googl
 | IDE                  | Android Studio                           |
 | Build Tool           | Gradle                                   |
 | User Interface       | XML Layout                               |
-| Local Database       | SQLite / Room Database                   |
+| Local Database       | SQLite Database                          |
 | List & Data Display  | RecyclerView                             |
 | Navigation           | Intent & Activity                        |
 | Authentication       | Firebase Authentication for Google Login |
 | Icons                | Material Vector Drawable                 |
-| External API         | hargaBensin API                          |
+| Fuel Price Source    | Scraped data from isibens.in             |
 
 <br />
 
@@ -159,10 +159,10 @@ MotoCare uses a local database to store motorcycle data and all vehicle-related 
 | ---------- | --------------------- |
 | `id`       | Tax record ID         |
 | `motorId`  | Related motorcycle ID |
+| `taxType`  | Tax type              |
 | `dueDate`  | Tax due date          |
-| `taxCost`  | Tax cost              |
+| `cost`     | Tax cost              |
 | `status`   | Payment status        |
-| `paidDate` | Tax payment date      |
 
 <br />
 
@@ -178,7 +178,7 @@ MotoCare uses a local database to store motorcycle data and all vehicle-related 
 8. The user can change the active motorcycle from the motorcycle list page.
 9. The `+` button is used to add service, oil, fuel, tax, or motorcycle records.
 10. Vehicle history is displayed through service, oil, tax, and fuel tabs.
-11. The application can fetch the latest fuel prices from an API to help users input fuel expenses.
+11. The application can fetch the latest fuel prices from scraped fuel price data to help users input fuel expenses.
 12. Data is stored in a local database and can still be accessed offline.
 13. The user can access profile, settings, backup/export, and about pages.
 
@@ -195,27 +195,22 @@ The application displays the estimate based on whichever condition is reached fi
 
 | Maintenance Type |  Mileage | Time     |
 | ---------------- | -------: | -------- |
-| Service          | 3,000 km | 3 months |
-| Oil Change       | 2,000 km | 2 months |
+| Service          | 4,000 km | Customizable |
+| Oil Change       | 3,000 km | Customizable |
 
 <br />
 
-## 🌐 External API
+## 🌐 Fuel Price Data
 
-MotoCare uses the following repository to fetch real-time fuel price data:
-
-```text
-https://github.com/alifmaulidanar/hargaBensin
-```
-
-Main endpoints used:
+MotoCare scrapes fuel price data from the following source:
 
 ```text
-https://api.alifmaulidanar.my.id/api-bbm/full
-https://api.alifmaulidanar.my.id/api-bbm/{jenis}/{merek}/{oktan}
+https://isibens.in/
 ```
 
-The API is only used to help retrieve fuel prices. If the API request fails, users can still enter the fuel price manually.
+Fuel brands and RON options with invalid prices, `0`, or `-` are not shown as selectable options.
+
+The scraped data is only used to help retrieve fuel prices. If the request fails, users can still enter the fuel price manually.
 
 <br />
 

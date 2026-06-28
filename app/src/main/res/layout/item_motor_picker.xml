@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:layout_marginBottom="12dp"
+    android:background="@drawable/bg_card_dark"
+    android:clickable="true"
+    android:focusable="true">
+
+    <TextView
+        android:id="@+id/textPickerMotorName"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="16dp"
+        android:textColor="#F4F5FA"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textPickerMotorPlate"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="42dp"
+        android:textColor="#9AA0B5"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/textPickerMotorKm"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|end"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="20dp"
+        android:gravity="end"
+        android:textColor="#F4F5FA"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textPickerMotorActive"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|end"
+        android:layout_marginTop="45dp"
+        android:layout_marginEnd="20dp"
+        android:gravity="end"
+        android:text="@string/motor_active_short"
+        android:textColor="#FFCB25"
+        android:textSize="11sp"
+        android:textStyle="bold" />
+</FrameLayout>

@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#070A12">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="22dp"
+        android:paddingTop="18dp"
+        android:paddingEnd="22dp"
+        android:paddingBottom="22dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/buttonBack"
+                android:layout_width="24dp"
+                android:layout_height="match_parent"
+                android:clickable="true"
+                android:contentDescription="@string/back"
+                android:focusable="true"
+                android:padding="5dp"
+                android:src="@drawable/ic_back"
+                app:tint="#F4F5FA" />
+
+            <TextView
+                android:id="@+id/textTitleBack"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="14dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="@string/fuel_form_title"
+                android:textColor="#F4F5FA"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textBensinMotor"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/bg_card_dark"
+            android:gravity="center_vertical"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:textColor="#FFCB25"
+            android:textStyle="bold" />
+
+        <TextView style="@style/FormLabel" android:text="@string/fuel_date" />
+        <EditText
+            android:id="@+id/editBensinDate"
+            style="@style/FormInput"
+            android:clickable="true"
+            android:focusable="false"
+            android:hint="@string/date_hint"
+            android:inputType="date" />
+
+        <TextView
+            style="@style/FormLabel"
+            android:text="@string/fuel_type"
+            android:visibility="gone" />
+        <EditText
+            android:id="@+id/editFuelType"
+            style="@style/FormInput"
+            android:hint="@string/default_fuel_type"
+            android:inputType="textCapWords"
+            android:visibility="gone" />
+
+        <TextView style="@style/FormLabel" android:text="@string/fuel_brand" />
+        <EditText
+            android:id="@+id/editFuelBrand"
+            style="@style/FormInput"
+            android:clickable="true"
+            android:focusable="false"
+            android:hint="@string/default_fuel_brand"
+            android:inputType="textCapWords" />
+
+        <TextView style="@style/FormLabel" android:text="@string/fuel_octane" />
+        <EditText
+            android:id="@+id/editFuelOctane"
+            style="@style/FormInput"
+            android:clickable="true"
+            android:focusable="false"
+            android:hint="@string/default_fuel_octane"
+            android:inputType="number" />
+
+        <Button
+            android:id="@+id/buttonFetchFuelPrice"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="14dp"
+            android:backgroundTint="#202331"
+            android:text="@string/fetch_fuel_price"
+            android:textColor="#FFCB25"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textFuelApiStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/fuel_api_hint"
+            android:textColor="#9AA0B5"
+            android:textSize="12sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView style="@style/FormLabel" android:text="@string/fuel_price" />
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp">
+                    <EditText
+                        android:id="@+id/editFuelPrice"
+                        style="@style/FormInputWithUnit"
+                        android:inputType="number" />
+                    <TextView
+                        style="@style/FormUnitText"
+                        android:text="@string/unit_rp_liter" />
+                </FrameLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView style="@style/FormLabel" android:text="@string/fuel_liter" />
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp">
+                    <EditText
+                        android:id="@+id/editFuelLiter"
+                        style="@style/FormInputWithUnit"
+                        android:inputType="numberDecimal" />
+                    <TextView
+                        style="@style/FormUnitText"
+                        android:text="@string/unit_liter" />
+                </FrameLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView style="@style/FormLabel" android:text="@string/fuel_cost" />
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp">
+                    <EditText
+                        android:id="@+id/editFuelCost"
+                        style="@style/FormInputWithUnit"
+                        android:inputType="number" />
+                    <TextView
+                        style="@style/FormUnitText"
+                        android:text="@string/unit_rp" />
+                </FrameLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView style="@style/FormLabel" android:text="@string/fuel_kilometer" />
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp">
+                    <EditText
+                        android:id="@+id/editFuelKilometer"
+                        style="@style/FormInputWithUnit"
+                        android:inputType="number" />
+                    <TextView
+                        style="@style/FormUnitText"
+                        android:text="@string/unit_km" />
+                </FrameLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/buttonSaveBensin"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="28dp"
+            android:backgroundTint="#FFCB25"
+            android:text="@string/save"
+            android:textColor="#070A12"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/buttonDeleteBensin"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="#2A2D3B"
+            android:text="@string/delete"
+            android:textColor="#F23D47"
+            android:textStyle="bold" />
+    </LinearLayout>
+</ScrollView>

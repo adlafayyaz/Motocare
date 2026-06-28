@@ -1,9 +1,22 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.Motocare" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:statusBarColor">#070A12</item>
+        <item name="android:navigationBarColor">#070A12</item>
+        <item name="android:windowAnimationStyle">@style/NoActivityAnimation</item>
+        <item name="colorPrimary">#FFCB25</item>
+        <item name="colorAccent">#FFCB25</item>
     </style>
 
     <style name="Theme.Motocare" parent="Base.Theme.Motocare" />
+
+    <style name="NoActivityAnimation">
+        <item name="android:activityOpenEnterAnimation">@null</item>
+        <item name="android:activityOpenExitAnimation">@null</item>
+        <item name="android:activityCloseEnterAnimation">@null</item>
+        <item name="android:activityCloseExitAnimation">@null</item>
+        <item name="android:taskOpenEnterAnimation">@null</item>
+        <item name="android:taskOpenExitAnimation">@null</item>
+    </style>
 </resources>

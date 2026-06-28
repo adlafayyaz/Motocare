@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottomNavRoot"
+    android:layout_width="match_parent"
+    android:layout_height="104dp"
+    android:background="#070A12">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="top"
+        android:layout_marginTop="26dp"
+        android:background="#1F2230" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="74dp"
+        android:layout_gravity="bottom"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:paddingTop="14dp"
+        android:paddingBottom="4dp">
+
+        <TextView
+            android:id="@+id/navHome"
+            style="@style/BottomNavItem"
+            android:drawableTop="@drawable/ic_home"
+            android:text="@string/nav_home_label" />
+
+        <TextView
+            android:id="@+id/navMotor"
+            style="@style/BottomNavItem"
+            android:drawableTop="@drawable/ic_motor"
+            android:text="@string/nav_motor_label" />
+
+        <Space
+            android:layout_width="72dp"
+            android:layout_height="1dp" />
+
+        <TextView
+            android:id="@+id/navRiwayat"
+            style="@style/BottomNavItem"
+            android:drawableTop="@drawable/ic_history"
+            android:text="@string/nav_riwayat_label" />
+
+        <TextView
+            android:id="@+id/navProfile"
+            style="@style/BottomNavItem"
+            android:drawableTop="@drawable/ic_profile"
+            android:text="@string/nav_profile_label" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/navCatat"
+        android:layout_width="58dp"
+        android:layout_height="58dp"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_marginTop="6dp"
+        android:background="@drawable/bg_circle_yellow"
+        android:contentDescription="@string/catat_title"
+        android:gravity="center"
+        android:padding="18dp"
+        android:src="@drawable/ic_plus"
+        app:tint="#070A12" />
+</FrameLayout>

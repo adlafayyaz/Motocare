@@ -29,4 +29,18 @@ google-services.json
 # Android Studio user-local settings
 /.idea/appInsightsSettings.xml
 /.idea/deploymentTargetSelector.xml
+/.idea/deviceManager.xml
 /.idea/vcs.xml
+/.idea/gradle.xml
+/.idea/misc.xml
+
+# Docs / notes / generated local output
+*.md
+/docs/
+/output/
+/outputs/
+/reports/
+/screenshots/
+*.log
+*.tmp
+*.bak

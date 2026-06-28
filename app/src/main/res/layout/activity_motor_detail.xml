@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:background="#070A12"
+    android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingStart="22dp"
+        android:paddingTop="18dp"
+        android:paddingEnd="22dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/buttonBack"
+                android:layout_width="24dp"
+                android:layout_height="match_parent"
+                android:clickable="true"
+                android:contentDescription="@string/back"
+                android:focusable="true"
+                android:padding="5dp"
+                android:src="@drawable/ic_back"
+                app:tint="#F4F5FA" />
+
+            <TextView
+                android:id="@+id/textTitleBack"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="14dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="@string/motor_detail_title"
+                android:textColor="#F4F5FA"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="148dp"
+            android:layout_marginTop="22dp"
+            android:background="@drawable/bg_card_dark">
+
+            <TextView
+                android:id="@+id/textDetailMotorName"
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="22dp"
+                android:layout_marginTop="22dp"
+                android:textColor="#F4F5FA"
+                android:textSize="19sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textDetailPlateNumber"
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="22dp"
+                android:layout_marginTop="48dp"
+                android:textColor="#9AA0B5"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/textDetailKilometer"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|end"
+                android:layout_marginTop="22dp"
+                android:layout_marginEnd="16dp"
+                android:gravity="end"
+                android:textColor="#F4F5FA"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|end"
+                android:layout_marginTop="48dp"
+                android:layout_marginEnd="16dp"
+                android:gravity="end"
+                android:text="@string/km_current_label"
+                android:textColor="#9AA0B5"
+                android:textSize="11sp" />
+
+            <TextView
+                android:id="@+id/textDetailActive"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|end"
+                android:layout_marginTop="68dp"
+                android:layout_marginEnd="16dp"
+                android:gravity="end"
+                android:textColor="#FFCB25"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_gravity="bottom"
+                android:layout_marginStart="18dp"
+                android:layout_marginEnd="18dp"
+                android:layout_marginBottom="14dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/buttonEditMotor"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="#FFCB25"
+                    android:text="@string/edit"
+                    android:textColor="#070A12"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/buttonSetActiveMotor"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="#FFCB25"
+                    android:text="@string/set_active_motor_short"
+                    android:textColor="#070A12"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/buttonDeleteMotor"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="#333541"
+                    android:text="@string/delete"
+                    android:textColor="#F4F5FA"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </FrameLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/summary_title"
+            android:textColor="#F4F5FA"
+            android:textSize="21sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            style="@style/MotorSummaryRow"
+            android:layout_marginTop="14dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_marginEnd="18dp"
+                android:src="@drawable/ic_service"
+                app:tint="#FFCB25" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="@string/service_summary_label"
+                android:textColor="#F4F5FA"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textSummaryServiceValue"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|end"
+                android:text="@string/no_data_short"
+                android:textColor="#9AA0B5"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/MotorSummaryRow"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_marginEnd="18dp"
+                android:src="@drawable/ic_oil"
+                app:tint="#FFCB25" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="@string/oil_summary_label"
+                android:textColor="#F4F5FA"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textSummaryOilValue"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|end"
+                android:text="@string/no_data_short"
+                android:textColor="#9AA0B5"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/MotorSummaryRow"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_marginEnd="18dp"
+                android:src="@drawable/ic_tax"
+                app:tint="#FFCB25" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="@string/tax_summary_label"
+                android:textColor="#F4F5FA"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textSummaryTaxValue"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|end"
+                android:text="@string/no_data_short"
+                android:textColor="#9AA0B5"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/MotorSummaryRow"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_marginEnd="18dp"
+                android:src="@drawable/ic_fuel"
+                app:tint="#FFCB25" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="@string/fuel_summary_label"
+                android:textColor="#F4F5FA"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textSummaryFuelValue"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|end"
+                android:text="@string/no_data_short"
+                android:textColor="#9AA0B5"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <include layout="@layout/include_bottom_nav" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
