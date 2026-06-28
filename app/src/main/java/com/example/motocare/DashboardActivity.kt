@@ -259,7 +259,7 @@ class DashboardActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.textDashboardMetricTitle).text = getString(R.string.distance_overview)
         findViewById<TextView>(R.id.textMonthlyTotal).apply {
             text = activeMotor?.let {
-                getString(R.string.km_value_short, it.currentKilometer)
+                getString(R.string.km_value_short, it.currentKilometer.toString())
             } ?: "-"
             fitMetricAmount(activeMotor?.currentKilometer ?: 0)
         }
@@ -303,7 +303,7 @@ class DashboardActivity : AppCompatActivity() {
             if (overdue) getString(R.string.service_due_now) else getString(R.string.service_remaining_meta, remainingKm)
         findViewById<TextView>(R.id.textNextServiceValue).text = getString(
             R.string.km_value_short,
-            targetKm
+            targetKm.toString()
         )
         findViewById<TextView>(R.id.textNextServiceLabel).text = getString(R.string.target_label)
         setEstimateStatusColor(overdue)
@@ -323,7 +323,7 @@ class DashboardActivity : AppCompatActivity() {
             val remainingKm = (latest.nextKilometer - currentKilometer).coerceAtLeast(0)
             findViewById<TextView>(R.id.textNextServiceMeta).text =
                 if (overdue) getString(R.string.oil_due_now) else getString(R.string.km_remaining_value, remainingKm)
-            findViewById<TextView>(R.id.textNextServiceValue).text = getString(R.string.km_value_short, latest.nextKilometer)
+            findViewById<TextView>(R.id.textNextServiceValue).text = getString(R.string.km_value_short, latest.nextKilometer.toString())
             findViewById<TextView>(R.id.textNextServiceLabel).text = getString(R.string.target_label)
             setEstimateStatusColor(overdue)
         }

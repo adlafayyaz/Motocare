@@ -37,7 +37,7 @@
                 android:focusable="true"
                 android:padding="5dp"
                 android:src="@drawable/ic_back"
-                android:tint="#F4F5FA" />
+                app:tint="#F4F5FA" />
 
             <TextView
                 android:id="@+id/textTitleBack"
@@ -179,7 +179,7 @@
                 android:layout_height="28dp"
                 android:layout_marginEnd="18dp"
                 android:src="@drawable/ic_service"
-                android:tint="#FFCB25" />
+                app:tint="#FFCB25" />
 
             <TextView
                 android:layout_width="0dp"
@@ -209,7 +209,7 @@
                 android:layout_height="28dp"
                 android:layout_marginEnd="18dp"
                 android:src="@drawable/ic_oil"
-                android:tint="#FFCB25" />
+                app:tint="#FFCB25" />
 
             <TextView
                 android:layout_width="0dp"
@@ -239,7 +239,7 @@
                 android:layout_height="28dp"
                 android:layout_marginEnd="18dp"
                 android:src="@drawable/ic_tax"
-                android:tint="#FFCB25" />
+                app:tint="#FFCB25" />
 
             <TextView
                 android:layout_width="0dp"
@@ -269,7 +269,7 @@
                 android:layout_height="28dp"
                 android:layout_marginEnd="18dp"
                 android:src="@drawable/ic_fuel"
-                android:tint="#FFCB25" />
+                app:tint="#FFCB25" />
 
             <TextView
                 android:layout_width="0dp"

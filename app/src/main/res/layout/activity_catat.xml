@@ -62,7 +62,7 @@
                     android:layout_gravity="center"
                     android:contentDescription="@string/nav_motor_label"
                     android:src="@drawable/ic_motor"
-                    android:tint="#070A12" />
+                    app:tint="#070A12" />
             </FrameLayout>
 
             <LinearLayout

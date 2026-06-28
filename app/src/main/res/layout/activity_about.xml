@@ -38,7 +38,7 @@
                     android:focusable="true"
                     android:padding="5dp"
                     android:src="@drawable/ic_back"
-                    android:tint="#F4F5FA" />
+                    app:tint="#F4F5FA" />
 
                 <TextView
                     android:id="@+id/textTitleBack"

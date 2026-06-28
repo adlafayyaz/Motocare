@@ -109,7 +109,7 @@
                         android:layout_gravity="center"
                         android:contentDescription="@string/servis_label"
                         android:src="@drawable/ic_service"
-                        android:tint="#FFCB25" />
+                        app:tint="#FFCB25" />
                 </FrameLayout>
 
                 <TextView
@@ -141,7 +141,7 @@
                         android:layout_gravity="center"
                         android:contentDescription="@string/oli_label"
                         android:src="@drawable/ic_oil"
-                        android:tint="#FFCB25" />
+                        app:tint="#FFCB25" />
                 </FrameLayout>
 
                 <TextView
@@ -173,7 +173,7 @@
                         android:layout_gravity="center"
                         android:contentDescription="@string/pajak_label"
                         android:src="@drawable/ic_tax"
-                        android:tint="#FFCB25" />
+                        app:tint="#FFCB25" />
                 </FrameLayout>
 
                 <TextView
@@ -205,7 +205,7 @@
                         android:layout_gravity="center"
                         android:contentDescription="@string/bensin_label"
                         android:src="@drawable/ic_fuel"
-                        android:tint="#FFCB25" />
+                        app:tint="#FFCB25" />
                 </FrameLayout>
 
                 <TextView
@@ -377,7 +377,7 @@
                     android:layout_gravity="center"
                     android:contentDescription="@string/servis_label"
                     android:src="@drawable/ic_service"
-                    android:tint="#070A12" />
+                    app:tint="#070A12" />
             </FrameLayout>
 
             <LinearLayout

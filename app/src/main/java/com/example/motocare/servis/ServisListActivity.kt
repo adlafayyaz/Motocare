@@ -117,7 +117,7 @@ class ServisListActivity : AppCompatActivity() {
             summaryValue.text =
                 if (overdue) getString(R.string.service_due_now) else getString(R.string.km_remaining_value, remainingKm)
             summaryMeta.text = getString(R.string.target_label)
-            summaryTargetValue.text = getString(R.string.km_value_short, targetKm)
+            summaryTargetValue.text = getString(R.string.km_value_short, targetKm.toString())
             setSummaryStatusColor(overdue)
         }
     }
