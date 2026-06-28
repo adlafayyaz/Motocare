@@ -6,8 +6,6 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.view.View
 import android.widget.TextView
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.motocare.CatatActivity
 import com.example.motocare.DashboardActivity
 import com.example.motocare.R
@@ -55,15 +53,7 @@ object BottomNavBinder {
     }
 
     private fun View.applyBottomInset() {
-        val baseHeight = layoutParams.height
-        ViewCompat.setOnApplyWindowInsetsListener(this) { view, insets ->
-            val bottom = insets.getInsets(WindowInsetsCompat.Type.systemBars()).bottom
-            view.layoutParams = view.layoutParams.apply {
-                height = baseHeight + bottom
-            }
-            insets
-        }
-        ViewCompat.requestApplyInsets(this)
+        setBackgroundColor(Color.parseColor("#070A12"))
     }
 
     const val MENU_HOME = "home"
