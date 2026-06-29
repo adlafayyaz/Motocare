@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/motocare_background"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="760dp"
+        android:orientation="vertical"
+        android:paddingStart="30dp"
+        android:paddingTop="18dp"
+        android:paddingEnd="30dp"
+        android:paddingBottom="34dp">
+
+        <TextView
+            android:id="@+id/textSetupTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/setup_motor_title"
+            android:textColor="@color/motocare_text"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textSetupBody"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/setup_motor_body"
+            android:textColor="@color/motocare_muted"
+            android:textSize="13sp" />
+
+        <LinearLayout
+            android:id="@+id/groupSetupMotor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/FormLabel"
+                android:text="@string/motor_name" />
+
+            <EditText
+                android:id="@+id/editMotorName"
+                style="@style/FormInput"
+                android:inputType="textCapWords" />
+
+            <TextView
+                style="@style/FormLabel"
+                android:text="@string/plate_number" />
+
+            <EditText
+                android:id="@+id/editPlateNumber"
+                style="@style/FormInput"
+                android:inputType="textCapCharacters" />
+
+            <TextView
+                style="@style/FormLabel"
+                android:text="@string/current_kilometer" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="64dp">
+
+                <EditText
+                    android:id="@+id/editCurrentKilometer"
+                    style="@style/FormInputWithUnit"
+                    android:inputType="number" />
+
+                <TextView
+                    style="@style/FormUnitText"
+                    android:text="@string/unit_km" />
+            </FrameLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/groupSetupService"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                style="@style/FormLabel"
+                android:text="@string/setup_service_last_km" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="64dp">
+
+                <EditText
+                    android:id="@+id/editSetupServiceKm"
+                    style="@style/FormInputWithUnit"
+                    android:inputType="number" />
+
+                <TextView
+                    style="@style/FormUnitText"
+                    android:text="@string/unit_km" />
+            </FrameLayout>
+
+            <TextView
+                style="@style/FormLabel"
+                android:text="@string/setup_service_target_km" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="64dp">
+
+                <EditText
+                    android:id="@+id/editSetupServiceTarget"
+                    style="@style/FormInputWithUnit"
+                    android:inputType="number" />
+
+                <TextView
+                    style="@style/FormUnitText"
+                    android:text="@string/unit_km" />
+            </FrameLayout>
+
+            <TextView
+                style="@style/FormLabel"
+                android:text="@string/setup_service_last_date" />
+
+            <EditText
+                android:id="@+id/editSetupServiceDate"
+                style="@style/FormInput"
+                android:clickable="true"
+                android:focusable="false"
+                android:hint="@string/date_hint"
+                android:inputType="date" />
+
+            <TextView
+                style="@style/FormLabel"
+                android:text="@string/setup_service_due_month" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="64dp">
+
+                <EditText
+                    android:id="@+id/editSetupServiceMonths"
+                    style="@style/FormInputWithUnit"
+                    android:inputType="number" />
+
+                <TextView
+                    style="@style/FormUnitText"
+                    android:text="@string/unit_month" />
+            </FrameLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/groupSetupOil"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                style="@style/FormLabel"
+                android:text="@string/setup_oil_last_km" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="64dp">
+
+                <EditText
+                    android:id="@+id/editSetupOilKm"
+                    style="@style/FormInputWithUnit"
+                    android:inputType="number" />
+
+                <TextView
+                    style="@style/FormUnitText"
+                    android:text="@string/unit_km" />
+            </FrameLayout>
+
+            <TextView
+                style="@style/FormLabel"
+                android:text="@string/setup_oil_target_km" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="64dp">
+
+                <EditText
+                    android:id="@+id/editSetupOilTarget"
+                    style="@style/FormInputWithUnit"
+                    android:inputType="number" />
+
+                <TextView
+                    style="@style/FormUnitText"
+                    android:text="@string/unit_km" />
+            </FrameLayout>
+
+            <TextView
+                style="@style/FormLabel"
+                android:text="@string/setup_oil_last_date" />
+
+            <EditText
+                android:id="@+id/editSetupOilDate"
+                style="@style/FormInput"
+                android:clickable="true"
+                android:focusable="false"
+                android:hint="@string/date_hint"
+                android:inputType="date" />
+
+            <TextView
+                style="@style/FormLabel"
+                android:text="@string/setup_oil_due_month" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="64dp">
+
+                <EditText
+                    android:id="@+id/editSetupOilMonths"
+                    style="@style/FormInputWithUnit"
+                    android:inputType="number" />
+
+                <TextView
+                    style="@style/FormUnitText"
+                    android:text="@string/unit_month" />
+            </FrameLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/groupSetupTax"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                style="@style/FormLabel"
+                android:text="@string/tax_due_date" />
+
+            <EditText
+                android:id="@+id/editSetupTaxDueDate"
+                style="@style/FormInput"
+                android:clickable="true"
+                android:focusable="false"
+                android:hint="@string/date_hint"
+                android:inputType="date" />
+
+            <TextView
+                style="@style/FormLabel"
+                android:text="@string/tax_cost" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="64dp">
+
+                <EditText
+                    android:id="@+id/editSetupTaxCost"
+                    style="@style/FormInputWithUnit"
+                    android:inputType="number" />
+
+                <TextView
+                    style="@style/FormUnitText"
+                    android:text="@string/unit_rp" />
+            </FrameLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/cardSetupInfo"
+            android:layout_width="match_parent"
+            android:layout_height="96dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/bg_card_dark"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="52dp"
+                android:layout_height="52dp"
+                android:background="@drawable/bg_circle_yellow"
+                android:gravity="center"
+                android:text="i"
+                android:textColor="@color/motocare_background"
+                android:textSize="26sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textInfoTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/motocare_text"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textInfoBody"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:lineSpacingExtra="2dp"
+                    android:textColor="@color/motocare_muted"
+                    android:textSize="13sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/buttonSetupPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:layout_marginTop="22dp"
+            android:background="@drawable/bg_segment_yellow"
+            android:text="@string/next"
+            android:textColor="@color/motocare_background"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/buttonSetupSkip"
+            android:layout_width="match_parent"
+            android:layout_height="34dp"
+            android:layout_marginTop="6dp"
+            android:gravity="center"
+            android:text="@string/setup_skip"
+            android:textColor="@color/motocare_muted"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_marginTop="14dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <View
+                android:id="@+id/dotSetupMotor"
+                android:layout_width="22dp"
+                android:layout_height="6dp"
+                android:background="@drawable/bg_dot_active" />
+
+            <View
+                android:id="@+id/dotSetupService"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/bg_dot_inactive" />
+
+            <View
+                android:id="@+id/dotSetupOil"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/bg_dot_inactive" />
+
+            <View
+                android:id="@+id/dotSetupTax"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/bg_dot_inactive" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

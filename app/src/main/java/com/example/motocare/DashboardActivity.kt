@@ -35,6 +35,7 @@ class DashboardActivity : AppCompatActivity() {
     private var costMode = true
     private var estimateIndex = 0
     private var downX = 0f
+    private var downY = 0f
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,20 +76,40 @@ class DashboardActivity : AppCompatActivity() {
     }
 
     private fun bindEstimateSwipe() {
-        findViewById<View>(R.id.dashboardEstimateCard).setOnTouchListener { view, event ->
+        val swipeListener = View.OnTouchListener { view, event ->
             when (event.actionMasked) {
                 MotionEvent.ACTION_DOWN -> {
                     downX = event.x
+                    downY = event.y
+                    true
+                }
+                MotionEvent.ACTION_MOVE -> {
+                    val deltaX = event.x - downX
+                    val deltaY = event.y - downY
+                    view.parent?.requestDisallowInterceptTouchEvent(kotlin.math.abs(deltaX) > kotlin.math.abs(deltaY))
                     true
                 }
                 MotionEvent.ACTION_UP -> {
-                    val delta = event.x - downX
-                    if (delta > 60f) showEstimate(-1) else if (delta < -60f) showEstimate(1) else view.performClick()
+                    view.parent?.requestDisallowInterceptTouchEvent(false)
+                    val deltaX = event.x - downX
+                    val deltaY = event.y - downY
+                    val threshold = dp(SWIPE_THRESHOLD_DP)
+                    if (kotlin.math.abs(deltaX) > threshold && kotlin.math.abs(deltaX) > kotlin.math.abs(deltaY)) {
+                        showEstimate(if (deltaX > 0) -1 else 1)
+                    } else {
+                        view.performClick()
+                    }
+                    true
+                }
+                MotionEvent.ACTION_CANCEL -> {
+                    view.parent?.requestDisallowInterceptTouchEvent(false)
                     true
                 }
                 else -> true
             }
         }
+        findViewById<View>(R.id.dashboardEstimateCard).setOnTouchListener(swipeListener)
+        findViewById<View>(R.id.dashboardEstimateDots).setOnTouchListener(swipeListener)
     }
 
     private fun showDashboardLoading() {
@@ -425,8 +446,13 @@ class DashboardActivity : AppCompatActivity() {
         setTextSize(TypedValue.COMPLEX_UNIT_SP, size)
     }
 
+    private fun dp(value: Int): Float {
+        return value * resources.displayMetrics.density
+    }
+
     private companion object {
         const val DAY_MILLIS = 86_400_000L
         const val ESTIMATE_COUNT = 4
+        const val SWIPE_THRESHOLD_DP = 28
     }
 }
