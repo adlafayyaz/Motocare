@@ -40,10 +40,12 @@ class SetupMotorActivity : AppCompatActivity() {
     private lateinit var infoBody: TextView
     private lateinit var serviceKmInput: EditText
     private lateinit var serviceTargetInput: EditText
+    private lateinit var serviceRecommendationText: TextView
     private lateinit var serviceDateInput: EditText
     private lateinit var serviceMonthsInput: EditText
     private lateinit var oilKmInput: EditText
     private lateinit var oilTargetInput: EditText
+    private lateinit var oilRecommendationText: TextView
     private lateinit var oilDateInput: EditText
     private lateinit var oilMonthsInput: EditText
     private lateinit var taxDueInput: EditText
@@ -53,6 +55,9 @@ class SetupMotorActivity : AppCompatActivity() {
     private var serviceSkipped = false
     private var oilSkipped = false
     private var taxSkipped = false
+    private var serviceTargetEditedByUser = false
+    private var oilTargetEditedByUser = false
+    private var updatingTarget = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,10 +80,12 @@ class SetupMotorActivity : AppCompatActivity() {
         infoBody = findViewById(R.id.textInfoBody)
         serviceKmInput = findViewById(R.id.editSetupServiceKm)
         serviceTargetInput = findViewById(R.id.editSetupServiceTarget)
+        serviceRecommendationText = findViewById(R.id.textSetupServiceRecommendation)
         serviceDateInput = findViewById(R.id.editSetupServiceDate)
         serviceMonthsInput = findViewById(R.id.editSetupServiceMonths)
         oilKmInput = findViewById(R.id.editSetupOilKm)
         oilTargetInput = findViewById(R.id.editSetupOilTarget)
+        oilRecommendationText = findViewById(R.id.textSetupOilRecommendation)
         oilDateInput = findViewById(R.id.editSetupOilDate)
         oilMonthsInput = findViewById(R.id.editSetupOilMonths)
         taxDueInput = findViewById(R.id.editSetupTaxDueDate)
@@ -130,8 +137,24 @@ class SetupMotorActivity : AppCompatActivity() {
         taxDueInput.setOnClickListener {
             FormDialogHelper.showDatePicker(this, taxDueInput.text.toString()) { taxDueInput.setText(it) }
         }
-        serviceKmInput.addTextChangedListener(targetWatcher(serviceKmInput, serviceTargetInput, SERVICE_INTERVAL_KM))
-        oilKmInput.addTextChangedListener(targetWatcher(oilKmInput, oilTargetInput, OIL_INTERVAL_KM))
+        serviceKmInput.addTextChangedListener(targetWatcher(
+            source = serviceKmInput,
+            target = serviceTargetInput,
+            recommendation = serviceRecommendationText,
+            interval = SERVICE_INTERVAL_KM,
+            recommendationRes = R.string.service_recommendation_info,
+            isEditedByUser = { serviceTargetEditedByUser }
+        ))
+        oilKmInput.addTextChangedListener(targetWatcher(
+            source = oilKmInput,
+            target = oilTargetInput,
+            recommendation = oilRecommendationText,
+            interval = OIL_INTERVAL_KM,
+            recommendationRes = R.string.oil_recommendation_info,
+            isEditedByUser = { oilTargetEditedByUser }
+        ))
+        serviceTargetInput.addTextChangedListener(manualTargetWatcher { serviceTargetEditedByUser = true })
+        oilTargetInput.addTextChangedListener(manualTargetWatcher { oilTargetEditedByUser = true })
     }
 
     private fun moveTo(step: Step) {
@@ -186,14 +209,41 @@ class SetupMotorActivity : AppCompatActivity() {
         }
     }
 
-    private fun targetWatcher(source: EditText, target: EditText, interval: Int): TextWatcher {
+    private fun targetWatcher(
+        source: EditText,
+        target: EditText,
+        recommendation: TextView,
+        interval: Int,
+        recommendationRes: Int,
+        isEditedByUser: () -> Boolean
+    ): TextWatcher {
         return object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (target.text.isBlank()) {
-                    val km = source.text.toString().trim().toIntOrNull() ?: return
-                    target.setText((km + interval).toString())
+                val km = source.text.toString().trim().toIntOrNull()
+                if (km == null) {
+                    recommendation.visibility = View.GONE
+                    return
                 }
+                val recommendedTarget = km + interval
+                recommendation.text = getString(recommendationRes, recommendedTarget)
+                recommendation.visibility = View.VISIBLE
+                if (!isEditedByUser()) {
+                    updatingTarget = true
+                    target.setText(recommendedTarget.toString())
+                    target.setSelection(target.text.length)
+                    updatingTarget = false
+                }
+            }
+            override fun afterTextChanged(s: Editable?) = Unit
+        }
+    }
+
+    private fun manualTargetWatcher(onUserEdit: () -> Unit): TextWatcher {
+        return object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (!updatingTarget) onUserEdit()
             }
             override fun afterTextChanged(s: Editable?) = Unit
         }

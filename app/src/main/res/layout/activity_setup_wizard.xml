@@ -122,6 +122,15 @@
             </FrameLayout>
 
             <TextView
+                android:id="@+id/textSetupServiceRecommendation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/motocare_yellow"
+                android:textSize="12sp"
+                android:visibility="gone" />
+
+            <TextView
                 style="@style/FormLabel"
                 android:text="@string/setup_service_last_date" />
 
@@ -195,6 +204,15 @@
                     style="@style/FormUnitText"
                     android:text="@string/unit_km" />
             </FrameLayout>
+
+            <TextView
+                android:id="@+id/textSetupOilRecommendation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/motocare_yellow"
+                android:textSize="12sp"
+                android:visibility="gone" />
 
             <TextView
                 style="@style/FormLabel"
