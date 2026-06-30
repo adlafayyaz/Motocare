@@ -6,9 +6,8 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.Button
-import android.widget.CheckBox
 import android.widget.EditText
-import android.widget.Toast
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.motocare.DashboardActivity
 import com.example.motocare.R
@@ -27,98 +26,229 @@ class SetupMotorActivity : AppCompatActivity() {
     private lateinit var motorNameInput: EditText
     private lateinit var plateNumberInput: EditText
     private lateinit var kilometerInput: EditText
-    private lateinit var serviceCheck: CheckBox
-    private lateinit var oilCheck: CheckBox
-    private lateinit var taxCheck: CheckBox
+    private lateinit var titleText: TextView
+    private lateinit var bodyText: TextView
+    private lateinit var primaryButton: Button
+    private lateinit var skipButton: TextView
+    private lateinit var motorGroup: View
     private lateinit var serviceGroup: View
     private lateinit var oilGroup: View
     private lateinit var taxGroup: View
+    private lateinit var infoCard: View
+    private lateinit var infoTitle: TextView
+    private lateinit var infoBody: TextView
     private lateinit var serviceKmInput: EditText
     private lateinit var serviceTargetInput: EditText
+    private lateinit var serviceRecommendationText: TextView
+    private lateinit var serviceDateInput: EditText
+    private lateinit var serviceMonthsInput: EditText
     private lateinit var oilKmInput: EditText
     private lateinit var oilTargetInput: EditText
+    private lateinit var oilRecommendationText: TextView
+    private lateinit var oilDateInput: EditText
+    private lateinit var oilMonthsInput: EditText
     private lateinit var taxDueInput: EditText
     private lateinit var taxCostInput: EditText
+    private lateinit var dots: List<View>
+    private var setupStep = Step.MOTOR
+    private var serviceSkipped = false
+    private var oilSkipped = false
+    private var taxSkipped = false
+    private var serviceTargetEditedByUser = false
+    private var oilTargetEditedByUser = false
+    private var updatingTarget = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_setup_motor)
+        setContentView(R.layout.activity_setup_wizard)
 
         dbHelper = MotoCareDbHelper(this)
+        titleText = findViewById(R.id.textSetupTitle)
+        bodyText = findViewById(R.id.textSetupBody)
+        primaryButton = findViewById(R.id.buttonSetupPrimary)
+        skipButton = findViewById(R.id.buttonSetupSkip)
         motorNameInput = findViewById(R.id.editMotorName)
         plateNumberInput = findViewById(R.id.editPlateNumber)
         kilometerInput = findViewById(R.id.editCurrentKilometer)
-        serviceCheck = findViewById(R.id.checkSetupService)
-        oilCheck = findViewById(R.id.checkSetupOil)
-        taxCheck = findViewById(R.id.checkSetupTax)
+        motorGroup = findViewById(R.id.groupSetupMotor)
         serviceGroup = findViewById(R.id.groupSetupService)
         oilGroup = findViewById(R.id.groupSetupOil)
         taxGroup = findViewById(R.id.groupSetupTax)
+        infoCard = findViewById(R.id.cardSetupInfo)
+        infoTitle = findViewById(R.id.textInfoTitle)
+        infoBody = findViewById(R.id.textInfoBody)
         serviceKmInput = findViewById(R.id.editSetupServiceKm)
         serviceTargetInput = findViewById(R.id.editSetupServiceTarget)
+        serviceRecommendationText = findViewById(R.id.textSetupServiceRecommendation)
+        serviceDateInput = findViewById(R.id.editSetupServiceDate)
+        serviceMonthsInput = findViewById(R.id.editSetupServiceMonths)
         oilKmInput = findViewById(R.id.editSetupOilKm)
         oilTargetInput = findViewById(R.id.editSetupOilTarget)
+        oilRecommendationText = findViewById(R.id.textSetupOilRecommendation)
+        oilDateInput = findViewById(R.id.editSetupOilDate)
+        oilMonthsInput = findViewById(R.id.editSetupOilMonths)
         taxDueInput = findViewById(R.id.editSetupTaxDueDate)
         taxCostInput = findViewById(R.id.editSetupTaxCost)
+        dots = listOf(
+            findViewById(R.id.dotSetupMotor),
+            findViewById(R.id.dotSetupService),
+            findViewById(R.id.dotSetupOil),
+            findViewById(R.id.dotSetupTax)
+        )
 
         bindOptionalSetup()
+        renderStep()
 
-        findViewById<Button>(R.id.buttonSaveMotor).setOnClickListener {
-            if (isValid()) {
-                val motorId = dbHelper.insertMotor(
-                    Motor(
-                        name = motorNameInput.text.toString().trim(),
-                        plateNumber = plateNumberInput.text.toString().trim(),
-                        currentKilometer = kilometerInput.text.toString().trim().toInt(),
-                        isActive = true
-                    )
-                )
-                saveOptionalRecords(motorId)
-                Toast.makeText(this, R.string.setup_motor_saved, Toast.LENGTH_SHORT).show()
-                startActivity(Intent(this, DashboardActivity::class.java))
-                finish()
+        primaryButton.setOnClickListener {
+            when (setupStep) {
+                Step.MOTOR -> if (isMotorValid()) moveTo(Step.SERVICE)
+                Step.SERVICE -> if (isOptionalServiceValid()) moveTo(Step.OIL)
+                Step.OIL -> if (isOptionalOilValid()) moveTo(Step.TAX)
+                Step.TAX -> if (isOptionalTaxValid()) finishSetup()
+            }
+        }
+        skipButton.setOnClickListener {
+            when (setupStep) {
+                Step.SERVICE -> {
+                    serviceSkipped = true
+                    moveTo(Step.OIL)
+                }
+                Step.OIL -> {
+                    oilSkipped = true
+                    moveTo(Step.TAX)
+                }
+                Step.TAX -> {
+                    taxSkipped = true
+                    finishSetup()
+                }
+                Step.MOTOR -> Unit
             }
         }
     }
 
     private fun bindOptionalSetup() {
-        serviceCheck.setOnCheckedChangeListener { _, checked ->
-            serviceGroup.visibility = if (checked) View.VISIBLE else View.GONE
-            if (checked) fillKmIfEmpty(serviceKmInput)
+        serviceDateInput.setOnClickListener {
+            FormDialogHelper.showDatePicker(this, serviceDateInput.text.toString()) { serviceDateInput.setText(it) }
         }
-        oilCheck.setOnCheckedChangeListener { _, checked ->
-            oilGroup.visibility = if (checked) View.VISIBLE else View.GONE
-            if (checked) fillKmIfEmpty(oilKmInput)
-        }
-        taxCheck.setOnCheckedChangeListener { _, checked ->
-            taxGroup.visibility = if (checked) View.VISIBLE else View.GONE
-            if (checked && taxDueInput.text.isBlank()) taxDueInput.setText(today())
+        oilDateInput.setOnClickListener {
+            FormDialogHelper.showDatePicker(this, oilDateInput.text.toString()) { oilDateInput.setText(it) }
         }
         taxDueInput.setOnClickListener {
             FormDialogHelper.showDatePicker(this, taxDueInput.text.toString()) { taxDueInput.setText(it) }
         }
-        serviceKmInput.addTextChangedListener(targetWatcher(serviceKmInput, serviceTargetInput, SERVICE_INTERVAL_KM))
-        oilKmInput.addTextChangedListener(targetWatcher(oilKmInput, oilTargetInput, OIL_INTERVAL_KM))
+        serviceKmInput.addTextChangedListener(targetWatcher(
+            source = serviceKmInput,
+            target = serviceTargetInput,
+            recommendation = serviceRecommendationText,
+            interval = SERVICE_INTERVAL_KM,
+            recommendationRes = R.string.service_recommendation_info,
+            isEditedByUser = { serviceTargetEditedByUser }
+        ))
+        oilKmInput.addTextChangedListener(targetWatcher(
+            source = oilKmInput,
+            target = oilTargetInput,
+            recommendation = oilRecommendationText,
+            interval = OIL_INTERVAL_KM,
+            recommendationRes = R.string.oil_recommendation_info,
+            isEditedByUser = { oilTargetEditedByUser }
+        ))
+        serviceTargetInput.addTextChangedListener(manualTargetWatcher { serviceTargetEditedByUser = true })
+        oilTargetInput.addTextChangedListener(manualTargetWatcher { oilTargetEditedByUser = true })
     }
 
-    private fun fillKmIfEmpty(input: EditText) {
-        if (input.text.isBlank()) input.setText(kilometerInput.text.toString().trim())
+    private fun moveTo(step: Step) {
+        setupStep = step
+        renderStep()
     }
 
-    private fun targetWatcher(source: EditText, target: EditText, interval: Int): TextWatcher {
+    private fun renderStep() {
+        motorGroup.visibility = if (setupStep == Step.MOTOR) View.VISIBLE else View.GONE
+        serviceGroup.visibility = if (setupStep == Step.SERVICE) View.VISIBLE else View.GONE
+        oilGroup.visibility = if (setupStep == Step.OIL) View.VISIBLE else View.GONE
+        taxGroup.visibility = if (setupStep == Step.TAX) View.VISIBLE else View.GONE
+        infoCard.visibility = if (setupStep == Step.MOTOR) View.GONE else View.VISIBLE
+        skipButton.visibility = if (setupStep == Step.MOTOR) View.GONE else View.VISIBLE
+        primaryButton.text = getString(if (setupStep == Step.TAX) R.string.setup_finish else R.string.next)
+
+        when (setupStep) {
+            Step.MOTOR -> {
+                titleText.text = getString(R.string.setup_motor_title)
+                bodyText.text = getString(R.string.setup_motor_body)
+            }
+            Step.SERVICE -> {
+                titleText.text = getString(R.string.setup_service_title)
+                bodyText.text = getString(R.string.setup_service_body)
+                infoTitle.text = getString(R.string.setup_schedule_title)
+                infoBody.text = getString(R.string.setup_schedule_body)
+            }
+            Step.OIL -> {
+                titleText.text = getString(R.string.setup_oil_title)
+                bodyText.text = getString(R.string.setup_oil_body)
+                infoTitle.text = getString(R.string.setup_reminder_title)
+                infoBody.text = getString(R.string.setup_reminder_body)
+            }
+            Step.TAX -> {
+                titleText.text = getString(R.string.setup_tax_page_title)
+                bodyText.text = getString(R.string.setup_tax_page_body)
+                infoTitle.text = getString(R.string.setup_tax_title)
+                infoBody.text = getString(R.string.setup_tax_body)
+            }
+        }
+        updateDots()
+    }
+
+    private fun updateDots() {
+        dots.forEachIndexed { index, dot ->
+            val active = index == setupStep.ordinal
+            dot.setBackgroundResource(if (active) R.drawable.bg_dot_active else R.drawable.bg_dot_inactive)
+            dot.layoutParams = dot.layoutParams.apply {
+                width = resources.getDimensionPixelSize(if (active) R.dimen.setup_dot_active_width else R.dimen.setup_dot_size)
+                height = resources.getDimensionPixelSize(R.dimen.setup_dot_size)
+            }
+        }
+    }
+
+    private fun targetWatcher(
+        source: EditText,
+        target: EditText,
+        recommendation: TextView,
+        interval: Int,
+        recommendationRes: Int,
+        isEditedByUser: () -> Boolean
+    ): TextWatcher {
         return object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (target.text.isBlank()) {
-                    val km = source.text.toString().trim().toIntOrNull() ?: return
-                    target.setText((km + interval).toString())
+                val km = source.text.toString().trim().toIntOrNull()
+                if (km == null) {
+                    recommendation.visibility = View.GONE
+                    return
+                }
+                val recommendedTarget = km + interval
+                recommendation.text = getString(recommendationRes, recommendedTarget)
+                recommendation.visibility = View.VISIBLE
+                if (!isEditedByUser()) {
+                    updatingTarget = true
+                    target.setText(recommendedTarget.toString())
+                    target.setSelection(target.text.length)
+                    updatingTarget = false
                 }
             }
             override fun afterTextChanged(s: Editable?) = Unit
         }
     }
 
-    private fun isValid(): Boolean {
+    private fun manualTargetWatcher(onUserEdit: () -> Unit): TextWatcher {
+        return object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (!updatingTarget) onUserEdit()
+            }
+            override fun afterTextChanged(s: Editable?) = Unit
+        }
+    }
+
+    private fun isMotorValid(): Boolean {
         var valid = true
         if (motorNameInput.text.isBlank()) {
             motorNameInput.error = getString(R.string.error_motor_name_required)
@@ -135,23 +265,45 @@ class SetupMotorActivity : AppCompatActivity() {
             kilometerInput.error = getString(R.string.error_kilometer_required)
             valid = false
         }
-        if (serviceCheck.isChecked) {
-            valid = validateNumber(serviceKmInput, R.string.error_kilometer_required) && valid
-            valid = validateNumber(serviceTargetInput, R.string.error_interval_required) && valid
+        return valid
+    }
+
+    private fun isOptionalServiceValid(): Boolean {
+        serviceSkipped = false
+        var valid = true
+        valid = validateNumber(serviceKmInput, R.string.error_kilometer_required) && valid
+        valid = validateNumber(serviceTargetInput, R.string.error_interval_required) && valid
+        valid = validateNumber(serviceMonthsInput, R.string.error_interval_required) && valid
+        if (serviceDateInput.text.isBlank()) {
+            serviceDateInput.error = getString(R.string.error_date_required)
+            valid = false
         }
-        if (oilCheck.isChecked) {
-            valid = validateNumber(oilKmInput, R.string.error_kilometer_required) && valid
-            valid = validateNumber(oilTargetInput, R.string.error_interval_required) && valid
+        return valid
+    }
+
+    private fun isOptionalOilValid(): Boolean {
+        oilSkipped = false
+        var valid = true
+        valid = validateNumber(oilKmInput, R.string.error_kilometer_required) && valid
+        valid = validateNumber(oilTargetInput, R.string.error_interval_required) && valid
+        valid = validateNumber(oilMonthsInput, R.string.error_interval_required) && valid
+        if (oilDateInput.text.isBlank()) {
+            oilDateInput.error = getString(R.string.error_date_required)
+            valid = false
         }
-        if (taxCheck.isChecked) {
-            if (taxDueInput.text.isBlank()) {
-                taxDueInput.error = getString(R.string.error_date_required)
-                valid = false
-            }
-            if (taxCostInput.text.isNotBlank() && taxCostInput.text.toString().toIntOrNull() == null) {
-                taxCostInput.error = getString(R.string.error_cost_number)
-                valid = false
-            }
+        return valid
+    }
+
+    private fun isOptionalTaxValid(): Boolean {
+        taxSkipped = false
+        var valid = true
+        if (taxDueInput.text.isBlank()) {
+            taxDueInput.error = getString(R.string.error_date_required)
+            valid = false
+        }
+        if (taxCostInput.text.isNotBlank() && taxCostInput.text.toString().toIntOrNull() == null) {
+            taxCostInput.error = getString(R.string.error_cost_number)
+            valid = false
         }
         return valid
     }
@@ -165,40 +317,54 @@ class SetupMotorActivity : AppCompatActivity() {
         }
     }
 
+    private fun finishSetup() {
+        val motorId = dbHelper.insertMotor(
+            Motor(
+                name = motorNameInput.text.toString().trim(),
+                plateNumber = plateNumberInput.text.toString().trim(),
+                currentKilometer = kilometerInput.text.toString().trim().toInt(),
+                isActive = true
+            )
+        )
+        saveOptionalRecords(motorId)
+        startActivity(Intent(this, DashboardActivity::class.java))
+        finish()
+    }
+
     private fun saveOptionalRecords(motorId: Long) {
-        if (serviceCheck.isChecked) {
+        if (!serviceSkipped) {
             val kilometer = serviceKmInput.text.toString().trim().toInt()
             val target = serviceTargetInput.text.toString().trim().toInt()
             dbHelper.insertServis(
                 Servis(
                     motorId = motorId,
-                    serviceDate = today(),
+                    serviceDate = serviceDateInput.text.toString().trim(),
                     serviceType = getString(R.string.setup_initial_record),
                     kilometer = kilometer,
                     intervalKm = target,
-                    intervalMonth = 6,
+                    intervalMonth = serviceMonthsInput.text.toString().trim().toInt(),
                     cost = 0,
                     note = getString(R.string.setup_initial_record)
                 )
             )
         }
-        if (oilCheck.isChecked) {
+        if (!oilSkipped) {
             val kilometer = oilKmInput.text.toString().trim().toInt()
             val target = oilTargetInput.text.toString().trim().toInt()
             dbHelper.insertOli(
                 Oli(
                     motorId = motorId,
-                    oilChangeDate = today(),
+                    oilChangeDate = oilDateInput.text.toString().trim(),
                     kilometer = kilometer,
                     nextKilometer = target,
                     intervalKm = target,
-                    intervalMonth = 3,
+                    intervalMonth = oilMonthsInput.text.toString().trim().toInt(),
                     oilType = getString(R.string.setup_initial_record),
                     cost = 0
                 )
             )
         }
-        if (taxCheck.isChecked) {
+        if (!taxSkipped) {
             dbHelper.insertPajak(
                 Pajak(
                     motorId = motorId,
@@ -212,6 +378,13 @@ class SetupMotorActivity : AppCompatActivity() {
     }
 
     private fun today(): String = SimpleDateFormat("yyyy-MM-dd", Locale.US).format(Date())
+
+    private enum class Step {
+        MOTOR,
+        SERVICE,
+        OIL,
+        TAX
+    }
 
     private companion object {
         const val SERVICE_INTERVAL_KM = 4000

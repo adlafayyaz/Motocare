@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="screen_padding">24dp</dimen>
+    <dimen name="setup_dot_size">8dp</dimen>
+    <dimen name="setup_dot_active_width">22dp</dimen>
 </resources>

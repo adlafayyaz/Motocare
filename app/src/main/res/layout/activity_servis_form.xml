@@ -214,7 +214,7 @@
                     <EditText
                         android:id="@+id/editServisCost"
                         style="@style/FormInputWithUnit"
-                        android:inputType="text" />
+                        android:inputType="number" />
 
                     <TextView
                         style="@style/FormUnitText"
