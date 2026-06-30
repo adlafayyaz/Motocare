@@ -8,7 +8,6 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.motocare.DashboardActivity
 import com.example.motocare.R
@@ -328,7 +327,6 @@ class SetupMotorActivity : AppCompatActivity() {
             )
         )
         saveOptionalRecords(motorId)
-        Toast.makeText(this, R.string.setup_motor_saved, Toast.LENGTH_SHORT).show()
         startActivity(Intent(this, DashboardActivity::class.java))
         finish()
     }

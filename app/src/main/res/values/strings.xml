@@ -19,7 +19,6 @@
     <string name="plate_number">Plat nomor</string>
     <string name="current_kilometer">Kilometer sekarang (km)</string>
     <string name="save">Simpan</string>
-    <string name="setup_motor_saved">Data motor tersimpan untuk tahap awal.</string>
     <string name="setup_schedule_title">Untuk jadwal</string>
     <string name="setup_schedule_body">Kami bantu ingatkan kapan motor perlu servis lagi.</string>
     <string name="setup_reminder_title">Untuk reminder</string>
